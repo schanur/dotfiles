@@ -1,5 +1,8 @@
-#!/bin/sh
-# #!/bin/bash
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 # FONT_NAME="/usr/share/fonts/X11/misc/ter-u12b_unicode.pcf.gz"
 FONT_NAME="-*-terminus-bold-*-*-*-16-*-*-*-*-*-*-*"
