@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+
+function link_dot_tmux_to_repo() {
+    local HOME_PATH="~"
+    local REPO_PATH=${SCRIPT_PATH}/../tmux
+    local CMD="ln -s -r ${SCRIPT_PATH}/../tmux/tmux.conf .tmux.conf"
+
+    echo ${CMD}
+    ${CMD}
+    # ln -s ${SCRIPT_PATH}/../tmux/tmux.conf ${HOME_PATH}/.tmux.conf
+}
+
+function main() {
+    link_dot_tmux_to_repo
+}
+
+main
