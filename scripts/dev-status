@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+function print_changed_files_in_repo_path() {
+    local GIT_REPO_PATH=${1}
+
+    echo "---"
+    echo "${GIT_REPO_PATH}"
+    # (cd ${GIT_REPO_PATH} && git ls-files -m -s)
+    (cd ${GIT_REPO_PATH} && git status -s )
+}
+
+function print_changed_files_for_repo_list() {
+    local GIT_REPO_PATH_LIST=${1}
+    local GIT_REPO_PATH
+
+    echo ${REPO_LIST_TO_CHECK}
+    for GIT_REPO_PATH in ${GIT_REPO_PATH_LIST}; do
+        print_changed_files_in_repo_path ${GIT_REPO_PATH}
+    done
+}
+
+function main() {
+    REPO_LIST_TO_CHECK="$(find ~/local/dev -maxdepth 1 -type d |tail -n +2)"
+    # echo ${REPO_LIST_TO_CHECK}
+    print_changed_files_for_repo_list "${REPO_LIST_TO_CHECK}"
+}
+
+main
