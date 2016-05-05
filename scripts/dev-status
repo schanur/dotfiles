@@ -4,29 +4,112 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-function print_changed_files_in_repo_path() {
+function print_repo_depth_indentation() {
+    local SUB_REPO_DEPTH=${1}
+    local INDENT_STRING="  "
+    local I
+
+    for I in $(seq 1 ${SUB_REPO_DEPTH}); do
+        echo -n "${INDENT_STRING}"
+    done
+}
+
+function print_repo() {
+    local GIT_REPO_PATH=${1}
+    local SUB_REPO_DEPTH=${2}
+
+    print_repo_depth_indentation ${SUB_REPO_DEPTH}
+    echo ${GIT_REPO_PATH}
+}
+
+function print_repo_if_conf_set() {
+    local GIT_REPO_PATH=${1}
+    local SUB_REPO_DEPTH=${2}
+
+    if [ "${GL_PRINT_PROCESSED_REPOS}" = "1" ]; then
+        print_repo ${GIT_REPO_PATH} ${SUB_REPO_DEPTH}
+    fi
+}
+
+function assert_git_repo() {
     local GIT_REPO_PATH=${1}
 
-    echo "---"
-    echo "${GIT_REPO_PATH}"
+    # "git status" returns 128 as exit code if path is not part of a
+    # repository.
+    # (cd ${GIT_REPO_PATH} && git status > dev/null)
+}
+
+function git_repo_has_uncommited_changes() {
+    local GIT_REPO_PATH=${1}
+    local MODIFY_FILE_COUNT
+    local HAS_UNCOMMITED_CHANGES=0
+
+    MODIFY_FILE_COUNT="$(cd ${GIT_REPO_PATH} && git status -s |wc -l)"
+    if [ "${MODIFY_FILE_COUNT}" != "0" ]; then
+        HAS_UNCOMMITED_CHANGES=1
+    fi
+
+    echo "${HAS_UNCOMMITED_CHANGES}"
+}
+
+function git_status() {
+    local GIT_REPO_PATH=${1}
+
     # (cd ${GIT_REPO_PATH} && git ls-files -m -s)
-    (cd ${GIT_REPO_PATH} && git status -s )
+    (cd ${GIT_REPO_PATH} && (git status -s))
+}
+
+function print_changed_files_in_repo_path() {
+    local GIT_REPO_PATH=${1}
+    local SUB_REPO_DEPTH=${2}
+
+    if [[ "$(git_repo_has_uncommited_changes ${GIT_REPO_PATH})" = "1" ]]; then
+        print_repo ${GIT_REPO_PATH} ${SUB_REPO_DEPTH}
+        git_status ${GIT_REPO_PATH}
+    else
+        print_repo_if_conf_set ${GIT_REPO_PATH} ${SUB_REPO_DEPTH}
+        true
+    fi
+}
+
+# Call "print_changed_files_in_repo_path()" for path itself and all
+# submodules.
+function print_changed_files_in_repo_path_recursive() {
+    local GIT_REPO_PATH=${1}
+    local RELATIVE_GIT_SUB_REPO_PATH
+    local GITMODULE_FILENAME="${GIT_REPO_PATH}/.gitmodules"
+    local SUB_REPOS_PROCESSED=0
+
+    print_changed_files_in_repo_path ${GIT_REPO_PATH} 0
+    # Check all submodules.
+    if [ -f ${GITMODULE_FILENAME} ]; then
+        for RELATIVE_GIT_SUB_REPO_PATH in $(cat ${GITMODULE_FILENAME} |grep "path = " |sed -e 's/.* = //g'); do
+            print_changed_files_in_repo_path ${GIT_REPO_PATH}/${RELATIVE_GIT_SUB_REPO_PATH} 1
+        done
+    fi
 }
 
 function print_changed_files_for_repo_list() {
     local GIT_REPO_PATH_LIST=${1}
     local GIT_REPO_PATH
 
-    echo ${REPO_LIST_TO_CHECK}
     for GIT_REPO_PATH in ${GIT_REPO_PATH_LIST}; do
-        print_changed_files_in_repo_path ${GIT_REPO_PATH}
+        print_changed_files_in_repo_path_recursive ${GIT_REPO_PATH}
     done
 }
 
 function main() {
-    REPO_LIST_TO_CHECK="$(find ~/local/dev -maxdepth 1 -type d |tail -n +2)"
-    # echo ${REPO_LIST_TO_CHECK}
-    print_changed_files_for_repo_list "${REPO_LIST_TO_CHECK}"
+    local GIT_REPO_PATH_LIST="${1}"
+    print_changed_files_for_repo_list "${GIT_REPO_PATH_LIST}"
 }
 
-main
+GL_PRINT_PROCESSED_REPOS=0
+GL_GIT_REPO_PATH_LIST="
+$(find ~/local/dev/apt-source         -maxdepth 1 -type d |tail -n +2)
+$(find ~/local/dev/employment/sonotec -maxdepth 1 -type d |tail -n +2)
+$(find ~/local/dev/inactive_public    -maxdepth 1 -type d |tail -n +2)
+$(find ~/local/dev/private            -maxdepth 1 -type d |tail -n +2)
+$(find ~/local/dev/public             -maxdepth 1 -type d |tail -n +2)
+"
+
+main "${GL_GIT_REPO_PATH_LIST}"
