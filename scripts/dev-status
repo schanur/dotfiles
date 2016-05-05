@@ -52,18 +52,41 @@ function git_repo_has_uncommited_changes() {
     echo "${HAS_UNCOMMITED_CHANGES}"
 }
 
+function git_repo_has_commits_not_pushed() {
+    local GIT_REPO_PATH=${1}
+    local HAS_COMMIT_NOT_PUSHED=0
+
+    if [ $(cd ${GIT_REPO_PATH} && git --no-pager log --branches --not --remotes --oneline |wc -l) != "0" ]; then
+        HAS_COMMIT_NOT_PUSHED=1
+    fi
+
+    return ${HAS_COMMIT_NOT_PUSHED}
+}
+
+function gir_repo_has_notable_changes() {
+    local GIT_REPO_PATH=${1}
+    local HAS_NOTABLE_CHANGES
+
+    HAS_NOTABLE_CHANGES=$(git_repo_has_uncommited_changes ${GIT_REPO_PATH})
+    if [ ${HAS_NOTABLE_CHANGES} = "0" ]; then
+        HAS_NOTABLE_CHANGES=$(git_repo_has_commits_not_pushed ${GIT_REPO_PATH})
+    fi
+
+    return ${HAS_NOTABLE_CHANGES}
+}
+
 function git_status() {
     local GIT_REPO_PATH=${1}
 
-    # (cd ${GIT_REPO_PATH} && git ls-files -m -s)
-    (cd ${GIT_REPO_PATH} && (git status -s))
+    (cd ${GIT_REPO_PATH} && git status -s)
+    (cd ${GIT_REPO_PATH} && git --no-pager log --branches --not --remotes --oneline)
 }
 
 function print_changed_files_in_repo_path() {
     local GIT_REPO_PATH=${1}
     local SUB_REPO_DEPTH=${2}
 
-    if [[ "$(git_repo_has_uncommited_changes ${GIT_REPO_PATH})" = "1" ]]; then
+    if [[ $(git_repo_has_uncommited_changes ${GIT_REPO_PATH}) = "1" ]]; then
         print_repo ${GIT_REPO_PATH} ${SUB_REPO_DEPTH}
         git_status ${GIT_REPO_PATH}
     else
