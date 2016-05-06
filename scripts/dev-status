@@ -4,6 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+
 function print_repo_depth_indentation() {
     local SUB_REPO_DEPTH=${1}
     local INDENT_STRING="  "
@@ -45,7 +46,7 @@ function git_repo_has_uncommited_changes() {
     local HAS_UNCOMMITED_CHANGES=0
 
     MODIFY_FILE_COUNT="$(cd ${GIT_REPO_PATH} && git status -s |wc -l)"
-    if [ "${MODIFY_FILE_COUNT}" != "0" ]; then
+    if [ ${MODIFY_FILE_COUNT} != "0" ]; then
         HAS_UNCOMMITED_CHANGES=1
     fi
 
@@ -60,10 +61,10 @@ function git_repo_has_commits_not_pushed() {
         HAS_COMMIT_NOT_PUSHED=1
     fi
 
-    return ${HAS_COMMIT_NOT_PUSHED}
+    echo ${HAS_COMMIT_NOT_PUSHED}
 }
 
-function gir_repo_has_notable_changes() {
+function git_repo_has_notable_changes() {
     local GIT_REPO_PATH=${1}
     local HAS_NOTABLE_CHANGES
 
@@ -71,8 +72,7 @@ function gir_repo_has_notable_changes() {
     if [ ${HAS_NOTABLE_CHANGES} = "0" ]; then
         HAS_NOTABLE_CHANGES=$(git_repo_has_commits_not_pushed ${GIT_REPO_PATH})
     fi
-
-    return ${HAS_NOTABLE_CHANGES}
+    echo ${HAS_NOTABLE_CHANGES}
 }
 
 function git_status() {
@@ -86,7 +86,7 @@ function print_changed_files_in_repo_path() {
     local GIT_REPO_PATH=${1}
     local SUB_REPO_DEPTH=${2}
 
-    if [[ $(git_repo_has_uncommited_changes ${GIT_REPO_PATH}) = "1" ]]; then
+    if [[ $(git_repo_has_notable_changes ${GIT_REPO_PATH}) = "1" ]]; then
         print_repo ${GIT_REPO_PATH} ${SUB_REPO_DEPTH}
         git_status ${GIT_REPO_PATH}
     else
