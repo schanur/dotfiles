@@ -80,6 +80,9 @@ function git_status() {
 
     (cd ${GIT_REPO_PATH} && git status -s)
     (cd ${GIT_REPO_PATH} && git --no-pager log --branches --not --remotes --oneline)
+    if [ ! -f ${GIT_REPO_PATH}/LICENSE.md ]; then
+        echo "License file missing."
+    fi
 }
 
 function print_changed_files_in_repo_path() {
@@ -128,11 +131,11 @@ function main() {
 
 GL_PRINT_PROCESSED_REPOS=0
 GL_GIT_REPO_PATH_LIST="
-$(find ~/local/dev/apt-source         -maxdepth 1 -type d |tail -n +2)
-$(find ~/local/dev/employment/sonotec -maxdepth 1 -type d |tail -n +2)
-$(find ~/local/dev/inactive_public    -maxdepth 1 -type d |tail -n +2)
-$(find ~/local/dev/private            -maxdepth 1 -type d |tail -n +2)
-$(find ~/local/dev/public             -maxdepth 1 -type d |tail -n +2)
+$(find ~/local/dev/apt-source         -maxdepth 1 -mindepth 1 -type d)
+$(find ~/local/dev/employment         -maxdepth 2 -mindepth 2 -type d)
+$(find ~/local/dev/inactive_public    -maxdepth 1 -mindepth 1 -type d)
+$(find ~/local/dev/private            -maxdepth 1 -mindepth 1 -type d)
+$(find ~/local/dev/public             -maxdepth 1 -mindepth 1 -type d)
 "
 
 main "${GL_GIT_REPO_PATH_LIST}"
