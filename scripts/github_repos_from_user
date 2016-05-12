@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+USERNAME=${1}
+# echo "USERNAME: ${USERNAME}"
+# URL="https://api.github.com/users/${USERNAME}/repos";
+# REPO_CNT=$(curl -sI "${URL}?page=1&per_page=100" | sed -nr 's/^Link:.*page=([0-9]+)&per_page=100>; rel="last".*/\1/p');
+# echo "REPO_CNT: ${REPO_CNT}"
+# for ((I=1;I<=${REPO_CNT};I++)); do
+#     ( curl -s "${URL}?page=${I}&per_page=100" | grep "clone_url" | sed -nr 's/.*clone_url": "(.*)",/git clone \1/p' )
+# done > clone_allrepos_${USERNAME}.sh
+
+curl  -s "https://api.github.com/users/schanur/repos?page=1&per_page=100" |grep html_url |grep "schanur/" |sed -e "s|.*schanur/||g" |sed -e "s|\",||g"
