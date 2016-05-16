@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+function active_screens() {
+    xrandr |grep "*" |grep -c "+"
+}
+
+function screen_on() {
+    CMD="xrandr --output VGA1 --mode 1440x900 --left-of LVDS1"
+    echo ${CMD}
+    ${CMD}
+}
+
+function screen_off() {
+    CMD="xrandr --output VGA1 --off"
+    echo ${CMD}
+    ${CMD}
+}
+
+function screen_toggle() {
+    local ACTIVE_SCREEN_CNT=$(active_screens)
+
+    case ${ACTIVE_SCREEN_CNT} in
+        1)
+            screen_on
+            ;;
+        2)
+            screen_off
+            ;;
+        *)
+            echo "Wrong number of currently active screens: ${ACTIVE_SCREEN_CNT}"
+            ;;
+    esac
+}
+
+function main() {
+    screen_toggle
+}
+
+main
+
