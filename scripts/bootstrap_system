@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+GITHUB_USER_BASE_DOMAIN="https://github.com/schanur"
+
+FIREFOX_DOWNLOAD_PATH="local/bin/firefox"
+if [ ! -d "${FIREFOX_DOWNLOAD_PATH}" ]; then
+    echo "Install Firefox"
+    # FIXME: Find download link to latest firefox version and unpack downloaded file.
+    # wget --recursive --no-parent --no-host-directories --cut-dirs=6 --accept bz2 https://download-installer.cdn.mozilla.net/pub/firefox/releases/latest/linux-x86_64/en-US/
+    mkdir -p local/bin/firefox
+fi
+
+if [ ! -d "local/dev/all2" ]; then
+    echo "Clone own repositories."
+    mkdir -p local/dev
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/avr-3-phase-high-voltage-driver.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/bad-code-i-wrote-as-a-kid.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/bash-status-prompt.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/blimp.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/dotfiles.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/emacs.d.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/gcov-highlight.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/libplatform.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/linux-bootstrap.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/octree-raytracer.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/slime-mold.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/tedder.git)
+fi
+
+if [ ! -d "local/inactive_dev" ]; then
+    echo "Clone own inactive repositories."
+    mkdir -p local/inactive_dev
+    (cd local/inactive_dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/36-cube-solver.git)
+fi
+
+if [ ! -d ".emace.s/.git" ]; then
+    echo "git clone emacs config"
+    if [ -d ".emacs.d" ]; then
+        echo "  Backup .emacs folder"
+        mv .emacs.d .emacs.d.pre-auto-install-script
+    fi
+    ln -s local/dev/emacs.d .emacs.d
+fi
