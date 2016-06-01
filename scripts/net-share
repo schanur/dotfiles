@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# This script makes only sense as root.
+if [ "${USER}" != "root" ]; then
+    su -c "${0}" root
+    exit
+fi
+
+function is_mounted() {
+    true
+}
+
+function mount_net_share() {
+    sshfs -o reconnect,allow_other,ro ${USERNAME}@${HOSTNAME}:${REMOTE_PATH} ${MOUNT_PATH}
+}

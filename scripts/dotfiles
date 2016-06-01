@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/shared_bash
+
+
+declare -A GL__SCRIPTS_DESCRIPTION
+
+# GL__SCRIPTS_DESCRIPTION=( ["add-license-file"]="Add a license file to a repository" \
+#                                               ["bootstrap_system "]="obsolete")
+
+function list_scripts() {
+    local ABS_SCRIPT_FILENAME
+    local RELATIVE_SCRIPT_FILENAME
+    for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_PATH}); do
+        RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
+
+        echo ${RELATIVE_SCRIPT_FILENAME}
+    done
+}
+
+function main() {
+    list_scripts
+}
+
+main

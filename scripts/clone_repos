@@ -8,9 +8,10 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/shared_bash
 
-source ../config/github
+source ${SCRIPT_PATH}/../config/github
 
-GITHUB__USER_↑BASE_DOMAIN="https://github.com/${GITHUB__USERNAME}"
+
+GITHUB__USER_BASE_DOMAIN="https://github.com/${GITHUB__USERNAME}"
 
 # function clone_repo_by_address() {
 #     local REPO_ADDRESS=${1}
@@ -28,7 +29,7 @@ GITHUB__USER_↑BASE_DOMAIN="https://github.com/${GITHUB__USERNAME}"
 # }
 
 function create_repo_path_structure() {
-    mkdir -p ${GL_CONF__REPO_CLONE_BASE_PATH}
+    mkdir -p ${GL_CONF__REPO_CLONE_PATH}
     mkdir -p ${GL_CONF__REPO_PUBLIC_PATH}
     mkdir -p ${GL_CONF__REPO_INACTIVE_PUBLIC_PATH}
     mkdir -p ${GL_CONF__REPO_PRIVATE_PATH}
@@ -43,31 +44,41 @@ function create_repo_path_structure() {
 #     for
 # }
 
+#we distinguish between repos under active development and non
+# continued ones, which would only clutter the directory structure. If
+# the repo contains a file in its base directory, which marks it as
+# discontinued, make a link under "inactive_public". Make a link in
+# "public" otherwise
+function link_public_repo() {
+    local REPO_NAME=${1}
+    if [ -f ${GL__DISCONTINUED_FILE_NAME} ];then
+        ln -s -r ${GL_CONF__REPO_CLONE_PATH}/${REPO_NAME} ${GL_CONF__REPO_INACTIVE_PUBLIC_PATH}/${REPO_NAME}
+    else
+        ln -s -r ${GL_CONF__REPO_CLONE_PATH}/${REPO_NAME} ${GL_CONF__REPO_PUBLIC_PATH}/${REPO_NAME}
+    fi
+}
+
 function main() {
     local REPO_NAME
+    local GITHUB_REPO_LIST
     create_repo_path_structure
 
-    # If repo does not exist in local dircetory, cline it.
-    local GITHUB_REPO_LIST=$(${SCRIPT_PATH}/github_repos_from_user ${GITHUB__USERNAME})
-    for REPO_NAME in GITHUB_REPO_LIST; do
-        if [ ! -d ]; then
+    # If repo does not exist in local directory, clone it.
+    GITHUB_REPO_LIST=$(${SCRIPT_PATH}/github_repos_from_user ${GITHUB__USERNAME})
+    for REPO_NAME in ${GITHUB_REPO_LIST}; do
+        if [ ! -d ${GL_CONF__REPO_CLONE_PATH}/${REPO_NAME} ]; then
             (cd ${GL_CONF__REPO_CLONE_PATH} && git clone --recursive --origin github ${GITHUB__USER_BASE_DOMAIN}/${REPO_NAME}.git)
-            # We expect all github repos as public. But we distinguish
-            # between repos under active development and non continued
-            # ones, which would only clutter the directory structure. If
-            # the repo contains a file in its base directory, which marks
-            # it as discontinued, make a link under
-            # "inactive_public". Make a link in "public" otherwise
-            if [ -f ${GL__DISCONTINUED_FILE_NAME} ];then
-                ln -s -r ${GL_CONF__REPO_CLONE_PATH}/${REPO_NAME} ${GL_CONF__REPO_INACTIVE_PUBLIC_PATH}/${REPO_NAME}
-            else
-                ln -s -r ${GL_CONF__REPO_CLONE_PATH}/${REPO_NAME} ${GL_CONF__REPO_PUBLIC_PATH}/${REPO_NAME}
-            fi
+            # We expect all github repos to be public.
+            link_public_repo ${REPO_NAME}
+        else
+            echo "Repository directory already exists. Skipping ${REPO_NAME}"
         fi
     done
 
     # Clone from fileserver if repo does not exist yet. If repo does
     # exist, add fileserver as remote to existing one.
+    ssh $@${!IP_Addr} "cat /etc/hosts"`
+
 
     # clone_repos "${GITHUB_REPO_LIST}"
 }
@@ -76,10 +87,11 @@ GL__DISCONTINUED_FILE_NAME="DISCONTINUED_REPOSITORY"
 GL__GITHUB_CLONE_CMD_LIST=""
 
 # Config
-GL_CONF__REPO_BASE_PATH="~/local/dev"
-GL_CONF__REPO_CLONE_PATH="${GL_REPO_BASE_PATH}/all"
-GL_CONF__REPO_PUBLIC_PATH="${GL_REPO_BASE_PATH}/public"
-GL_CONF__REPO_INACTIVE_PUBLIC_PATH="${GL_REPO_BASE_PATH}/inactive_public"
-GL_CONF__REPO_PRIVATE_PATH="${GL_REPO_BASE_PATH}/private"
+
+GL_CONF__REPO_BASE_PATH="${HOME}/local/dev"
+GL_CONF__REPO_CLONE_PATH="${GL_CONF__REPO_BASE_PATH}/all"
+GL_CONF__REPO_PUBLIC_PATH="${GL_CONF__REPO_BASE_PATH}/public"
+GL_CONF__REPO_INACTIVE_PUBLIC_PATH="${GL_CONF__REPO_BASE_PATH}/inactive_public"
+GL_CONF__REPO_PRIVATE_PATH="${GL_CONF__REPO_BASE_PATH}/private"
 
 main
