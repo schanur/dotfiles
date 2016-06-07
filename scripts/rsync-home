@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# Backup home dircetory of current user with bsync.
+#
+# Remote backup target is configured in 'config/bsync-home'
+
 set -o errexit
 set -o nounset
 set -o pipefail
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+# source ${INCLUDE_PATH}/config-file
+
+HOSTNAME=$(hostname)
+USERNAME=$(whoami)
+TARGET_PATH_EXTENSION=$(echo ${HOME//\//_} | sed -e 's/^_//g')
+
+echo "bsync ${HOME} ${RSYNC-HOME__REMOTE_USERNAME}@${RSYNC-HOME__REMOTE_HOST}:${RSYNC-HOME__REMOTE_BASE_PATH}/${HOSTNAME}__${TARGET_PATH_EXTENSION}"

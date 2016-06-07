@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# List all git repositories that belong to a username.
+
 set -o errexit
 set -o nounset
 set -o pipefail

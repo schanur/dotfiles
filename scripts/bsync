@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Backup sync: Use rsync over SSH with default options for backups.
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+SOURCE=${1}
+DESTINATION=${2}
+
+rsync -aXESxzve "ssh -T -o Compression=yes" --progress ${SOURCE} ${DESTINATION}
+exit $?

@@ -1,12 +1,16 @@
 #!/bin/bash
 
+# List all scripts with a short description what they are doing.
+
 set -o errexit
 set -o nounset
 set -o pipefail
 
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-INCLUDE_PATH=${SCRIPT_PATH}/shared_bash
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/string.sh
 
 
 declare -A GL__SCRIPTS_DESCRIPTION
@@ -14,13 +18,34 @@ declare -A GL__SCRIPTS_DESCRIPTION
 # GL__SCRIPTS_DESCRIPTION=( ["add-license-file"]="Add a license file to a repository" \
 #                                               ["bootstrap_system "]="obsolete")
 
-function list_scripts() {
+function get_short_description {
+    local SCRIPT_FILE=${1}
+    local THIRD_LINE
+    local SHORT_DESCRIPTION
+
+    THIRD_LINE=$(cat ${SCRIPT_FILE} |head -n 3 |tail -n 1)
+    if [ "${THIRD_LINE:0:2}" = "# " ]; then
+        SHORT_DESCRIPTION=${THIRD_LINE:2}
+    else
+        # SHORT_DESCRIPTION=${THIRD_LINE:2}
+        SHORT_DESCRIPTION="No description available"
+    fi
+
+    echo ${SHORT_DESCRIPTION}
+}
+
+function list_scripts {
     local ABS_SCRIPT_FILENAME
     local RELATIVE_SCRIPT_FILENAME
-    for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_PATH}); do
-        RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
+    local TABBED_FILENAME
+    for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_PATH} |sort); do
+        if [ ! -d  ${ABS_SCRIPT_FILENAME} ]; then
+            RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
+            TABBED_FILENAME=$(fill_tail ${RELATIVE_SCRIPT_FILENAME} 28 " ")
+            # get_short_description ${ABS_SCRIPT_FILENAME}
 
-        echo ${RELATIVE_SCRIPT_FILENAME}
+            echo "${TABBED_FILENAME}$(get_short_description ${ABS_SCRIPT_FILENAME})"
+        fi
     done
 }
 

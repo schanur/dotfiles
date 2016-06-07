@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Start a rxvt-unicode-256color terminal emulator instance with bold terminus font.
+
+
 set -o errexit
 set -o nounset
 set -o pipefail

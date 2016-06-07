@@ -169,6 +169,7 @@ python3 \
 qt5-default \
 rake \
 ruby-method-source \
+silversearcher-ag \
 swig \
 valgrind \
 zshdb \

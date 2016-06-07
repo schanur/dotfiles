@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Clone all repositories.
+
 set -o errexit
 set -o nounset
 set -o pipefail
