@@ -14,7 +14,7 @@ source ${INCLUDE_PATH}/string.sh
 
 function echo_align {
     local STRING=${1}
-    echo -n "$(fill_tail ${STRING}: 25 _)"
+    echo -n "$(fill_tail ${STRING}: 25 ' ')"
 }
 
 PROCESS_ID=${1}
