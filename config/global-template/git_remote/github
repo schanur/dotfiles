@@ -1,0 +1,4 @@
+GITHUB__USERNAME=""
+
+# Do you have a paid accout which supports private repositories?
+GITHUB__PRIVATE_REPO_SUPPORT=0
