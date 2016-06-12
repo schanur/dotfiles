@@ -2,11 +2,18 @@
 
 # Mount preconfigured network shared.
 
-# This script makes only sense as root.
-if [ "${USER}" != "root" ]; then
-    su -c "${0}" root
-    exit
-fi
+set -o errexit
+set -o nounset
+set -o pipefail
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/script-su.sh
+
+
+run_as_root
 
 function is_mounted() {
     true

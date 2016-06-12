@@ -1,14 +1,19 @@
 #!/bin/bash
 
+# Install a predefined set of packages.
+
 set -o errexit
 set -o nounset
 set -o pipefail
 
-# This script makes only sense as root.
-if [ "${USER}" != "root" ]; then
-    su -c "${0}" root
-    exit
-fi
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/script-su.sh
+
+
+run_as_root
 
 PACKAGE_LIST_EARLY_1="\
 git \
