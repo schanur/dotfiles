@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Run emacs in terminal mode with support for 256 colors.
+
+export TERM=xterm-256color
+emacs24 -nw
+exit $?
