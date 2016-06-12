@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Mount preconfigured network shared.
+
 # This script makes only sense as root.
 if [ "${USER}" != "root" ]; then
     su -c "${0}" root

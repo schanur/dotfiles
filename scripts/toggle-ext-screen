@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Switch external screen on/off based on current state.
+
+# TODO:
+# - Use config file instead of hard coded resolution and screen
+# - Allow more than one external screen?
+# - If no screen is found in config file, use the first one with the
+#   maximum allowed screen resolution.
+# - Add help.
+
 set -o errexit
 set -o nounset
 set -o pipefail
