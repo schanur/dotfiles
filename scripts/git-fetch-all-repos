@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# function
+
+function git_fetch_repo_cmd {
+    local GIT_REPO_PATH=${1}
+
+    # echo "git remote update: ${GIT_REPO_PATH}"
+    echo "(cd ${GIT_REPO_PATH} && git remote update)"
+}
+
+function git_fetch_all_repos {
+    local GIT_REPO_PATH_LIST=${1}
+    local GIT_REPO_PATH
+    local GIT_FETCH_CMD_LIST=""
+    local NEWLINE=$'\n'
+
+    for GIT_REPO_PATH in ${GIT_REPO_PATH_LIST}; do
+        GIT_FETCH_CMD_LIST="${GIT_FETCH_CMD_LIST}$(git_fetch_repo_cmd ${GIT_REPO_PATH})
+"
+    done
+    echo "${GIT_FETCH_CMD_LIST}" |parallel -j 8 --halt 1
+}
+
+function main {
+    local GIT_REPO_PATH_LIST="${1}"
+    git_fetch_all_repos "${GIT_REPO_PATH_LIST}"
+}
+
+GL_GIT_REPO_PATH_LIST=" $(find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d)"
+
+main "${GL_GIT_REPO_PATH_LIST}"
