@@ -55,11 +55,13 @@ network-manager \
 nfs-common \
 openssh-server \
 pandoc \
+parallel \
 powertop \
 printer-driver-all \
 p7zip-rar \
 rsync \
 rzip \
+sysstat \
 unace \
 unalz \
 smartmontools \

@@ -131,7 +131,7 @@ function print_changed_files_for_repo_list() {
     done
 }
 
-function main() {
+function main {
     local GIT_REPO_PATH_LIST="${1}"
     print_changed_files_for_repo_list "${GIT_REPO_PATH_LIST}"
 }
