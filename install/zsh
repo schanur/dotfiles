@@ -8,3 +8,17 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
+function link_dot_zshrc_to_repo() {
+    local HOME_PATH="~"
+    local REPO_PATH=${SCRIPT_PATH}/../zsh
+    local CMD="ln -s -r ${SCRIPT_PATH}/../zsh/zshrc .zshrc"
+
+    echo ${CMD}
+    ${CMD}
+}
+
+function main() {
+    link_dot_zshrc_to_repo
+}
+
+main
