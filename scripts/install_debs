@@ -50,9 +50,11 @@ lynx \
 lzip \
 mc \
 moc \
+mps-youtube \
 ncompress \
 network-manager \
 nfs-common \
+nmap \
 openssh-server \
 pandoc \
 parallel \
@@ -116,7 +118,6 @@ gmusicbrowser \
 gpodder \
 grilo-plugins-0.3 \
 handbrake \
-k3b \
 knowthelist \
 mplayer \
 musique \
@@ -145,6 +146,7 @@ xmount \
 
 PACKAGE_LIST_DEV="\
 bashdb \
+bison \
 bundler \
 check \
 clang \
@@ -153,11 +155,13 @@ ddd \
 doxygen \
 doxygen-gui \
 ffmpeg-doc \
+flex \
 gcc \
 gdb \
 gitg \
 gitk \
 git-cola \
+git-extras \
 global \
 graphviz \
 g++ \
@@ -194,6 +198,8 @@ giggle-terminal-view-plugin \
 git-doc \
 git-man \
 glibc-doc \
+glibc-doc-reference \
+graphviz-doc \
 libvirt-doc \
 manpages \
 manpages-dev \
