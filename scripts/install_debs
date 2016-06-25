@@ -64,6 +64,7 @@ printer-driver-all \
 p7zip-rar \
 rsync \
 rzip \
+slurm \
 sysstat \
 unace \
 unalz \
