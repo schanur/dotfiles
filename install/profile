@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+
+function link_dot_profile_to_repo() {
+    local HOME_PATH="~"
+    local REPO_PATH=${SCRIPT_PATH}/../tmux
+    local CMD="ln -s -r ${SCRIPT_PATH}/../profile/profile .profile"
+
+    echo ${CMD}
+    ${CMD}
+}
+
+function main() {
+    link_dot_profile_to_repo
+}
+
+main
