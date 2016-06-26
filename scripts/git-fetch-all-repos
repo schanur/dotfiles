@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# function
+# Fetch all personal repositories in parallel.
 
 function git_fetch_repo_cmd {
     local GIT_REPO_PATH=${1}
@@ -27,6 +27,6 @@ function main {
     git_fetch_all_repos "${GIT_REPO_PATH_LIST}"
 }
 
-GL_GIT_REPO_PATH_LIST=" $(find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d)"
+GL_GIT_REPO_PATH_LIST=" $(git-list)"
 
 main "${GL_GIT_REPO_PATH_LIST}"

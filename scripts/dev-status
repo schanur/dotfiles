@@ -138,14 +138,7 @@ function main {
 
 GL_PRINT_PROCESSED_REPOS=0
 
-GL_GIT_REPO_PATH_LIST=" $(find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d)"
+GL_GIT_REPO_PATH_LIST=" $(git-list)"
 
-# GL_GIT_REPO_PATH_LIST="
-# $(find ~/local/dev/apt-source         -maxdepth 1 -mindepth 1 -type d)
-# $(find ~/local/dev/employment         -maxdepth 2 -mindepth 2 -type d)
-# $(find ~/local/dev/inactive_public    -maxdepth 1 -mindepth 1 -type d)
-# $(find ~/local/dev/private            -maxdepth 1 -mindepth 1 -type d)
-# $(find ~/local/dev/public             -maxdepth 1 -mindepth 1 -type d)
-# "
 
 main "${GL_GIT_REPO_PATH_LIST}"
