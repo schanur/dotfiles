@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Start a rxvt-unicode-256color terminal emulator instance with bold terminus font.
+# Start a rxvt-unicode-256color terminal emulator instance with bold terminus font and dark background.
 
 
 set -o errexit
