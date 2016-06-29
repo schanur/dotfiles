@@ -2,6 +2,13 @@
 
 # Fetch all personal repositories in parallel.
 
+# The effect is the same as using "git-each remote update". But it is
+# a lot faster by using the "parallel" command.
+
+
+set -o errexit -o nounset -o pipefail
+
+
 function git_fetch_repo_cmd {
     local GIT_REPO_PATH=${1}
 

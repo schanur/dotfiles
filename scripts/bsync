@@ -2,9 +2,9 @@
 
 # Backup sync: Use rsync over SSH with default options for backups.
 
-set -o errexit
-set -o nounset
-set -o pipefail
+
+set -o errexit -o nounset -o pipefail
+
 
 SOURCE=${1}
 DESTINATION=${2}

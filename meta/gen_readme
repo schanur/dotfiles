@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+
+# Read short description and long description of all scripts and
+# renerate a README.md file with proper markdown syntax.
+
+def short_description(script)
+
+end
+
+def long_description(script)
+
+end

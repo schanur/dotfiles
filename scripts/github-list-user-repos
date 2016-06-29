@@ -2,26 +2,23 @@
 
 # List all git repositories that belong to a username.
 
-set -o errexit
-set -o nounset
-set -o pipefail
 
-function help {
-    echo $(basename ${0}) GITHUB_USERNAME
-}
+set -o errexit -o nounset -o pipefail
 
-function bad_param {
-    echo "Wrong number of parameter"
-    echo
-    help
-}
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+
 
 function main {
     if [ "${#}" -eq "1" ]; then
         local USERNAME=${1}
         curl  -s "https://api.github.com/users/${USERNAME}/repos?page=1&per_page=100" |grep html_url |grep "${USERNAME}/" |sed -e "s|.*${USERNAME}/||g" |sed -e "s|\",||g"
     else
-        bad_param
+        invalid_parameter_exit
     fi
 }
 

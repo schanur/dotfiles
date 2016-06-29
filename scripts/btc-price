@@ -2,4 +2,8 @@
 
 # Show the current bitcoin price in US Dollar.
 
+
+set -o errexit -o nounset -o pipefail
+
+
 echo "$(curl -s https://coinbase.com/api/v1/prices/spot_rate |cut -d '"' -f 4) USD"

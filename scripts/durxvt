@@ -3,9 +3,8 @@
 # Start a rxvt-unicode-256color terminal emulator instance with bold terminus font and dark background.
 
 
-set -o errexit
-set -o nounset
-set -o pipefail
+set -o errexit -o nounset -o pipefail
+
 
 # FONT_NAME="/usr/share/fonts/X11/misc/ter-u12b_unicode.pcf.gz"
 FONT_NAME="-*-terminus-bold-*-*-*-16-*-*-*-*-*-*-*"

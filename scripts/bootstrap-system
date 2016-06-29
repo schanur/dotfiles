@@ -2,9 +2,9 @@
 
 # Clone all repositories.
 
-set -o errexit
-set -o nounset
-set -o pipefail
+
+set -o errexit -o nounset -o pipefail
+
 
 GITHUB_USER_BASE_DOMAIN="https://github.com/schanur"
 

@@ -2,9 +2,8 @@
 
 # Show changes not yet committed, commits not yet pushed, and some style guide errors.
 
-set -o errexit
-set -o nounset
-set -o pipefail
+
+set -o errexit -o nounset -o pipefail
 
 
 function print_repo_depth_indentation {

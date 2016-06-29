@@ -2,37 +2,22 @@
 
 # List all scripts with a short description what they are doing.
 
-set -o errexit
-set -o nounset
-set -o pipefail
+
+set -o errexit -o nounset -o pipefail
+
 
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/string.sh
-
+source ${INCLUDE_PATH}/help.sh
 
 declare -A GL__SCRIPTS_DESCRIPTION
 
 # GL__SCRIPTS_DESCRIPTION=( ["add-license-file"]="Add a license file to a repository" \
 #                                               ["bootstrap_system "]="obsolete")
 
-function get_short_description {
-    local SCRIPT_FILE=${1}
-    local THIRD_LINE
-    local SHORT_DESCRIPTION
-
-    THIRD_LINE=$(cat ${SCRIPT_FILE} |head -n 3 |tail -n 1)
-    if [ "${THIRD_LINE:0:2}" = "# " ]; then
-        SHORT_DESCRIPTION=${THIRD_LINE:2}
-    else
-        # SHORT_DESCRIPTION=${THIRD_LINE:2}
-        SHORT_DESCRIPTION="No description available"
-    fi
-
-    echo ${SHORT_DESCRIPTION}
-}
 
 function list_scripts {
     local ABS_SCRIPT_FILENAME
