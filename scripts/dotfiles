@@ -29,7 +29,7 @@ function list_scripts {
             TABBED_FILENAME=$(fill_tail ${RELATIVE_SCRIPT_FILENAME} 28 " ")
             # get_short_description ${ABS_SCRIPT_FILENAME}
 
-            echo "${TABBED_FILENAME}$(get_short_description ${ABS_SCRIPT_FILENAME})"
+            echo "${TABBED_FILENAME}$(short_description ${ABS_SCRIPT_FILENAME})"
         fi
     done
 }

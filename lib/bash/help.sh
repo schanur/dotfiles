@@ -20,17 +20,20 @@ function short_description {
 }
 
 function long_description {
-    local
+    true
+    # local
 }
 
 # Print the help section of a script, consisting of the script name,
 # the short description and the long description.
 function help {
-    echo $()
+    local SCRIPT_NAME="$(script_name)"
+
+    echo ${SCRIPT_NAME}
     echo
-    echo $(get_short_description)
+    echo $(short_description ${SCRIPT_FILENAME})
     echo
-    echo ${get_long_description}
+    echo $(long_description ${SCRIPT_FILENAME})
 }
 
 # The script was called with a wron number of arguments or the
