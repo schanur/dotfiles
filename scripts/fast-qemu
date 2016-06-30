@@ -10,5 +10,40 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
-# source ${INCLUDE_PATH}/config-file
+source ${INCLUDE_PATH}/help.sh
 
+#EMU_BINARY="/usr/bin/kvm"
+EMU_BINARY="/usr/bin/qemu-system-x86_64"
+
+# cache=writeback
+
+function start_vm {
+    local HD_IMAGE=${1}
+    # local PARAMS=${2}
+    local EXIT_STATUS
+    local CMD
+
+    CMD="eatmydata                           \
+        ${EMU_BINARY}                        \
+        -smp 2 -cpu host -enable-kvm         \
+        -m 1024                              \
+        -vga qxl                             \
+        -no-fd-bootchk -no-acpi              \
+        -drive file=${HD_IMAGE},cache=unsafe \
+        -boot c                              \
+        -net nic,vlan=0 -net user,vlan=0     \
+        -name \"$(basename ${HD_IMAGE})\""
+    echo ${CMD}
+    ${CMD}
+    EXIT_STATUS=${?}
+    return ${EXIT_STATUS}
+}
+
+function main {
+    if [ "${#}" -eq "1" ]; then
+        start_vm "${@}"
+        exit EXIT_STATUS=$?
+    else
+        invalid_parameter_exit
+    fi
+}
