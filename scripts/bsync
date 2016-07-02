@@ -2,6 +2,25 @@
 
 # Backup sync: Use rsync over SSH with default options for backups.
 
+# We use the following options:
+# -a,     --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
+# -X,     --xattrs                preserve extended attributes
+# -E,     --executability         preserve executability
+# -S,     --sparse                handle sparse files efficiently
+# -x,     --one-file-system       don't cross filesystem boundaries
+# -z,     --compress              compress file data during the transfer
+# -v,     --verbose               increase verbosity
+# -e ssh, --rsh=ssh               specify the remote shell to use (we use SSH)
+#
+# The following options may be inappropriate for your use cases:
+#
+# The "-x" option is a good way to backup a system even if removable
+# drives, network filesystems, etc. are mounted in the directory you
+# want to backup.
+#
+# If you want to use the script for machine local rsync operations,
+# remove the "-e ssh" option.
+
 
 set -o errexit -o nounset -o pipefail
 
