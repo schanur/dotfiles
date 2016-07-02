@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Show the current bitcoin price in US Dollar.
+# Show the current bitcoin price in US Dollar and Euro.
 
 
 set -o errexit -o nounset -o pipefail
 
-
-echo "$(curl -s https://coinbase.com/api/v1/prices/spot_rate |cut -d '"' -f 4) USD"
+echo "Coinbase:       $(curl -s https://coinbase.com/api/v1/prices/spot_rate      |cut -d '"' -f 4) USD"
+echo "BitcoinAverage: $(curl -s https://api.bitcoinaverage.com/ticker/global/EUR/ |grep \"last\" |sed -e 's/.*\:\ //g' |cut -f 1 -d ',') EUR"
