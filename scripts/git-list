@@ -4,12 +4,11 @@
 
 
 set -o errexit -o nounset -o pipefail
-
-
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 # source ${INCLUDE_PATH}/config-file
+
 
 find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d

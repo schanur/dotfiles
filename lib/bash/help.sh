@@ -3,6 +3,11 @@ function script_name {
     echo $(basename ${0})
 }
 
+function comment_section_count {
+    echo "Not implemented"
+    exit 1
+}
+
 function short_description {
     local SCRIPT_FILE=${1}
     local THIRD_LINE

@@ -2,7 +2,7 @@
 
 # Backup sync: Use rsync over SSH with default options for backups.
 
-# We use the following options:
+# We use the following rsync options:
 # -a,     --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
 # -X,     --xattrs                preserve extended attributes
 # -E,     --executability         preserve executability
@@ -23,10 +23,27 @@
 
 
 set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
 
 
-SOURCE=${1}
-DESTINATION=${2}
+function rsync_cmd {
+    local SOURCE=${1}
+    local DESTINATION=${2}
+    rsync -aXESxzve "ssh -T -o Compression=yes" --progress ${SOURCE} ${DESTINATION}
+    exit $?
+}
 
-rsync -aXESxzve "ssh -T -o Compression=yes" --progress ${SOURCE} ${DESTINATION}
-exit $?
+function main {
+    if [ "${#}" -eq "2" ]; then
+        rsync_cmd "${@}"
+        exit EXIT_STATUS=$?
+    else
+        invalid_parameter_exit
+    fi
+}
+
+main "${@}"

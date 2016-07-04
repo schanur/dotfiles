@@ -47,3 +47,5 @@ function main {
         invalid_parameter_exit
     fi
 }
+
+main "${@}"

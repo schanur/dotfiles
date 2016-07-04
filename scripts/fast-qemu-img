@@ -12,6 +12,7 @@ INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/help.sh
 
+
 function create_qcow2_image_file {
     local HD_IMAGE_NAME=${1}
     local HD_IMAGE_SIZE=${2}
