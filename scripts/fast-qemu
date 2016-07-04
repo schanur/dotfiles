@@ -4,8 +4,6 @@
 
 
 set -o errexit -o nounset -o pipefail
-
-
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash

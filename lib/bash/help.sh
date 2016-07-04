@@ -41,6 +41,19 @@ function help {
     echo $(long_description ${SCRIPT_FILENAME})
 }
 
+# If the first parameter is "--help" or "-h", print the help to stdout
+# and exit without error.
+function parse_help_parameter {
+    if [ ${#} -eq 1 ]; then
+        case ${1} in
+            '--help'|'-h')
+                help
+                exit 0
+                ;;
+        esac
+    fi
+}
+
 # The script was called with a wron number of arguments or the
 # arguments cannot be parsed. We print the help section of the script
 # and exit with error code 64.
@@ -53,3 +66,6 @@ function invalid_parameter_exit {
     #define EX_USAGE        64      /* command line usage error */
     exit 64
 }
+
+
+parse_help_parameter "${@}"
