@@ -50,6 +50,7 @@ libreoffice \
 lynx \
 lzip \
 mc \
+memtest86+ \
 moc \
 moreutils
 mps-youtube \
@@ -251,6 +252,8 @@ apt-get install                        \
 # ssh-askpass rssh molly-guard ufw monkeysphere
 # resolvconf dnsmasq
 
+# Parallel processing:
+# mdm parafly parallel startpar xjobs
 
 # TODO:
 # Reset linux-firmware-free to autoset
