@@ -12,7 +12,9 @@ SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/help.sh
+source ${INCLUDE_PATH}/require.sh
 
+require_executable parallel
 
 function git_fetch_repo_cmd {
     local GIT_REPO_PATH=${1}
@@ -31,7 +33,8 @@ function git_fetch_all_repos {
         GIT_FETCH_CMD_LIST="${GIT_FETCH_CMD_LIST}$(git_fetch_repo_cmd ${GIT_REPO_PATH})
 "
     done
-    echo "${GIT_FETCH_CMD_LIST}" |parallel -j 8 --halt 1
+    # echo "${GIT_FETCH_CMD_LIST}" |parallel -j 8
+    parallel -j 8 -- "${GIT_FETCH_CMD_LIST}"
 }
 
 function main {

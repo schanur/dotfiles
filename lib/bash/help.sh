@@ -29,6 +29,11 @@ function long_description {
     # local
 }
 
+function usage {
+    echo "Not implemented"
+    exit 1
+}
+
 # Print the help section of a script, consisting of the script name,
 # the short description and the long description.
 function help {
