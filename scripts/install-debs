@@ -213,6 +213,11 @@ openmpi-doc \
 qt5-doc \
 "
 
+PACKAGE_LIST_DEV_GPU="\
+clinfo \
+"
+# opencl-icd virtual package
+
 PACKAGE_LIST_NONFREE="\
 firmware-iwlwifi \
 firmware-linux \
@@ -235,7 +240,8 @@ apt-get install                        \
 apt-get install                        \
         ${PACKAGE_LIST_NONFREE}        \
         ${PACKAGE_LIST_X11_MULTIMEDIA} \
-        ${PACKAGE_LIST_VIRT}
+        ${PACKAGE_LIST_VIRT}           \
+        ${PACKAGE_LIST_DEV_GPU}
 
 # Check for inclusion:
 # logtail
