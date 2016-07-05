@@ -51,6 +51,7 @@ lynx \
 lzip \
 mc \
 moc \
+moreutils
 mps-youtube \
 ncompress \
 network-manager \
@@ -58,7 +59,6 @@ nfs-common \
 nmap \
 openssh-server \
 pandoc \
-parallel \
 powertop \
 printer-driver-all \
 p7zip-rar \
