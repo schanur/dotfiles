@@ -41,10 +41,30 @@ function list_scripts {
 
 # }
 
-# Print help for a script
-function dotfiles_help {
-    echo "not implemented"
-    exit 1
+# Print a section of a documentation of a script.
+function dotfiles_doc {
+    if [ "${#}" -eq "0" ]; then
+        invalid_parameter_exit "No section."
+    fi
+    if [ "${#}" -eq "1" ]; then
+        invalid_parameter_exit "No script name."
+    fi
+    local SECTION=${1}
+    local SCRIPT_NAME=${2}
+    case ${SECTION} in
+        'short')
+            short_description ${SCRIPT_NAME}
+        ;;
+        'long')
+            long_description ${SCRIPT_NAME}
+            ;;
+        'usage')
+            usage ${SCRIPT_NAME}
+            ;;
+        *)
+            invalid_parameter_exit "Unknown documentation section: ${SECTION}."
+            ;;
+    esac
 }
 
 # Default action if script is called without parameters.
@@ -57,13 +77,13 @@ function main() {
         no_param
     else
         case ${1} in
-            help)
+            doc)
                 shift
-                dotfiles_help "${@}"
-            ;;
+                dotfiles_doc "${@}"
+                ;;
             *)
                 invalid_parameter_exit
-            ;;
+                ;;
         esac
     fi
 }

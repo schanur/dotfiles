@@ -8,8 +8,19 @@ function comment_section_count {
     exit 1
 }
 
+# Print the text of a section of a script.
+# The first parameter is the script filename.
+# section number. Currently allowed section numbers:
+# 1) Short description
+# 2) Long description
+# 3) Usage
+function section {
+    local SECTION_NUMBER
+}
+
 function short_description {
-    local SCRIPT_FILE=${1}
+    local SCRIPT_NAME=${1}
+    local SCRIPT_FILENAME="${SCRIPT_NAME}/${1}"
     local THIRD_LINE
     local SHORT_DESCRIPTION
 
