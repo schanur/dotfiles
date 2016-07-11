@@ -13,8 +13,7 @@ INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/help.sh
 source ${INCLUDE_PATH}/require.sh
-
-require_executable parallel
+source ${INCLUDE_PATH}/parallel.sh
 
 function git_fetch_repo_cmd {
     local GIT_REPO_PATH=${1}
