@@ -24,7 +24,7 @@ function short_description {
     local THIRD_LINE
     local SHORT_DESCRIPTION
 
-    THIRD_LINE=$(cat ${SCRIPT_FILE} |head -n 3 |tail -n 1)
+    THIRD_LINE=$(cat ${SCRIPT_NAME} |head -n 3 |tail -n 1)
     if [ "${THIRD_LINE:0:2}" = "# " ]; then
         SHORT_DESCRIPTION=${THIRD_LINE:2}
     else
