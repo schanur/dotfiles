@@ -29,15 +29,16 @@ function git_fetch_all_repos {
     local NEWLINE=$'\n'
 
     for GIT_REPO_PATH in ${GIT_REPO_PATH_LIST}; do
-        GIT_FETCH_CMD_LIST="${GIT_FETCH_CMD_LIST}$(git_fetch_repo_cmd ${GIT_REPO_PATH})
+        GIT_FETCH_CMD_LIST="${GIT_FETCH_CMD_LIST}\"$(git_fetch_repo_cmd ${GIT_REPO_PATH})\"
 "
     done
     # echo "${GIT_FETCH_CMD_LIST}" |parallel -j 8
-    parallel -j 8 -- "${GIT_FETCH_CMD_LIST}"
+    echo "${GIT_FETCH_CMD_LIST}" |parallel_exec
 }
 
 function main {
     local GIT_REPO_PATH_LIST="${1}"
+    set_parallel_jobs 8
     git_fetch_all_repos "${GIT_REPO_PATH_LIST}"
 }
 

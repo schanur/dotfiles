@@ -13,14 +13,12 @@ function find_parallel_tool {
 
 function run_non_parallel {
     while read CMD; do
-        printf "${CMD}"
+        echo "${CMD}"
     done
 }
 
 function parallel_xjobs {
-    while read CMD; do
-        printf "${CMD}"
-    done
+   cat | xjobs -v 2 -j ${GL_CPU_CORE_COUNT} -- sh -c
 }
 
 function parallel_gnu_parallel {
@@ -33,8 +31,13 @@ function parallel_init {
     find_parallel_tool
 }
 
+function set_parallel_jobs {
+    local GL_CPU_CORE_COUNT=${1}
+    GL_CPU_CORE_COUNT=GL_CPU_CORE_COUNT
+}
+
 function parallel_exec {
-    cat | GL_PARALLEL_TOOL_FUNC
+    cat | ${GL_PARALLEL_TOOL_FUNC}
 }
 
 parallel_init
