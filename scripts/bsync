@@ -2,6 +2,8 @@
 
 # Backup sync: Use rsync over SSH with default options for backups.
 
+#
+
 # We use the following rsync options:
 # -a,     --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
 # -X,     --xattrs                preserve extended attributes
