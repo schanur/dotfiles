@@ -173,10 +173,12 @@ libclang-dev \
 libcrypto++-dev \
 libglib2.0-doc \
 libgraphviz-dev \
+liblz4-dev \
 libpcap-dev \
 libsdl2-dev \
+libtinyxml-dev \
 lldb \
-lua5.2
+lua5.2 \
 make \
 meld \
 pry \
