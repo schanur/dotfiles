@@ -2,7 +2,7 @@
 
 # Backup sync: Use rsync over SSH with default options for backups.
 
-#
+# Test
 
 # We use the following rsync options:
 # -a,     --archive               archive mode; equals -rlptgoD (no -H,-A,-X)

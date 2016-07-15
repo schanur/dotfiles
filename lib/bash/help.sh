@@ -1,75 +1,55 @@
 
+declare -a GL_SECTION_POS_START
+declare -a GL_SECTION_POS_END
+GL_SECTION_CNT=0;
+
+
 function script_name {
     echo $(basename ${0})
 }
 
-function comment_section_count {
-    echo "Not implemented"
-    exit 1
-}
-
 function clear_section_positions {
-    true
+    local I
+
+    for (( I=1 ; I<=5 ; I++ )); do
+        true
+        GL_SECTION_POS_START[${I}]=0
+        GL_SECTION_POS_END[${I}]=0
+    done
 }
 
 function parse_section_positions {
     local SCRIPT_NAME=${1}
     local EMPTY_LINE
     local IN_SECTION=0
-    local LINE_NO
+    local LINE_NO=1
 
-    LINE_NO=0
-    echo "${SCRIPT_NAME}"
+    clear_section_positions
     while read LINE; do
-        echo -n "${LINE_NO}: ${LINE}"
-        if [ ${#LINE} -eq 0 ]; then
-            echo -n "1"
-            EMPTY_LINE=1
-        elif [ "${LINE:0:1}" = " " ]; then
-            echo -n "2"
-            EMPTY_LINE=1
-        elif [ "${LINE:0:1}" = "#" ]; then
-            echo -n "3"
-            EMPTY_LINE=0
-        elif [ ${IN_SECTION} -eq 1 ]; then
-            echo "Parse error in line ${LINE_NO}. Abort"
-            exit 1
+        if   [ ${#LINE}      -eq  0  ]; then EMPTY_LINE=1
+        elif [ "${LINE:0:1}" =   " " ]; then EMPTY_LINE=1
+        elif [ "${LINE:0:1}" =   "#" ]; then EMPTY_LINE=0
+        elif [ ${IN_SECTION} -eq  1  ]; then echo "Parse error in line ${LINE_NO}. Abort"; exit 1
+        else break # First script command. Stop section parsing.
         fi
         if [ ${EMPTY_LINE} -eq 1 ]; then
-            if [ ${IN_SECTION} -eq 1 ]; then
-                # Last section got closed.
-                IN_SECTION=0
-                echo -n "a"
-            else
-                # Another empty line. Do nothing
-                true
-                echo -n "b"
+            if [ ${IN_SECTION} -eq 1 ]; then IN_SECTION=0 # Last section got closed.
+            else true # Another empty line. Do nothing
             fi
         else
-            if [ ${IN_SECTION} -eq 1 ]; then
-                # Current section is at least one line longer.
-                GL_SECTION_POS_END[${GL_SECTION_CNT}]=${LINE_NO}
-                echo -n "c"
+            if [ ${IN_SECTION} -eq 1 ]; then GL_SECTION_POS_END[${GL_SECTION_CNT}]=${LINE_NO} # Current section is at least one line longer.
             else
-                 echo "###"
                 # New section started.
-                (( GL_SECTION_CNT++ ))
+                IN_SECTION=1
+                (( GL_SECTION_CNT+=1 ))
                 GL_SECTION_POS_START[${GL_SECTION_CNT}]=${LINE_NO}
-                echo -n "d"
+                GL_SECTION_POS_END[${GL_SECTION_CNT}]=${LINE_NO}
             fi
         fi
-        echo
         (( LINE_NO++ ))
     done <${SCRIPT_NAME}
-    if [ ${IN_SECTION} -eq 1 ]; then
-        echo "Parse error in line ${LINE_NO}. Still in section. Abort"
+    if [ ${IN_SECTION} -eq 1 ]; then echo "Parse error in line ${LINE_NO}. Still in section. Abort"; exit 1
     fi
-    exit 1
-    echo "Number of sections: ${GL_SECTION_CNT}"
-    for (( I=1 ; I<=${GL_SECTION_CNT} ; I++ )); do
-        true
-        # echo "Start: ${GL_SECTION_POS_START[${I}]} End: ${GL_SECTION_POS_END[${I}]}"
-    done
 }
 
 # Print the text of a section of a script. The first parameter is the
@@ -79,37 +59,46 @@ function parse_section_positions {
 # 2) Short description
 # 3) Long description
 # 4) Usage
-function section {
+function print_section {
+    local SCRIPT_NAME=${1}
     local SECTION_NUMBER=${2}
+    local SECTION_LENGTH
+
+    # echo ${GL_SECTION_POS_START[${SECTION_NUMBER}]}
+    # echo ${GL_SECTION_POS_END[${SECTION_NUMBER}]}
+    SECTION_LENGTH=$(expr ${GL_SECTION_POS_END[${SECTION_NUMBER}]} - ${GL_SECTION_POS_START[${SECTION_NUMBER}]} + 1)
+    # echo ${SECTION_LENGTH}
+
+    cat ${SCRIPT_NAME} |tail -n +${GL_SECTION_POS_START[${SECTION_NUMBER}]} |head -n ${SECTION_LENGTH} |sed -e 's/^#\ //g'
+}
+
+
+function shebang {
+    local SCRIPT_NAME=${1}
+
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 1
 }
 
 function short_description {
     local SCRIPT_NAME=${1}
-    local THIRD_LINE
-    local SHORT_DESCRIPTION
 
     parse_section_positions ${SCRIPT_NAME}
-    exit 1
-
-    THIRD_LINE=$(cat ${SCRIPT_NAME} |head -n 3 |tail -n 1)
-    if [ "${THIRD_LINE:0:2}" = "# " ]; then
-        SHORT_DESCRIPTION=${THIRD_LINE:2}
-    else
-        # SHORT_DESCRIPTION=${THIRD_LINE:2}
-        SHORT_DESCRIPTION="No description available"
-    fi
-
-    echo ${SHORT_DESCRIPTION}
+    print_section ${SCRIPT_NAME} 2
 }
 
 function long_description {
-    true
-    # local
+    local SCRIPT_NAME=${1}
+
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 3
 }
 
 function usage {
-    echo "Not implemented"
-    exit 1
+    local SCRIPT_NAME=${1}
+
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 4
 }
 
 # Print the help section of a script, consisting of the script name,
@@ -150,8 +139,5 @@ function invalid_parameter_exit {
     exit 64
 }
 
-declare -a GL_SECTION_POS_START
-declare -a GL_SECTION_POS_END
-GL_SECTION_CNT=0;
 
 parse_help_parameter "${@}"
