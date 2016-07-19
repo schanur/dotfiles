@@ -10,3 +10,23 @@ function require_executable {
         exit 1
     fi
 }
+
+function require_file {
+    local FILENAME=${1}
+
+    if [ ! -f ${FILENAME} ]; then
+        echo "File not found: ${FILENAME}"
+        echo "Abort!"
+        exit 1
+    fi
+}
+
+function require_sybolic_link {
+    local LINK_NAME=${1}
+
+    if [ ! -h ${LINK_NAME} ]; then
+        echo "Symbolic link not found: ${LINKNAME}"
+        echo "Abort!"
+        exit 1
+    fi
+}

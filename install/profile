@@ -1,11 +1,14 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
+# Link .bashrc to provided bashrc config file of this repository.
 
+
+set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/link.sh
 
 function link_dot_profile_to_repo() {
     local HOME_PATH="~"
