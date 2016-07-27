@@ -17,20 +17,50 @@ EMU_BINARY="/usr/bin/qemu-system-x86_64"
 
 function start_vm {
     local HD_IMAGE=${1}
-    # local PARAMS=${2}
     local EXIT_STATUS
     local CMD
 
+    local ARGS=""
+    local NIC_MODEL=""
+    local GPU_MODEL="-vga qxl"
+    local CPU_MODEL="-cpu host"
+    local MACHINE_TYPE="-machine type=pc-i440fx-2.1,accel=kvm"
+    local ENABLE_KVM="-enable-kvm"
+
+    if [ ${#} -ge 2 ]; then
+        shift
+        ARGS=${*}
+    fi
+    if [[ ${HD_IMAGE} =~ "Reactos" ]]; then
+        NIC_MODEL="model=ne2k_pci,"
+    fi
+    if [[ ${HD_IMAGE} =~ "reactos" ]]; then
+        NIC_MODEL="model=ne2k_pci,"
+    fi
+    GPU_MODEL=""
+    CPU_MODEL="-cpu kvm64,+nx"
+    ENABLE_KVM=""
+    MACHINE_TYPE=""
+    # ARGS="${ARGS} -net user,smb=/media/sshfs_usb1/software/windows \
+    #               -net nic,model=virtio"
+
+
     CMD="eatmydata                           \
         ${EMU_BINARY}                        \
-        -smp 2 -cpu host -enable-kvm         \
-        -m 1024                              \
-        -vga qxl                             \
+        -smp 2,sockets=1,cores=2,threads=1   \
+        ${CPU_MODEL}                         \
+        ${ENABLE_KVM}                        \
+        -m 2048                              \
+        ${GPU_MODEL}                         \
+        ${MACHINE_TYPE}                      \
         -no-fd-bootchk -no-acpi              \
         -drive file=${HD_IMAGE},cache=unsafe \
-        -boot c                              \
-        -net nic,vlan=0 -net user,vlan=0     \
-        -name \"$(basename ${HD_IMAGE})\""
+        -boot once=d                         \
+        -net nic,${NIC_MODEL}vlan=0          \
+        -net user,vlan=0                     \
+        -name \"$(basename ${HD_IMAGE})\"    \
+        ${ARGS}"
+
     echo ${CMD}
     ${CMD}
     EXIT_STATUS=${?}
@@ -38,7 +68,7 @@ function start_vm {
 }
 
 function main {
-    if [ "${#}" -eq "1" ]; then
+    if [ ${#} -ge 1 ]; then
         start_vm "${@}"
         exit EXIT_STATUS=$?
     else
