@@ -65,6 +65,7 @@ printer-driver-all \
 p7zip-rar \
 rsync \
 rzip \
+samba \
 slurm \
 sysstat \
 unace \
