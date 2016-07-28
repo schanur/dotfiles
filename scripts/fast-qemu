@@ -37,9 +37,9 @@ function start_vm {
     if [[ ${HD_IMAGE} =~ "reactos" ]]; then
         NIC_MODEL="model=ne2k_pci,"
     fi
-    GPU_MODEL=""
-    CPU_MODEL="-cpu kvm64,+nx"
-    ENABLE_KVM=""
+    # GPU_MODEL=""
+    # CPU_MODEL="-cpu kvm64,+nx"
+    # ENABLE_KVM=""
     MACHINE_TYPE=""
     # ARGS="${ARGS} -net user,smb=/media/sshfs_usb1/software/windows \
     #               -net nic,model=virtio"
@@ -53,7 +53,7 @@ function start_vm {
         -m 2048                              \
         ${GPU_MODEL}                         \
         ${MACHINE_TYPE}                      \
-        -no-fd-bootchk -no-acpi              \
+        -no-fd-bootchk                       \
         -drive file=${HD_IMAGE},cache=unsafe \
         -boot once=d                         \
         -net nic,${NIC_MODEL}vlan=0          \
