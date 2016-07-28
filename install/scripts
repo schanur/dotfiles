@@ -10,17 +10,17 @@ INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/path_variable.sh
 
-function link_dot_tmux_to_repo() {
-    local HOME_PATH="~"
-    local REPO_PATH=${SCRIPT_PATH}/../tmux
-    local CMD="ln -s -r ${SCRIPT_PATH}/../tmux/tmux.conf .tmux.conf"
+# function link_dot_tmux_to_repo() {
+#     local HOME_PATH="~"
+#     local REPO_PATH=${SCRIPT_PATH}/../tmux
+#     local CMD="ln -s -r ${SCRIPT_PATH}/../tmux/tmux.conf .tmux.conf"
 
-    echo ${CMD}
-    ${CMD}
-}
+#     echo ${CMD}
+#     ${CMD}
+# }
 
-function main() {
-    link_dot_tmux_to_repo
-}
+# function main() {
+#     link_dot_tmux_to_repo
+# }
 
-main
+# main

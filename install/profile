@@ -8,6 +8,7 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
+source ${INCLUDE_PATH}/help.sh
 source ${INCLUDE_PATH}/link.sh
 
 function link_dot_profile_to_repo() {
@@ -20,7 +21,10 @@ function link_dot_profile_to_repo() {
 }
 
 function main() {
-    link_dot_profile_to_repo
+    local LINK_FILEAME_RELATIVE_TO_HOME=".profile"
+    local DOTFILES_FILENAME="${SCRIPT_PATH}/../profile/profile"
+
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}
 }
 
 main

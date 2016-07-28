@@ -1,11 +1,13 @@
 
+source ${INCLUDE_PATH}/debug.sh
+
 # Returns 1 if the file given as parameter sets the PATH variable. 0
 # otherwise.
 function file_sets_path_variable {
     FILENAME=${1}
 
     if [ -r "${FILENAME}" ]; then
-        if
+	stack_trace
     else
         echo "File does not exist. Abort!"
         exit 1

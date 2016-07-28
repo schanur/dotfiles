@@ -1,12 +1,7 @@
 
-if [ ! -d ".emace.s/.git" ]; then
-    echo "git clone emacs config"
-    if [ -d ".emacs.d" ]; then
-        echo "  Backup .emacs folder"
-        mv .emacs.d .emacs.d.pre-auto-install-script
-    fi
-    ln -s local/dev/emacs.d .emacs.d
-fi
+source ${INCLUDE_PATH}/date.sh
+source ${INCLUDE_PATH}/require.sh
+
 
 # Print link target to stdout.
 function link_target {
@@ -23,19 +18,14 @@ function link_target {
 function backup_config_and_create_link {
     local LINK_TARGET=${1}
     local LINK_NAME=${2}
-    local BACKUP_NAME=${LINK_NAME}.dotfiles_backup
+    local BACKUP_NAME=${LINK_NAME}.dotfiles_backup.$(timestamp)
 
     require_file ${LINK_TARGET}
     if [ -e ${LINK_NAME} ]; then
-
-        echo "  Backup ${LINK_NAME} -> ${CONFIG_BACKUP_NAME}"
+        echo "Backup ${LINK_NAME} -> ${BACKUP_NAME}"
         mv ${LINK_NAME} ${BACKUP_NAME}
     fi
-    ln -s -r ${LINK_TARGET} ${LINK_NAME}
-
-    local REPO_PATH=${SCRIPT_PATH}/../tmux
-    local CMD="ln -s -r ${SCRIPT_PATH}/../profile/profile .profile"
-
+    local CMD="ln -s -r ${LINK_TARGET} ${LINK_NAME}"
     echo ${CMD}
     ${CMD}
 }
@@ -49,5 +39,5 @@ function backup_user_config_and_create_dotfiles_link {
     local ABSOLUTE_LINK_TARGET=${LINK_TARGET}
     local ABSOLUTE_LINK_NAME=${HOME}/${LINK_NAME}
 
-    backup_config_and_create_link
+    backup_config_and_create_link ${ABSOLUTE_LINK_TARGET} ${ABSOLUTE_LINK_NAME}
 }
