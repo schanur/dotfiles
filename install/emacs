@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+source ${INCLUDE_PATH}/link.sh
+source ${INCLUDE_PATH}/config.sh
+
+
+function main() {
+    local LINK_FILENAME_RELATIVE_TO_HOME=".emacs.d"
+    # 'FIXME: Load emacs path from config file.
+    local EMACS_PATH="${HOME}/local/dev/all/emacs.d"
+
+    if [ ! -d ${EMACS_PATH} ]; then
+        echo "No Emacs configuration found. Skip installation"
+        exit 0
+    fi
+
+    backup_user_config_and_create_dotfiles_link ${EMACS_PATH} ${LINK_FILENAME_RELATIVE_TO_HOME}
+}
+
+main
