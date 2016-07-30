@@ -10,7 +10,7 @@ function require_executable {
     which ${EXECUTABLE_NAME} > /dev/null 2>/dev/null || EXECUTABLE_FOUND=0
     if [ ${EXECUTABLE_FOUND} -ne 1 ]; then
         echo "${EXECUTABLE_NAME} not found. Abort!"
-	stack_trace
+        stack_trace
         exit 1
     fi
 }
@@ -21,7 +21,7 @@ function require_file {
     if [ ! -f ${FILENAME} ]; then
         echo "File not found: ${FILENAME}"
         echo "Abort!"
-	stack_trace
+        stack_trace
         exit 1
     fi
 }
@@ -32,7 +32,7 @@ function require_file_or_directory {
     if [ ! -f ${FILENAME} && ! -d ${FILENAME} ]; then
         echo "File not found: ${FILENAME}"
         echo "Abort!"
-	stack_trace
+        stack_trace
         exit 1
     fi
 }

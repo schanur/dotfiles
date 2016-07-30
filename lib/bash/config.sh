@@ -55,11 +55,11 @@ function absolute_config_file {
     local ABSOLUTE_CONFIG_FILENAME
 
     if [ $(profile_config_file_exists) ]; then
-	true
+        true
     elif [ $(global_config_file_exists) ]; then
         true
     else
-	true
+        true
     fi
 }
 
