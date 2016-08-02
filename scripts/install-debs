@@ -86,6 +86,7 @@ zsh \
 "
 
 PACKAGE_LIST_X11="\
+dunst \
 evince \
 filezilla \
 file-roller \
@@ -94,6 +95,8 @@ gedit-plugins \
 gksu \
 gnome-commander \
 i3 \
+i3-lock \
+i3-status \
 icedove \
 mesa-utils \
 mesa-utils-extra \
