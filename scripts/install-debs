@@ -139,6 +139,7 @@ docker-swarm \
 lxc \
 packer \
 qemu \
+schroot \
 vde2 \
 virtinst \
 virtualbricks \
