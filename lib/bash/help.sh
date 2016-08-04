@@ -1,37 +1,138 @@
 
+declare -a GL_SECTION_POS_START
+declare -a GL_SECTION_POS_END
+GL_SECTION_CNT=0
+PARSED=0
+
 function script_name {
     echo $(basename ${0})
 }
 
-function comment_section_count {
-    echo "Not implemented"
-    exit 1
+function clear_section_positions {
+    local I
+
+    for (( I=1 ; I<=5 ; I++ )); do
+        GL_SECTION_POS_START[${I}]=0
+        GL_SECTION_POS_END[${I}]=0
+    done
+}
+
+function parse_section_positions {
+    if [ ${PARSED} = "1" ]; then
+        return
+    fi
+    local SCRIPT_NAME=${1}
+    local EMPTY_LINE
+    local IN_SECTION=0
+    local LINE_NO=1
+
+    clear_section_positions
+    while read LINE; do
+        if   [ ${#LINE}      -eq  0  ]; then EMPTY_LINE=1
+        elif [ "${LINE:0:1}" =   " " ]; then EMPTY_LINE=1
+        elif [ "${LINE:0:1}" =   "#" ]; then EMPTY_LINE=0
+        elif [ ${IN_SECTION} -eq  1  ]; then echo "Parse error in line ${LINE_NO}. Abort"; exit 1
+        else break # First script command. Stop section parsing.
+        fi
+        if [ ${EMPTY_LINE} -eq 1 ]; then
+            if [ ${IN_SECTION} -eq 1 ]; then IN_SECTION=0 # Last section got closed.
+            else true # Another empty line. Do nothing
+            fi
+        else
+            if [ ${IN_SECTION} -eq 1 ]; then GL_SECTION_POS_END[${GL_SECTION_CNT}]=${LINE_NO} # Current section is at least one line longer.
+            else
+                # New section started.
+                IN_SECTION=1
+                (( GL_SECTION_CNT+=1 ))
+                GL_SECTION_POS_START[${GL_SECTION_CNT}]=${LINE_NO}
+                GL_SECTION_POS_END[${GL_SECTION_CNT}]=${LINE_NO}
+            fi
+        fi
+        (( LINE_NO++ ))
+    done <${SCRIPT_NAME}
+    if [ ${IN_SECTION} -eq 1 ]; then echo "Parse error in line ${LINE_NO}. Still in section. Abort"; exit 1
+    fi
+    PARSED=1
+}
+
+function print_section_positions {
+    local I
+
+    echo ${GL_SECTION_CNT}
+    for (( I=1 ; I<=5 ; I++ )); do
+        echo "${I}: ${GL_SECTION_POS_START[${I}]} ${GL_SECTION_POS_END[${I}]}"
+    done
+}
+
+# Print the text of a section of a script. The first parameter is the
+# script filename. The second one is the section number.
+# Currently allowed section numbers:
+# 1) Shebang
+# 2) Short description
+# 3) Long description
+# 4) Usage
+function print_section {
+    local SCRIPT_NAME=${1}
+    local SECTION_NUMBER=${2}
+    local SECTION_LENGTH=$(expr ${GL_SECTION_POS_END[${SECTION_NUMBER}]} - ${GL_SECTION_POS_START[${SECTION_NUMBER}]} + 1)
+
+    cat ${SCRIPT_NAME} |tail -n +${GL_SECTION_POS_START[${SECTION_NUMBER}]} |head -n ${SECTION_LENGTH} |sed -e 's/^#\ //g' | sed -e 's/^#//g'
+}
+
+
+function shebang {
+    local SCRIPT_NAME=${1}
+
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 1
 }
 
 function short_description {
-    local SCRIPT_FILE=${1}
-    local THIRD_LINE
-    local SHORT_DESCRIPTION
+    local SCRIPT_NAME=${1}
 
-    THIRD_LINE=$(cat ${SCRIPT_FILE} |head -n 3 |tail -n 1)
-    if [ "${THIRD_LINE:0:2}" = "# " ]; then
-        SHORT_DESCRIPTION=${THIRD_LINE:2}
-    else
-        # SHORT_DESCRIPTION=${THIRD_LINE:2}
-        SHORT_DESCRIPTION="No description available"
-    fi
-
-    echo ${SHORT_DESCRIPTION}
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 2
 }
 
 function long_description {
-    true
-    # local
+    local SCRIPT_NAME=${1}
+
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 3
 }
 
 function usage {
-    echo "Not implemented"
-    exit 1
+    local SCRIPT_NAME=${1}
+
+    parse_section_positions ${SCRIPT_NAME}
+    print_section ${SCRIPT_NAME} 4
+}
+
+function has_short_description {
+    local SECTION_EXISTS=0
+    if [ ${GL_SECTION_CNT} -ge 2 ]; then
+        SECTION_EXISTS=1
+    fi
+
+    echo ${SECTION_EXISTS}
+}
+
+function has_long_description {
+    local SECTION_EXISTS=0
+    if [ ${GL_SECTION_CNT} -ge 3 ]; then
+        SECTION_EXISTS=1
+    fi
+
+    echo ${SECTION_EXISTS}
+}
+
+function has_usage {
+    local SECTION_EXISTS=0
+    if [ ${GL_SECTION_CNT} -ge 4 ]; then
+        SECTION_EXISTS=1
+    fi
+
+    echo ${SECTION_EXISTS}
 }
 
 # Print the help section of a script, consisting of the script name,
@@ -39,11 +140,20 @@ function usage {
 function help {
     local SCRIPT_NAME="$(script_name)"
 
+    parse_section_positions ${SCRIPT_NAME}
     echo ${SCRIPT_NAME}
-    echo
-    echo $(short_description ${SCRIPT_FILENAME})
-    echo
-    echo $(long_description ${SCRIPT_FILENAME})
+    if [ $(has_short_description) = "1" ]; then
+        echo
+        short_description ${SCRIPT_FILENAME}
+    fi
+    if [ $(has_long_description) = "1" ]; then
+        echo
+        long_description ${SCRIPT_FILENAME}
+    fi
+    if [ $(has_usage) = "1" ]; then
+        echo
+        usage ${SCRIPT_FILENAME}
+    fi
 }
 
 # If the first parameter is "--help" or "-h", print the help to stdout

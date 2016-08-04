@@ -2,6 +2,8 @@
 
 # Backup sync: Use rsync over SSH with default options for backups.
 
+# Test
+
 # We use the following rsync options:
 # -a,     --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
 # -X,     --xattrs                preserve extended attributes
@@ -40,7 +42,8 @@ function rsync_cmd {
 function main {
     if [ "${#}" -eq "2" ]; then
         rsync_cmd "${@}"
-        exit EXIT_STATUS=$?
+        EXIT_STATUS=$?
+        exit ${EXIT_STATUS}
     else
         invalid_parameter_exit
     fi

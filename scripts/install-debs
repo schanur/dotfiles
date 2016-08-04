@@ -50,6 +50,7 @@ libreoffice \
 lynx \
 lzip \
 mc \
+memtest86+ \
 moc \
 moreutils
 mps-youtube \
@@ -64,6 +65,7 @@ printer-driver-all \
 p7zip-rar \
 rsync \
 rzip \
+samba \
 slurm \
 sysstat \
 unace \
@@ -75,6 +77,7 @@ thin-provisioning-tools \
 tmux \
 vim \
 wordnet \
+xjobs \
 xloadimage \
 xz-utils \
 youtube-dl \
@@ -83,6 +86,7 @@ zsh \
 "
 
 PACKAGE_LIST_X11="\
+dunst \
 evince \
 filezilla \
 file-roller \
@@ -91,6 +95,8 @@ gedit-plugins \
 gksu \
 gnome-commander \
 i3 \
+i3-lock \
+i3-status \
 icedove \
 mesa-utils \
 mesa-utils-extra \
@@ -136,6 +142,7 @@ docker-swarm \
 lxc \
 packer \
 qemu \
+schroot \
 vde2 \
 virtinst \
 virtualbricks \
@@ -171,10 +178,12 @@ libclang-dev \
 libcrypto++-dev \
 libglib2.0-doc \
 libgraphviz-dev \
+liblz4-dev \
 libpcap-dev \
 libsdl2-dev \
+libtinyxml-dev \
 lldb \
-lua5.2
+lua5.2 \
 make \
 meld \
 pry \
@@ -213,6 +222,11 @@ openmpi-doc \
 qt5-doc \
 "
 
+PACKAGE_LIST_DEV_GPU="\
+clinfo \
+"
+# opencl-icd virtual package
+
 PACKAGE_LIST_NONFREE="\
 firmware-iwlwifi \
 firmware-linux \
@@ -235,7 +249,8 @@ apt-get install                        \
 apt-get install                        \
         ${PACKAGE_LIST_NONFREE}        \
         ${PACKAGE_LIST_X11_MULTIMEDIA} \
-        ${PACKAGE_LIST_VIRT}
+        ${PACKAGE_LIST_VIRT}           \
+        ${PACKAGE_LIST_DEV_GPU}
 
 # Check for inclusion:
 # logtail
@@ -245,6 +260,8 @@ apt-get install                        \
 # ssh-askpass rssh molly-guard ufw monkeysphere
 # resolvconf dnsmasq
 
+# Parallel processing:
+# mdm parafly parallel startpar xjobs
 
 # TODO:
 # Reset linux-firmware-free to autoset

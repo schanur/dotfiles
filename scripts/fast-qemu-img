@@ -31,7 +31,8 @@ function create_qcow2_image_file {
 function main {
     if [ "${#}" -eq "2" ]; then
         create_qcow2_image_file "${@}"
-        exit EXIT_STATUS=$?
+        EXIT_STATUS=$?
+        exit ${EXIT_STATUS}
     else
         invalid_parameter_exit
     fi

@@ -1,9 +1,25 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
+# Link .bashrc to provided bashrc config file of this repository.
 
+
+set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+source ${INCLUDE_PATH}/link.sh
+
+function main() {
+    local LINK_FILEAME_RELATIVE_TO_HOME=".bashrc"
+    local DOTFILES_FILENAME="${SCRIPT_PATH}/../bash/bashrc"
+
+    echo ${LINK_FILEAME_RELATIVE_TO_HOME}
+    echo ${DOTFILES_FILENAME}
+    exit 1
+
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}
+}
+
+main
