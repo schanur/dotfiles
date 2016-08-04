@@ -5,4 +5,3 @@
 PROXY_HOST=${1}
 
 ssh -f -N -D 8119 ${PROXY_HOST}
-git-tunnelgit-tunnel
