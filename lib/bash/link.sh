@@ -3,6 +3,10 @@ source ${INCLUDE_PATH}/date.sh
 source ${INCLUDE_PATH}/require.sh
 
 
+function ln_support_relative_linking {
+    (ln --help |grep "\-r" || true) |wc -l
+}
+
 # Print link target to stdout.
 function link_target {
     local LINK_NAME=${1}
@@ -25,7 +29,7 @@ function backup_config_and_create_link {
         echo "Backup ${LINK_NAME} -> ${BACKUP_NAME}"
         mv ${LINK_NAME} ${BACKUP_NAME}
     fi
-    local CMD="ln -s -r ${LINK_TARGET} ${LINK_NAME}"
+    local CMD="ln -s ${GL_RELATIVE_LINKING_SWITCH} ${LINK_TARGET} ${LINK_NAME}"
     echo ${CMD}
     ${CMD}
 }
@@ -41,3 +45,9 @@ function backup_user_config_and_create_dotfiles_link {
 
     backup_config_and_create_link ${ABSOLUTE_LINK_TARGET} ${ABSOLUTE_LINK_NAME}
 }
+
+if [ $(ln_support_relative_linking) = "1" ]; then
+    GL_RELATIVE_LINKING_SWITCH="-r"
+else
+    GL_RELATIVE_LINKING_SWITCH=""
+fi
