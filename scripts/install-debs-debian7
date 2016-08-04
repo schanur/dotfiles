@@ -1,0 +1,232 @@
+#!/bin/bash
+
+# Install a predefined set of packages.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+source ${INCLUDE_PATH}/script-su.sh
+
+
+run_as_root
+
+PACKAGE_LIST_EARLY_1="\
+git \
+"
+
+PACKAGE_LIST_EARLY_2="\
+eatmydata \
+etckeeper \
+"
+
+PACKAGE_LIST="\
+alsa-utils \
+apparmor \
+apparmor-docs \
+apparmor-notify \
+apparmor-profiles \
+apparmor-utils \
+aptitude \
+arj \
+beep \
+cclive \
+colortest \
+conntrack \
+cups \
+emacs \
+exfat-utils \
+gddrescue \
+highlight \
+imagemagick \
+lhasa \
+libreoffice \
+lynx \
+lzip \
+mc \
+moc \
+moreutils
+ncompress \
+network-manager \
+nfs-common \
+nmap \
+openssh-server \
+pandoc \
+powertop \
+printer-driver-all \
+rsync \
+rzip \
+slurm \
+sysstat \
+unace \
+unalz \
+smartmontools \
+smbclient \
+sshfs \
+tmux \
+vim \
+wordnet \
+xloadimage \
+xz-utils \
+zoo \
+zsh \
+"
+
+PACKAGE_LIST_X11="\
+evince \
+filezilla \
+file-roller \
+gedit \
+gedit-plugins \
+gksu \
+gnome-commander \
+i3 \
+icedove \
+mesa-utils \
+mirage \
+mupdf \
+mupdf-tools \
+network-manager-gnome \
+network-manager-openconnect-gnome \
+network-manager-openvpn-gnome \
+network-manager-vpnc-gnome \
+network-manager-pptp-gnome \
+rxvt-unicode-256color \
+system-config-printer \
+wdm \
+xfonts-terminus \
+xserver-xorg \
+xterm \
+xtrlock \
+"
+
+PACKAGE_LIST_X11_MULTIMEDIA="\
+banshee \
+brasero \
+clementine \
+gimp \
+gmusicbrowser \
+gpodder \
+grilo-plugins-0.3 \
+handbrake \
+knowthelist \
+mplayer \
+musique \
+rhythmbox \
+sxiv \
+vlc \
+"
+
+PACKAGE_LIST_VIRT="\
+aqemu \
+docker-compose \
+docker-registry \
+docker-swarm \
+lxc \
+packer \
+qemu \
+vde2 \
+virtinst \
+virtualbricks \
+virt-goodies \
+virt-manager \
+virt-top \
+vmdebootstrap \
+xmount \
+"
+
+PACKAGE_LIST_DEV="\
+bashdb \
+bison \
+bundler \
+check \
+clang \
+cmake \
+ddd \
+doxygen \
+doxygen-gui \
+ffmpeg-doc \
+flex \
+gcc \
+gdb \
+gitg \
+gitk \
+git-cola \
+git-extras \
+global \
+graphviz \
+g++ \
+libclang-dev \
+libcrypto++-dev \
+libglib2.0-doc \
+libgraphviz-dev \
+libpcap-dev \
+lua5.2
+make \
+meld \
+python3 \
+rake \
+ruby-method-source \
+swig \
+valgrind \
+zshdb \
+"
+
+PACKAGE_LIST_DEV_DOC="\
+aspell-doc \
+debian-handbook \
+doxygen-doc \
+erlang-manpages \
+giggle \
+giggle-personal-details-plugin \
+giggle-terminal-view-plugin \
+git-doc \
+git-man \
+glibc-doc \
+graphviz-doc \
+libvirt-doc \
+manpages \
+manpages-dev \
+mplayer-doc \
+ncurses-doc \
+openmpi-doc \
+"
+
+PACKAGE_LIST_NONFREE="\
+firmware-iwlwifi \
+firmware-linux \
+"
+
+apt-get install ${PACKAGE_LIST_EARLY_1}
+
+git config --global user.email "root@localhost"
+git config --global user.name  "root"
+
+apt-get install ${PACKAGE_LIST_EARLY_2}
+
+# eatmydata
+apt-get install                        \
+        ${PACKAGE_LIST}                \
+        ${PACKAGE_LIST_X11}            \
+        ${PACKAGE_LIST_DEV}            \
+        ${PACKAGE_LIST_DEV_DOC}
+
+apt-get install                        \
+        ${PACKAGE_LIST_NONFREE}        \
+        ${PACKAGE_LIST_X11_MULTIMEDIA} \
+        ${PACKAGE_LIST_VIRT}
+
+# Check for inclusion:
+# logtail
+# pavumeter pavucontrol paman paprefs
+# gsmartcontrol
+# cmdtest
+# ssh-askpass rssh molly-guard ufw monkeysphere
+# resolvconf dnsmasq
+
+
+# TODO:
+# Reset linux-firmware-free to autoset
