@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+
+#
+# git config --global core.gitproxy ~/bin/git-proxy-wrapper
+# ssh -f -N -D 8119 -p 443 ${SOCKS_SSH_PROXY}
+#
+# Tcsh:
+#
+# setenv GIT_PROXY_COMMAND ~/bin/git-proxy-wrapper
+#
+# Bash:
+#
+# export GIT_PROXY_COMMAND=~/bin/git-proxy-wrapper
+
+
+
+PROXY=localhost
+PORT=8119
+
+exec socat STDIO SOCKS4:${PROXY}:${1}:${2},socksport=${PORT}

@@ -29,7 +29,7 @@ function require_file {
 function require_file_or_directory {
     local FILENAME=${1}
 
-    if [ ! -f ${FILENAME} && ! -d ${FILENAME} ]; then
+    if [[ ! -f ${FILENAME} && ! -d ${FILENAME} ]]; then
         echo "File not found: ${FILENAME}"
         echo "Abort!"
         stack_trace

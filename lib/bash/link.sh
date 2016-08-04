@@ -20,7 +20,7 @@ function backup_config_and_create_link {
     local LINK_NAME=${2}
     local BACKUP_NAME=${LINK_NAME}.dotfiles_backup.$(timestamp)
 
-    require_file ${LINK_TARGET}
+    require_file_or_directory ${LINK_TARGET}
     if [ -e ${LINK_NAME} ]; then
         echo "Backup ${LINK_NAME} -> ${BACKUP_NAME}"
         mv ${LINK_NAME} ${BACKUP_NAME}
