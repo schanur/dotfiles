@@ -110,9 +110,6 @@ clementine \
 gimp \
 gmusicbrowser \
 gpodder \
-grilo-plugins-0.3 \
-handbrake \
-knowthelist \
 mplayer \
 musique \
 rhythmbox \
@@ -122,11 +119,7 @@ vlc \
 
 PACKAGE_LIST_VIRT="\
 aqemu \
-docker-compose \
-docker-registry \
-docker-swarm \
 lxc \
-packer \
 qemu \
 vde2 \
 virtinst \
@@ -134,7 +127,6 @@ virtualbricks \
 virt-goodies \
 virt-manager \
 virt-top \
-vmdebootstrap \
 xmount \
 "
 
@@ -215,7 +207,6 @@ apt-get install                        \
         ${PACKAGE_LIST_DEV_DOC}
 
 apt-get install                        \
-        ${PACKAGE_LIST_NONFREE}        \
         ${PACKAGE_LIST_X11_MULTIMEDIA} \
         ${PACKAGE_LIST_VIRT}
 
