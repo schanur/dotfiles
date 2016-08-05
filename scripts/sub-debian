@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Install a Debian with debootstrap and
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+source ${INCLUDE_PATH}/script-su.sh
+
+
+INSTALL_NAME=${1}
+INSTALL_PATH=${INSTALL_NAME}
+
+CHROOT_USER="ze"
+
+function install_debian_oldstable {
+    if [ ! -f ${INSTALL_PATH}/debootstrap.succ ]; then
+        mkdir -p ${INSTALL_PATH}
+        debootstrap wheezy ${INSTALL_PATH}
+        touch ${INSTALL_PATH}/debootstrap.succ
+    fi
+}
+
+function run_schroot {
+    # schroot --chroot=${INSTALL_PATH}
+    schroot -c ${INSTALL_NAME}
+        # ${CHROOT_USER} \
+        # -o description=sub-debian \
+        # -o directory=${INSTALL_PATH}
+}
+
+function main {
+    install_debian_oldstable
+    run_schroot
+}
+
+main
