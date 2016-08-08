@@ -2,6 +2,6 @@
 
 # Start a SSH Proxy forwarding for the default git protocol port
 
-PROXY_HOST=${1}
+PROXY_HOST=${*}
 
 ssh -f -N -D 8119 ${PROXY_HOST}
