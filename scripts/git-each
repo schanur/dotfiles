@@ -11,9 +11,9 @@ INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 source ${INCLUDE_PATH}/help.sh
 
 
-PARAMS="$*"
+PARAMS="${*}"
 
-if [ ${PARAMS} = "" ]; then
+if [ "${PARAMS}" = "" ]; then
     echo "Error: No arguments."
     exit 1
 fi
