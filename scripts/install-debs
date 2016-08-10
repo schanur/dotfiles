@@ -34,6 +34,7 @@ apparmor-utils \
 aptitude \
 arj \
 beep \
+bridge-utils \
 cclive \
 colortest \
 conntrack \
