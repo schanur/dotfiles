@@ -85,4 +85,4 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="${PATH}:${HOME}/local/dev/public/dotfiles/scripts"
+export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"

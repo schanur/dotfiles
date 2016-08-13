@@ -21,9 +21,12 @@ source ${INCLUDE_PATH}/help.sh
 #
 # export GIT_PROXY_COMMAND=~/bin/git-proxy-wrapper
 
+PARAM_1=${1}
+PARAM_2=${1}
 
 
 PROXY=localhost
 PORT=8119
 
-exec socat STDIO SOCKS4:${PROXY}:${1}:${2},socksport=${PORT}
+
+exec socat STDIO SOCKS4:${PROXY}:${PARAM_1}:${PARAM_2},socksport=${PORT}
