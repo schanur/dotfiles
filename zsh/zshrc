@@ -86,3 +86,7 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"
+
+SHARED_PATH=${HOME}/local/dev/all/dotfiles/shared
+
+source ${SHARED_PATH}/colorized_man_pages.sh
