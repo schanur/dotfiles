@@ -41,7 +41,7 @@ function require_sybolic_link {
     local LINK_NAME=${1}
 
     if [ ! -h ${LINK_NAME} ]; then
-        echo "Symbolic link not found: ${LINKNAME}"
+        echo "Symbolic link not found: ${LINK_NAME}"
         echo "Abort!"
         stack_trace
         exit 1

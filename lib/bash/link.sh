@@ -34,6 +34,29 @@ function backup_config_and_create_link {
     ${CMD}
 }
 
+# Prints "1" if the symbolic link ($1) targets the file/directory
+# $2. "0" otherwise.
+function funtion_links_to_target {
+    local EXPECTED_LINK_TARGET=${1}
+    local LINK_NAME=${2}
+    local RESOLVED_LINK_TARGET
+    local ABS_RESOLVED_LINK_TARGET
+    local FUNCTION_LINKS_TO_TARGET=0
+
+    RESOLVED_LINK_TARGET=$(link_target ${LINK_NAME})
+    echo
+    echo "0 PWD:                  $(pwd)"
+    # ABS_RESOLVED_LINK_TARGET=$(realpath ${RESOLVED_LINK_TARGET})
+    # if [ ${ABS_RESOLVED_LINK_TARGET} = ${EXPECTED_LINK_TARGET} ]; then
+    #     FUNCTION_LINKS_TO_TARGET=1
+    # fi
+    echo "1 EXPECTED_LINK_TARGET: ${EXPECTED_LINK_TARGET}"
+    echo "2 LINK_NAME:            ${LINK_NAME}"
+    echo "3 RESOLVED_LINK_TARGET: ${RESOLVED_LINK_TARGET}"
+    # echo "4 ${ABS_RESOLVED_LINK_TARGET}"
+    echo ${FUNCTION_LINKS_TO_TARGET}
+}
+
 # Does the same as "backup_config_and_create_link" but interpret
 # "§{LINK_TARGET}" relative to dotfiles repository and ${LINK_NAME}
 # relative to the home directory of the user runncing the script.
@@ -42,8 +65,14 @@ function backup_user_config_and_create_dotfiles_link {
     local LINK_NAME=${2}
     local ABSOLUTE_LINK_TARGET=${LINK_TARGET}
     local ABSOLUTE_LINK_NAME=${HOME}/${LINK_NAME}
+    local FUNCTION_LINKS_TO_TARGET
 
-    backup_config_and_create_link ${ABSOLUTE_LINK_TARGET} ${ABSOLUTE_LINK_NAME}
+    funtion_links_to_target ${ABSOLUTE_LINK_TARGET} ${ABSOLUTE_LINK_NAME}
+    # FUNCTION_LINKS_TO_TARGET=funtion_links_to_target ${ABSOLUTE_LINK_TARGET} ${ABSOLUTE_LINK_NAME}
+    echo "##### "
+    # if [ ! ${FUNCTION_LINKS_TO_TARGET} ]
+
+    #backup_config_and_create_link ${ABSOLUTE_LINK_TARGET} ${ABSOLUTE_LINK_NAME}
 }
 
 if [ $(ln_support_relative_linking) = "1" ]; then

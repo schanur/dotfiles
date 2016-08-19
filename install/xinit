@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Link ~/.bashrc to provided bashrc config file of this repository.
+# Link ~/.xinitrc to provided xinitrc config file of this repository.
 
 
 set -o errexit -o nounset -o pipefail
@@ -13,8 +13,8 @@ source ${INCLUDE_PATH}/link.sh
 
 
 function main() {
-    local LINK_FILEAME_RELATIVE_TO_HOME=".bashrc"
-    local DOTFILES_FILENAME="${SCRIPT_PATH}/../bash/bashrc"
+    local LINK_FILEAME_RELATIVE_TO_HOME=".xinitrc"
+    local DOTFILES_FILENAME="${SCRIPT_PATH}/../xinit/xinitrc"
 
     echo ${LINK_FILEAME_RELATIVE_TO_HOME}
     echo ${DOTFILES_FILENAME}
