@@ -16,6 +16,22 @@ function link_target {
     ls -la ${LINK_NAME} |sed -e 's/.*\ ->\ //g'
 }
 
+# Returns the absolute path/filename of a link target. This works no
+# matter the link target is already absolute or relative to the path
+# of the link.
+function absolute_link_target {
+    local LINK_NAME=${1}
+    local LINK_TARGET
+    local ABS_LINK_TARGET
+
+
+    LINK_TARGET=$(link_target)
+    ABS_LINK_TARGET=${LINK_TARGET}
+    if [ $[LINK_TARGET:0:1] != "/" ]; then
+        ABS_LINK_TARGET=$()${ABS_LINK_TARGET}
+    fi
+}
+
 # If file or directory with "${LINK_NAME}" exists, rename it to
 # "${LINK_NAME}.dotfiles_backup". Create a symbolic link with the name
 # "${LINK_NAME}" targeting ""{LINK_TARGET}" afterwards.
@@ -35,7 +51,7 @@ function backup_config_and_create_link {
 }
 
 # Prints "1" if the symbolic link ($1) targets the file/directory
-# $2. "0" otherwise.
+# ($2). "0" otherwise.
 function funtion_links_to_target {
     local EXPECTED_LINK_TARGET=${1}
     local LINK_NAME=${2}
