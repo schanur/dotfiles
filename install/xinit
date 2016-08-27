@@ -16,10 +16,6 @@ function main() {
     local LINK_FILEAME_RELATIVE_TO_HOME=".xinitrc"
     local DOTFILES_FILENAME="${SCRIPT_PATH}/../xinit/xinitrc"
 
-    echo ${LINK_FILEAME_RELATIVE_TO_HOME}
-    echo ${DOTFILES_FILENAME}
-
-
     backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}
 }
 

@@ -1,11 +1,9 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
-
+set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/shared_bash
 
 function install_component() {
     local INSTALL_SCRIPT=${1}
@@ -26,8 +24,14 @@ function install_component() {
 
 function main () {
     local INSTALL_SCRIPT
+    local FIRST_FILE=1;
 
     for INSTALL_SCRIPT in $(find ${SCRIPT_PATH}/install ! -type d); do
+        if [ ${FIRST_FILE} = "1" ]; then
+            FIRST_FILE=0
+        else
+            echo
+        fi
         install_component ${INSTALL_SCRIPT}
     done
 }
