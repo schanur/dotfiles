@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Install and run a Debian 7 LXC environment.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+
+source ${INCLUDE_PATH}/help.sh
+source ${INCLUDE_PATH}/script-su.sh
+
+
+run_as_root
+
+CONTAINER_NAME="debian7"
+INSTALL_PATH="${HOME}/local/vm/lxc"
+ROOTFS_PATH="${INSTALL_PATH}/${CONTAINER_NAME}/rootfs"
+INSTALL_SUCC_FILE="${INSTALL_PATH}/${CONTAINER_NAME}/install.succ"
+SUITE=wheezy
+
+function set_root_password {
+    echo "Set root password"
+    chroot ${ROOTFS_PATH} /bin/bash -c ""
+}
+
+function install {
+    echo "Start installation"
+    mkdir -p ${INSTALL_PATH}
+    LANG=C SUITE=${SUITE} MIRROR=http://httpredir.debian.org/debian lxc-create -n debian7 -t debian --lxcpath=${INSTALL_PATH}
+    if [ ${?} = "0" ]; then
+        set_root_password
+        echo "Success"
+        touch ${INSTALL_SUCC_FILE}
+    fi
+}
+
+function is_installed {
+    local IS_INSTALLED=0
+    if [ -d "${INSTALL_PATH}" ]; then
+        if [ -f "${INSTALL_SUCC_FILE}" ]; then
+            IS_INSTALLED=1
+        fi
+    fi
+
+    echo ${IS_INSTALLED}
+}
+
+function require_installed {
+    if [ $(is_installed) = "0" ]; then
+        install
+    fi
+}
+
+# function is_running
+
+function run {
+    echo "Run container"
+    echo "Stop"
+    echo "Start"
+    echo "Attach"
+    echo "Stop"
+    lxc-stop   --name debian7 --lxcpath=${INSTALL_PATH} -t 5
+}
+
+function change_lxc_state {
+    true
+}
+
+
+function require_installed_and_run {
+    #require_started
+    run
+}
+
+function main {
+    local CMD
+    #require_installed_and_run
+    case ${1} in
+        install)
+            require_installed
+            ;;
+        start)
+            CMD="lxc-start  --name debian7 --lxcpath=${INSTALL_PATH} -F"
+            ;;
+        stop)
+            CMD="lxc-stop   --name debian7 --lxcpath=${INSTALL_PATH} -t 3"
+            ;;
+        attach)
+            CMD="lxc-attach --name debian7 --lxcpath=${INSTALL_PATH}"
+            ;;
+    esac
+    echo "${CMD}"
+    ${CMD}
+    echo "Done"
+}
+
+# echo $*
+# exit 1
+main "${*}"
