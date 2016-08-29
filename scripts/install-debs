@@ -34,6 +34,7 @@ apparmor-utils \
 aptitude \
 arj \
 beep \
+bridge-utils \
 cclive \
 colortest \
 conntrack \
@@ -95,8 +96,8 @@ gedit-plugins \
 gksu \
 gnome-commander \
 i3 \
-i3-lock \
-i3-status \
+i3lock \
+i3status \
 icedove \
 mesa-utils \
 mesa-utils-extra \

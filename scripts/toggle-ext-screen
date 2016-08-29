@@ -17,19 +17,30 @@ INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/help.sh
 
+INTERNAL_SCREEN_NAME="LVDS-1"
+EXTERNAL_SCREEN_NAME="VGA-1"
 
-function active_screens() {
+function active_connected_screens() {
     xrandr |grep "*" |grep -c "+"
 }
 
+function active_disconnected_screens() {
+    xrandr |grep "*" |grep -c "+"
+}
+
+function active_screens() {
+    expr $(active_connected_screens) + $(active_disconnected_screens)
+
+}
+
 function screen_on() {
-    CMD="xrandr --output VGA1 --mode 1440x900 --left-of LVDS1"
+    CMD="xrandr --output ${EXTERNAL_SCREEN_NAME} --mode 1440x900 --left-of ${INTERNAL_SCREEN_NAME}"
     echo ${CMD}
     ${CMD}
 }
 
 function screen_off() {
-    CMD="xrandr --output VGA1 --off"
+    CMD="xrandr --output ${EXTERNAL_SCREEN_NAME} --off"
     echo ${CMD}
     ${CMD}
 }
@@ -51,6 +62,7 @@ function screen_toggle() {
 }
 
 function main() {
+    active_screens
     screen_toggle
 }
 

@@ -15,6 +15,6 @@ function stack_trace {
         local SRC="${BASH_SOURCE[${I}]}"
         [ x"$SRC" = x ] && SRC=NO_FILE_SOURCE
 
-        echo ${I} ${FUNC} ${SRC} ${LINE_NO}
+        echo ${I} ${FUNC} ${SRC} ${LINE_NO} >&2
     done
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Link .bashrc to provided bashrc config file of this repository.
+# Link .profile to provided profile config file of this repository.
 
 
 set -o errexit -o nounset -o pipefail
@@ -10,15 +10,6 @@ INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
 
 source ${INCLUDE_PATH}/help.sh
 source ${INCLUDE_PATH}/link.sh
-
-function link_dot_profile_to_repo() {
-    local HOME_PATH="~"
-    local REPO_PATH=${SCRIPT_PATH}/../tmux
-    local CMD="ln -s -r ${SCRIPT_PATH}/../profile/profile .profile"
-
-    echo ${CMD}
-    ${CMD}
-}
 
 function main() {
     local LINK_FILEAME_RELATIVE_TO_HOME=".profile"

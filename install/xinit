@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Link ~/.xinitrc to provided xinitrc config file of this repository.
+
+
 set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
@@ -10,8 +13,8 @@ source ${INCLUDE_PATH}/link.sh
 
 
 function main() {
-    local LINK_FILEAME_RELATIVE_TO_HOME=".zshrc"
-    local DOTFILES_FILENAME="${SCRIPT_PATH}/../zsh/zshrc"
+    local LINK_FILEAME_RELATIVE_TO_HOME=".xinitrc"
+    local DOTFILES_FILENAME="${SCRIPT_PATH}/../xinit/xinitrc"
 
     backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}
 }
