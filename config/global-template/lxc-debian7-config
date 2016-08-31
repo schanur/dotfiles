@@ -1,0 +1,26 @@
+# Template used to create this container: /usr/share/lxc/templates/lxc-debian
+# Parameters passed to the template:
+# For additional config options, please look at lxc.container.conf(5)
+
+# Uncomment the following line to support nesting containers:
+#lxc.include = /usr/share/lxc/config/nesting.conf
+# (Be aware this has security implications)
+
+lxc.network.type = empty
+lxc.rootfs = /root/local/vm/lxc/debian7/rootfs
+lxc.rootfs.backend = dir
+
+# Common configuration
+lxc.include = /usr/share/lxc/config/debian.common.conf
+
+# Container specific configuration
+lxc.tty = 4
+lxc.utsname = debian7
+lxc.arch = amd64
+
+# Networking
+lxc.network.type    = veth
+lxc.network.flags   = up
+lxc.network.link    = br0
+lxc.network.ipv4    = 0.0.0.0/24
+lxc.network.hwaddr  = 00:1E:AF:FE:AF:FE
