@@ -4,7 +4,7 @@
 #     local HOSTNAME=$(hostname)
 # }
 
-source ${INCLUDE_PATH}/csv.sh
+source ${DOTFILES_PATH}/lib/bash/csv.sh
 
 
 CONFIG_PATH=${SCRIPT_PATH}/../config

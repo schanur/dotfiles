@@ -3,7 +3,7 @@
 set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-INCLUDE_PATH=${SCRIPT_PATH}/shared_bash
+DOTFILES_PATH=${SCRIPT_PATH}/sh
 
 function install_component() {
     local INSTALL_SCRIPT=${1}

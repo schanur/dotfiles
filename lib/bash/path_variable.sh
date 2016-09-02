@@ -1,5 +1,6 @@
 
-source ${INCLUDE_PATH}/debug.sh
+source ${DOTFILES_PATH}/lib/bash/debug.sh
+
 
 # Returns 1 if the file given as parameter sets the PATH variable. 0
 # otherwise.

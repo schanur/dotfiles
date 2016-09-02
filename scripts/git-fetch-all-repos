@@ -9,11 +9,11 @@
 set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-INCLUDE_PATH=${SCRIPT_PATH}/../lib/bash
+DOTFILES_PATH=${SCRIPT_PATH}/..
 
-source ${INCLUDE_PATH}/help.sh
-source ${INCLUDE_PATH}/require.sh
-source ${INCLUDE_PATH}/parallel.sh
+source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/require.sh
+source ${DOTFILES_PATH}/lib/bash/parallel.sh
 
 function git_fetch_repo_cmd {
     local GIT_REPO_PATH=${1}

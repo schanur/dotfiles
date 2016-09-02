@@ -1,7 +1,7 @@
 
-source ${INCLUDE_PATH}/date.sh
-source ${INCLUDE_PATH}/require.sh
-source ${INCLUDE_PATH}/path.sh
+source ${DOTFILES_PATH}/lib/bash/date.sh
+source ${DOTFILES_PATH}/lib/bash/require.sh
+source ${DOTFILES_PATH}/lib/bash/path.sh
 
 
 function ln_support_relative_linking {
