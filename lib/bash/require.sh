@@ -37,6 +37,17 @@ function require_file {
     fi
 }
 
+function require_directory {
+    local FILENAME=${1}
+
+    if [ ! -d ${FILENAME} ]; then
+        echo "Directory not found: ${FILENAME}" >&2
+        echo "Abort!" >&2
+        stack_trace
+        exit 1
+    fi
+}
+
 function require_file_or_directory {
     local FILENAME=${1}
 
