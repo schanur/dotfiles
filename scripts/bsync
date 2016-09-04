@@ -12,6 +12,7 @@
 # -x,     --one-file-system       don't cross filesystem boundaries
 # -z,     --compress              compress file data during the transfer
 # -v,     --verbose               increase verbosity
+#         --partial               keep partially transferred files
 # -e ssh, --rsh=ssh               specify the remote shell to use (we use SSH)
 #
 # The following options may be inappropriate for your use cases:
@@ -35,7 +36,7 @@ source ${DOTFILES_PATH}/lib/bash/help.sh
 function rsync_cmd {
     local SOURCE=${1}
     local DESTINATION=${2}
-    rsync -aXESxzve "ssh -T -o Compression=yes" --progress ${SOURCE} ${DESTINATION}
+    rsync -aXESxzve "ssh -T -o Compression=yes" --progress --partial ${SOURCE} ${DESTINATION}
     exit $?
 }
 
