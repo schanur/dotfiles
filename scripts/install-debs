@@ -23,7 +23,7 @@ eatmydata \
 etckeeper \
 "
 
-PACKAGE_LIST="\
+PACKAGE_LIST_BASE="\
 alsa-utils \
 apparmor \
 apparmor-docs \
@@ -35,34 +35,25 @@ aptitude \
 arj \
 beep \
 bridge-utils \
-cclive \
 colortest \
 conntrack \
-cups \
 emacs \
 emacs24-dbg \
 exfat-utils \
 gddrescue \
-highlight \
 imagemagick \
 jq \
 lhasa \
-libreoffice \
 lynx \
 lzip \
 mc \
 memtest86+ \
-moc \
 moreutils
-mps-youtube \
 ncompress \
-network-manager \
 nfs-common \
 nmap \
 openssh-server \
-pandoc \
 powertop \
-printer-driver-all \
 p7zip-rar \
 rsync \
 rzip \
@@ -77,15 +68,22 @@ sshfs \
 thin-provisioning-tools \
 tmux \
 vim \
-wordnet \
 xjobs \
 xloadimage \
 xz-utils \
-youtube-dl \
 zoo \
 zsh \
 "
 
+PACKAGE_LIST_DESKTOP="\
+cclive \
+cups \
+libreoffice \
+moc \
+mps-youtube \
+network-manager \
+printer-driver-all \
+"
 PACKAGE_LIST_X11="\
 dunst \
 evince \
@@ -133,6 +131,7 @@ musique \
 rhythmbox \
 sxiv \
 vlc \
+youtube-dl \
 "
 
 PACKAGE_LIST_VIRT="\
@@ -175,6 +174,7 @@ git-extras \
 global \
 graphviz \
 g++ \
+highlight \
 libclang-dev \
 libcrypto++-dev \
 libglib2.0-doc \
@@ -187,6 +187,7 @@ lldb \
 lua5.2 \
 make \
 meld \
+pandoc \
 pry \
 python3 \
 qt5-default \
@@ -195,6 +196,7 @@ ruby-method-source \
 silversearcher-ag \
 swig \
 valgrind \
+wordnet \
 zshdb \
 "
 
