@@ -39,3 +39,5 @@ while [ 1 ]; do
     fi
 done
 
+echo "Successfully synced with ${ATTEMPTS} attempts."
+exit 0
