@@ -28,9 +28,9 @@ function parse_section_positions {
 
     clear_section_positions
     while read LINE; do
-        if   [ ${#LINE}      -eq  0  ]; then EMPTY_LINE=1
-        elif [ "${LINE:0:1}" =   " " ]; then EMPTY_LINE=1
-        elif [ "${LINE:0:1}" =   "#" ]; then EMPTY_LINE=0
+        if   [ ${#LINE}      -eq  0  ]; then EMPTY_LINE=1 # Line containing only a newline is interpreted as empty line.
+        elif [ "${LINE:0:1}" =   " " ]; then EMPTY_LINE=1 # Line that starts with a space character is also interpreted as empty line.
+        elif [ "${LINE:0:1}" =   "#" ]; then EMPTY_LINE=0 # Character of text section to parse.
         elif [ ${IN_SECTION} -eq  1  ]; then echo "Parse error in line ${LINE_NO}. Abort"; exit 1
         else break # First script command. Stop section parsing.
         fi
