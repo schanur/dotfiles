@@ -1,0 +1,16 @@
+aqemu
+docker-compose
+docker-registry
+docker-swarm
+lxc
+packer
+qemu
+schroot
+vde2
+virtinst
+virtualbricks
+virt-goodies
+virt-manager
+virt-top
+vmdebootstrap
+xmount

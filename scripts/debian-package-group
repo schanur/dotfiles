@@ -1,0 +1,155 @@
+#!/bin/bash
+
+# Install a predefined set of packages.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/script-su.sh
+source ${DOTFILES_PATH}/lib/bash/require.sh
+
+
+SELECTED_PACKAGE_LIST=""
+
+DEBIAN_PACKAGE_GROUP_PATH="${DOTFILES_PATH}/data/debian-package-groups"
+
+
+run_as_root "${@}"
+
+
+
+function pre_requirements {
+    return
+    PACKAGE_LIST_EARLY_1="\
+        git \
+    "
+
+    PACKAGE_LIST_EARLY_2="\
+        eatmydata \
+        etckeeper \
+    "
+
+    apt-get install ${PACKAGE_LIST_EARLY_1}
+
+    git config --global user.email "root@localhost"
+    git config --global user.name  "root"
+
+    apt-get install ${PACKAGE_LIST_EARLY_2}
+}
+
+function list_group_items {
+    local PACKAGE_GROUP=${1}
+    local PACKAGE_GOUP_FILENAME=${DEBIAN_PACKAGE_GROUP_PATH}/${PACKAGE_GROUP}
+
+    require_file ${PACKAGE_GOUP_FILENAME}
+
+    cat ${PACKAGE_GOUP_FILENAME}
+}
+
+function list_package_groups {
+    find ${DEBIAN_PACKAGE_GROUP_PATH} |sed -e "s|.*/||g"
+}
+
+function package_exists {
+    local PACKAGE_EXISTS=1
+
+    dpkg -l "$1" &> /dev/null || PACKAGE_EXISTS=0
+
+    echo ${PACKAGE_EXISTS}
+}
+
+function add_package_group_to_selected_package_list {
+    local PACKAGE_GROUP=${1}
+    local PACKAGE
+
+    for PACKAGE in $(list_group_items ${PACKAGE_GROUP}); do
+        # echo ${PACKAGE}
+        if [ "$(package_exists ${PACKAGE})" = "1" ]; then
+            SELECTED_PACKAGE_LIST="${SELECTED_PACKAGE_LIST} ${PACKAGE}"
+        else
+            echo "Package not found: ${PACKAGE} (package group: ${PACKAGE_GROUP})."
+            exit 1
+        fi
+    done
+}
+
+function parse_all_package_groups {
+    local PACKAGE_GROUP_LIST=${*}
+    local PACKAGE_GROUP
+
+    echo "Package group list: ${PACKAGE_GROUP_LIST}"
+    for PACKAGE_GROUP in ${PACKAGE_GROUP_LIST}; do
+        add_package_group_to_selected_package_list ${PACKAGE_GROUP}
+    done
+}
+
+function install_packages {
+    apt-get install ${SELECTED_PACKAGE_LIST}
+}
+
+function remove_packages {
+    apt-get remove ${SELECTED_PACKAGE_LIST}
+}
+
+function purge_packages {
+    apt-get remove --purge ${SELECTED_PACKAGE_LIST}
+}
+
+
+function main {
+    # echo "Parameter: ${@}"
+    local OPERATION=${1}
+    shift
+    local PACKAGE_GROUPS="${@}"
+
+    case ${OPERATION} in
+        install)
+            pre_requirements
+            parse_all_package_groups ${PACKAGE_GROUPS}
+            install_packages
+            ;;
+        remove)
+            pre_requirements
+            parse_all_package_groups ${PACKAGE_GROUPS}
+            remove_packages
+            ;;
+        remove-purge)
+            pre_requirements
+            parse_all_package_groups ${PACKAGE_GROUPS}
+            purge_packages
+            ;;
+        list-group-items)
+            list_group_items         ${PACKAGE_GROUPS}
+            ;;
+        list-groups)
+            list_package_groups
+            ;;
+        *)
+            echo "fatal"
+            exit 1
+            ;;
+    esac
+}
+
+main "${@}"
+
+# Check for inclusion:
+# logtail
+# pavumeter pavucontrol paman paprefs
+# gsmartcontrol
+# cmdtest
+# ssh-askpass rssh molly-guard ufw monkeysphere
+# resolvconf dnsmasq
+
+# Parallel processing:
+# mdm parafly parallel startpar xjobs
+
+# TODO:
+# Reset linux-firmware-free to autoset
+
+# opencl-icd virtual package
+
