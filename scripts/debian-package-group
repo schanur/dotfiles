@@ -57,7 +57,7 @@ function list_package_groups {
 function package_exists {
     local PACKAGE_EXISTS=1
 
-    dpkg -l "$1" &> /dev/null || PACKAGE_EXISTS=0
+    # dpkg -l "$1" &> /dev/null || PACKAGE_EXISTS=0
 
     echo ${PACKAGE_EXISTS}
 }

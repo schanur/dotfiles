@@ -69,3 +69,14 @@ function require_sybolic_link {
         exit 1
     fi
 }
+
+function require_block_special {
+    local LINK_NAME=${1}
+
+    if [ ! -h ${LINK_NAME} ]; then
+        echo "Block special: ${LINK_NAME}" >&2
+        echo "Abort!" >&2
+        stack_trace
+        exit 1
+    fi
+}
