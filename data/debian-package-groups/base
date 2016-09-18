@@ -9,6 +9,7 @@ aptitude
 arj
 beep
 bridge-utils
+cifs-utils
 colortest
 conntrack
 emacs
@@ -19,6 +20,7 @@ imagemagick
 jq
 lhasa
 lynx
+lrzip
 lzip
 mc
 memtest86+
@@ -28,7 +30,6 @@ nfs-common
 nmap
 openssh-server
 powertop
-p7zip-rar
 rsync
 rzip
 samba
