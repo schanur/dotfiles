@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Convert album filename layout to standard layout.
+
+# Currently only the output of RipperX software is supported.
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/../..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/path.sh
+source ${DOTFILES_PATH}/lib/bash/require.sh
+
+
+function padded_track_number {
+    local PADDED_TRACK_NUMBER=${1}
+
+    if [ ${#PADDED_TRACK_NUMBER} = "1" ]; then
+        PADDED_TRACK_NUMBER="0${PADDED_TRACK_NUMBER}"
+    fi
+
+    echo ${PADDED_TRACK_NUMBER}
+}
+
+function is_valid_ripperx_input {
+    local ALBUM_PATH=${1}
+
+    # FIXME: Implement real check.
+    echo "1"
+}
+
+function unify_album_ripperx {
+    local ALBUM_PATH=${1}
+    local TITLE_NO
+    local UNIFIED_FILENAME
+    local FILE_PATH
+    local FILE_BASENAME
+
+    for FILE in $(find ${ALBUM_PATH} -name "*.inf"); do
+        FILE_WITHOUT_SUFFIX="echo ${FILE} |sed -e 's/\.inf$//g'"
+        FILE_PATH=$(dirname ${FILE})
+        FILE_BASENAME=$(basename)
+        TITLE_NO=$(padded_track_number $(cat ${FILE} | grep "Tracknumber= " | sed -e 's/Tracknumber=\ //g'))
+        UNIFIED_FILENAME="${FILE_PATH}/${TITLE_NO}_-_${FILE_BASENAME}"
+
+        echo "${FILE} -> ${UNIFIED_FILENAME}"
+        mv   ${FILE}     ${UNIFIED_FILENAME}
+    done
+}
+
+function unify_album {
+    local ALBUM_PATH=${1}
+
+    if [ $(is_valid_ripperx_input ${ALBUM_PATH}) = "1" ]; then
+        unify_album_ripperx ${ALBUM_PATH}
+    fi
+}
+
+function main {
+    local ALBUM_PATH=""
+
+    if [ ${#} -ge 1 ]; then
+        ALBUM_PATH=${1}
+    else
+        ALBUM_PATH="."
+    fi
+
+    unify_album ${ALBUM_PATH}
+}
+
+main "${@}"
