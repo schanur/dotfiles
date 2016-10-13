@@ -8,3 +8,5 @@ fi
 if [ -d "$HOME/local/dev/all/dotfiles/scripts" ] ; then
     PATH="$HOME/local/dev/all/dotfiles/scripts:$PATH"
 fi
+
+xsetroot -solid darkred
