@@ -29,6 +29,9 @@ font pango:monospace 4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# make a screnshot
+bindsym XF86Display exec "scrot ~/Downloads/Screenshot%Y-%m-%d%H:%M:%S.png"
+
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec local/dev/public/dotfiles/scripts/durxvt
