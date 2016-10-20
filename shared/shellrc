@@ -1,0 +1,6 @@
+
+export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"
+export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/multimedia"
+
+source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
+source ${DOTFILES_PATH}/alias/all.sh
