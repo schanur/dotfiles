@@ -20,6 +20,10 @@ TARGET_PATH_EXTENSION=$(echo ${HOME//\//_} | sed -e 's/^_//g')
 
 load_config_file rsync-home.conf
 
+require_variable RSYNC_HOME__REMOTE_USERNAME
+require_variable RSYNC_HOME__REMOTE_HOST
+require_variable RSYNC_HOME__REMOTE_BASE_PATH
+
 echo "bsync ${HOME} ${RSYNC_HOME__REMOTE_USERNAME}@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}/${HOSTNAME}__${TARGET_PATH_EXTENSION}"
 
 ATTEMPTS=0
