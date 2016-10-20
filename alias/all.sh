@@ -6,7 +6,8 @@ DOTFILES_PATH=${SCRIPT_PATH}/..
 
 source ${DOTFILES_PATH}/lib/bash/path_variable.sh
 
-for INC_FILE in .; do
+echo "Load alias files"
+for INC_FILE in $(find ${DOTFILES_PATH}/alias |grep -v "all.sh"); do
     echo "Load alias file: ${INC_FILE}"
     . ${INC_FILE}
 done
