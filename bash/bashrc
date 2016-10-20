@@ -115,7 +115,7 @@ fi
 
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"
 
+DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
 
-SHARED_PATH=${HOME}/local/dev/all/dotfiles/shared
-
-source ${SHARED_PATH}/colorized_man_pages.sh
+source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
+source ${DOTFILES_PATH}/alias/all.sh
