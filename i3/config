@@ -13,7 +13,25 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 4
+font pango:monospace 0
+new_window 1pixel
+
+# border / titlebar
+new_window normal
+hide_edge_borders vertical
+bindsym Control+Shift+x [class="^.*"] border toggle
+for_window [class="^.*"] border pixel 1
+#for_window [class="URxvt"] border normal
+for_window [class="URxvt"] border pixel 0
+for_window [class="Leafpad"] border normal
+for_window [class="Lxappearance"] border normal
+for_window [class="Vlc"] border pixel 0
+for_window [class="mpv"] border pixel 0
+for_window [class="Pcmanfm"] border pixel 0
+for_window [class="Firefox"] border pixel 0
+for_window [class="Geary"] border pixel 0
+for_window [class="Lmms"] border pixel 0
+for_window [class="Feh"] border pixel 0
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -157,5 +175,10 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        font pango:monospace 7
+        # font pango:monospace 4
+        # font pango:monospace 4
+        # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+        font pango:DejaVu Sans Mono 4
+        # font pango:DejaVu Sans Mono, Terminus Bold Semi-Condensed 11
+        # font pango:Terminus 7px
 }
