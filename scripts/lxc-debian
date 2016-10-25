@@ -12,10 +12,11 @@ source ${DOTFILES_PATH}/lib/bash/help.sh
 source ${DOTFILES_PATH}/lib/bash/script-su.sh
 
 
-run_as_root
+run_as_root "${@}"
 
 CONTAINER_NAME="debian7"
-INSTALL_PATH="${HOME}/local/vm/lxc"
+# INSTALL_PATH="${HOME}/local/vm/lxc"
+INSTALL_PATH="home/ze/local/vm/lxc"
 ROOTFS_PATH="${INSTALL_PATH}/${CONTAINER_NAME}/rootfs"
 INSTALL_SUCC_FILE="${INSTALL_PATH}/${CONTAINER_NAME}/install.succ"
 SUITE=wheezy
@@ -48,9 +49,12 @@ function is_installed {
 }
 
 function require_installed {
-    if [ $(is_installed) = "0" ]; then
+    echo "require_installed"
+    local IS_INSTALLED=$(is_installed)
+    if [ ${IS_INSTALLED} = "0" ]; then
         install
     fi
+    install
 }
 
 # function is_running
@@ -75,7 +79,8 @@ function require_installed_and_run {
 }
 
 function main {
-    local CMD
+    echo "main parameter: ${*}"
+    local CMD=""
     #require_installed_and_run
     case ${1} in
         install)
@@ -98,4 +103,4 @@ function main {
 
 # echo $*
 # exit 1
-main "${*}"
+main "${@}"
