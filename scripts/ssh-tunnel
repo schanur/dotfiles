@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Tunnel all network traffic except this subnet through SSH with the help of sshuttle.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+
+
+if [ ${#} != "1" ]; then
+    invalid_parameter_exit
+fi
+
+GATEWAY_HOSTNAME=${1}
+
+sshuttle -x -r ${GATEWAY_HOSTNAME} 0.0.0.0/0
+exit $?

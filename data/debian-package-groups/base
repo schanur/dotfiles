@@ -34,6 +34,7 @@ rsync
 rzip
 samba
 slurm
+sshuttle
 sysstat
 unace
 unalz
