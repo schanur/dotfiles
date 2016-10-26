@@ -15,21 +15,26 @@ source ${DOTFILES_PATH}/lib/bash/script-su.sh
 run_as_root "${@}"
 
 CONTAINER_NAME="debian7"
+#DEBIAN_RELEASE="sid"
+DEBIAN_RELEASE="jessie"
+
 # INSTALL_PATH="${HOME}/local/vm/lxc"
-INSTALL_PATH="home/ze/local/vm/lxc"
+INSTALL_BASE_PATH="/home/ze/local/vm/lxc"
+INSTALL_PATH="${INSTALL_BASE_PATH}/${CONTAINER_NAME}"
+#INSTALL_PATH="/home/ze/local/vm/lxc/${CONTAINER_NAME}"
 ROOTFS_PATH="${INSTALL_PATH}/${CONTAINER_NAME}/rootfs"
 INSTALL_SUCC_FILE="${INSTALL_PATH}/${CONTAINER_NAME}/install.succ"
-SUITE=wheezy
+SUITE=jessie
 
 function set_root_password {
     echo "Set root password"
-    chroot ${ROOTFS_PATH} /bin/bash -c ""
+    chroot ${ROOTFS_PATH} /bin/bash -c "passwd root"
 }
 
 function install {
     echo "Start installation"
     mkdir -p ${INSTALL_PATH}
-    LANG=C SUITE=${SUITE} MIRROR=http://httpredir.debian.org/debian lxc-create -n debian7 -t debian --lxcpath=${INSTALL_PATH}
+    LANG=C SUITE=${SUITE} MIRROR=http://httpredir.debian.org/debian lxc-create -n ${CONTAINER_NAME} -t debian  --lxcpath=${INSTALL_PATH} -- -r ${DEBIAN_RELEASE}
     if [ ${?} = "0" ]; then
         set_root_password
         echo "Success"
@@ -54,7 +59,6 @@ function require_installed {
     if [ ${IS_INSTALLED} = "0" ]; then
         install
     fi
-    install
 }
 
 # function is_running
@@ -87,13 +91,17 @@ function main {
             require_installed
             ;;
         start)
-            CMD="lxc-start  --name debian7 --lxcpath=${INSTALL_PATH} -F"
+            CMD="lxc-start  --name ${CONTAINER_NAME} --lxcpath=${INSTALL_PATH} -F"
+            #CMD="lxc-start  --name debian7 --lxcpath=${INSTALL_PATH}"
             ;;
         stop)
-            CMD="lxc-stop   --name debian7 --lxcpath=${INSTALL_PATH} -t 3"
+            CMD="lxc-stop   --name ${CONTAINER_NAME} --lxcpath=${INSTALL_PATH} -t 3"
             ;;
         attach)
-            CMD="lxc-attach --name debian7 --lxcpath=${INSTALL_PATH}"
+            CMD="lxc-attach --name ${CONTAINER_NAME} --lxcpath=${INSTALL_PATH}"
+            ;;
+        set-root-password)
+            CMD="set_root_password"
             ;;
     esac
     echo "${CMD}"
