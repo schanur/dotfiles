@@ -4,9 +4,6 @@ declare -a GL_SECTION_POS_END
 GL_SECTION_CNT=0
 PARSED=0
 
-function script_name {
-    echo $(basename ${0})
-}
 
 function clear_section_positions {
     local I
@@ -81,31 +78,31 @@ function print_section {
 
 
 function shebang {
-    local SCRIPT_NAME=${1}
+    local SCRIPT_FILENAME=${1}
 
-    parse_section_positions ${SCRIPT_NAME}
-    print_section ${SCRIPT_NAME} 1
+    parse_section_positions ${SCRIPT_FILENAME}
+    print_section ${SCRIPT_FILENAME} 1
 }
 
 function short_description {
-    local SCRIPT_NAME=${1}
+    local SCRIPT_FILENAME=${1}
 
-    parse_section_positions ${SCRIPT_NAME}
-    print_section ${SCRIPT_NAME} 2
+    parse_section_positions ${SCRIPT_FILENAME}
+    print_section ${SCRIPT_FILENAME} 2
 }
 
 function long_description {
-    local SCRIPT_NAME=${1}
+    local SCRIPT_FILENAME=${1}
 
-    parse_section_positions ${SCRIPT_NAME}
-    print_section ${SCRIPT_NAME} 3
+    parse_section_positions ${SCRIPT_FILENAME}
+    print_section ${SCRIPT_FILENAME} 3
 }
 
 function usage {
-    local SCRIPT_NAME=${1}
+    local SCRIPT_FILENAME=${1}
 
-    parse_section_positions ${SCRIPT_NAME}
-    print_section ${SCRIPT_NAME} 4
+    parse_section_positions ${SCRIPT_FILENAME}
+    print_section ${SCRIPT_FILENAME} 4
 }
 
 function has_short_description {
@@ -138,10 +135,10 @@ function has_usage {
 # Print the help section of a script, consisting of the script name,
 # the short description and the long description.
 function help {
-    local SCRIPT_NAME="$(script_name)"
+    # local SCRIPT_NAME=$(basename ${SCRIPT_FILENAME})
 
-    parse_section_positions ${SCRIPT_NAME}
-    echo ${SCRIPT_NAME}
+    parse_section_positions ${SCRIPT_FILENAME}
+    echo $(basename ${SCRIPT_FILENAME})
     if [ $(has_short_description) = "1" ]; then
         echo
         short_description ${SCRIPT_FILENAME}
@@ -173,7 +170,8 @@ function parse_help_parameter {
 # arguments cannot be parsed. We print the help section of the script
 # and exit with error code 64.
 function invalid_parameter_exit {
-    echo $(help)
+    help
+    # echo $(help)
     echo
     echo "Error: Invalid parameter."
 
@@ -181,6 +179,5 @@ function invalid_parameter_exit {
     #define EX_USAGE        64      /* command line usage error */
     exit 64
 }
-
 
 parse_help_parameter "${@}"
