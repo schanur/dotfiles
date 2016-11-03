@@ -83,6 +83,6 @@ FIELD_DESCRIPTION=(
 
 I=0
 for STAT_VAR in $(cat ${STAT_FILE}) ; do
-    echo "${I}: $(echo_align ${FIELD_DESCRIPTION[${I}]}) $STAT_VAR"
+    echo "$(fill_tail ${I}: 3 ' ') $(echo_align ${FIELD_DESCRIPTION[${I}]}) $STAT_VAR"
     let I=I+1
 done
