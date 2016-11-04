@@ -178,6 +178,9 @@ bar {
         # font pango:monospace 4
         # font pango:monospace 4
         # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+        mode hide
+        position top
+        # separator_symbol "="
         font pango:DejaVu Sans Mono 8
         # font pango:DejaVu Sans Mono, Terminus Bold Semi-Condensed 11
         # font pango:Terminus 7px
