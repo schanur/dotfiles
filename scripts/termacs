@@ -11,6 +11,9 @@ DOTFILES_PATH=${SCRIPT_PATH}/..
 source ${DOTFILES_PATH}/lib/bash/help.sh
 
 
+
+LATEST_AVAILABLE_EMACS_VERSION=$(find /usr/bin -name "emacs??" |sort -V |tail -n 1)
+
 export TERM=xterm-256color
-emacs24 -nw
+${LATEST_AVAILABLE_EMACS_VERSION} -nw
 exit $?
