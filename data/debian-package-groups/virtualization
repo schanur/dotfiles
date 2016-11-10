@@ -3,6 +3,8 @@ docker-compose
 docker-registry
 docker-swarm
 lxc
+lxcfs
+lxctl
 packer
 qemu
 schroot

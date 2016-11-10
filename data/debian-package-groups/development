@@ -32,6 +32,7 @@ lua5.2
 make
 meld
 pandoc
+phantomjs
 pry
 python3
 qt5-default

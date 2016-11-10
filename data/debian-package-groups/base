@@ -23,12 +23,14 @@ gddrescue
 imagemagick
 jq
 lhasa
+lm-sensors
 lynx
 lrzip
 lzip
 mc
 memtest86+
 moreutils
+mosh
 ncompress
 nfs-common
 nmap
@@ -37,6 +39,7 @@ powertop
 rsync
 rzip
 samba
+sl
 slurm
 sshuttle
 sysstat
