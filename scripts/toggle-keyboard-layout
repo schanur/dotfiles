@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Toggle keyboard layouts between qwertz and dvorak.
+
+# TODO:
+# - Use config file instead of hard coded layouts
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+
+# Copyright: http://unix.stackexchange.com/questions/2884/toggle-between-dvorak-and-qwerty
+
+if [ -n "$DISPLAY" ]; then
+    if xmodmap -pke | awk '$3=="=" && $4=="q" {q=$2}
+                           $3=="=" && $4=="w" {w=$2}	
+       		           END {exit w-q==1}'; then
+	setxkbmap de
+	notify-send "X server keyboard layout: de"	
+    else
+	setxkbmap dvorak
+	notify-send "X server keyboard layout: dvorak"
+    fi
+    
+elif [ "$TERM" = "linux" ]; then
+    if dumpkeys     | awk '$3=="=" && $4=="q" {q=$2}
+                           $3=="=" && $4=="w" {w=$2}
+       		           END {exit w-q==1}'; then
+	loadkeys de
+	echo "Terminal keyboard layout: de"
+    else
+	loadkeys dvorak
+	echo "Terminal keyboard layout: dvorak"
+    fi
+fi
