@@ -51,7 +51,9 @@ bindsym $mod+Ctrl+f           exec "~/local/bin/firefox/firefox/firefox"
 bindsym $mod+Ctrl+g           exec gpodder
 bindsym $mod+Ctrl+i           exec icedove
 bindsym $mod+Ctrl+v           exec vlc
-
+# Toggle between qwertz and dvorak keyboard layout. The "a" character
+# was choosen because it is at the same position at both layouts.
+bindsym $mod+Ctrl+a           exec "~/local/dev/public/dotfiles/scripts/toggle-keyboard-layout"
 
 # make a screnshot
 bindsym XF86Display           exec "scrot ~/Downloads/Screenshot%Y-%m-%d%H:%M:%S.png"
