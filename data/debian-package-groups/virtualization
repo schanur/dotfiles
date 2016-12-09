@@ -1,7 +1,4 @@
 aqemu
-docker-compose
-docker-registry
-docker-swarm
 lxc
 lxcfs
 lxctl
