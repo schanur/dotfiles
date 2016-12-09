@@ -23,7 +23,8 @@ function create_luks_partition {
     cryptsetup luksFormat    ${BLOCK_DEVICE}     \
         --cipher             twofish-xts-plain64 \
         --key-size           512                 \
-        --hash               512                 \
+        --hash               sha512              \
+        --iter-time          5432                \
         --verify-passphrase
 }
 
