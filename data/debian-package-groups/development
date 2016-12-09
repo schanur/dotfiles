@@ -19,6 +19,7 @@ global
 graphviz
 g++
 highlight
+imediff2
 libclang-dev
 libcrypto++-dev
 libglib2.0-doc
