@@ -71,10 +71,10 @@ function require_sybolic_link {
 }
 
 function require_block_special {
-    local LINK_NAME=${1}
+    local BLOCK_FILENAME=${1}
 
-    if [ ! -h ${LINK_NAME} ]; then
-        echo "Block special: ${LINK_NAME}" >&2
+    if [ ! -b ${BLOCK_FILENAME} ]; then
+        echo "Block special: ${BLOCK_FILENAME}" >&2
         echo "Abort!" >&2
         stack_trace
         exit 1
