@@ -18,7 +18,8 @@ HOSTNAME=$(hostname)
 USERNAME=$(whoami)
 TARGET_PATH_EXTENSION=$(echo ${HOME//\//_} | sed -e 's/^_//g')
 
-load_config_file rsync-home.conf
+load_config_file sync-home.conf
+RSYNC_EXCLUDE_FILE=$(absolute_config_file sync-home_exclude.list)
 
 # require_variable RSYNC_HOME__REMOTE_USERNAME
 # require_variable RSYNC_HOME__REMOTE_HOST
@@ -32,7 +33,7 @@ MAX_ATTEMPTS=10
 while [ 1 ]; do
     (( ATTEMPTS = ATTEMPTS + 1 ))
     echo "Start attempt ${ATTEMPTS}."
-    bsync ${HOME} ${RSYNC_HOME__REMOTE_USERNAME}@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}/${HOSTNAME}__${TARGET_PATH_EXTENSION}
+    bsync --exclude-from=${RSYNC_EXCLUDE_FILE} ${HOME} ${RSYNC_HOME__REMOTE_USERNAME}@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}/${HOSTNAME}__${TARGET_PATH_EXTENSION}
     SYNC_CMD_EXIT_CODE=${?}
     if [ ${SYNC_CMD_EXIT_CODE} = "0" ]; then
         exit 0
