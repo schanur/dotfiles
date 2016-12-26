@@ -34,14 +34,13 @@ source ${DOTFILES_PATH}/lib/bash/help.sh
 
 
 function rsync_cmd {
-    local SOURCE=${1}
-    local DESTINATION=${2}
-    rsync -aXESxzve "ssh -T -o Compression=yes" --progress --partial ${SOURCE} ${DESTINATION}
+    local PARAMS=${*}
+    rsync -aXESxzve "ssh -T -o Compression=yes" --progress --partial ${PARAMS}
     exit $?
 }
 
 function main {
-    if [ "${#}" -eq "2" ]; then
+    if [ "${#}" -ge "2" ]; then
         rsync_cmd "${@}"
         EXIT_STATUS=$?
         exit ${EXIT_STATUS}
