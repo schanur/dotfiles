@@ -1,4 +1,9 @@
 aqemu
+bridge-utils
+cgmanager
+cgroups-tool
+libpam-cgroup
+libpam-cgfs
 lxc
 lxcfs
 lxctl
@@ -13,3 +18,4 @@ virt-manager
 virt-top
 vmdebootstrap
 xmount
+
