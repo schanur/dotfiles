@@ -1,6 +1,11 @@
 
 source ${DOTFILES_PATH}/lib/bash/debug.sh
 
+function require_failed {
+    echo "Abort!"  >&2
+    stack_trace
+    exit 1
+}
 
 # Check if the binary/script filename exists in a path specified in the PATH variable. If no match is found, an error message is printed to stderr and the script terminates with an error.
 function require_executable {
@@ -10,8 +15,7 @@ function require_executable {
     which ${EXECUTABLE_NAME} > /dev/null 2>/dev/null || EXECUTABLE_FOUND=0
     if [ ${EXECUTABLE_FOUND} -ne 1 ]; then
         echo "${EXECUTABLE_NAME} not found. Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -20,9 +24,7 @@ function require_exists {
 
     if [ ! -e ${FILENAME} ]; then
         echo "File not found: ${FILENAME}" >&2
-        echo "Abort!"  >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -31,9 +33,7 @@ function require_file {
 
     if [ ! -f ${FILENAME} ]; then
         echo "File not found: ${FILENAME}" >&2
-        echo "Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -42,9 +42,7 @@ function require_directory {
 
     if [ ! -d ${FILENAME} ]; then
         echo "Directory not found: ${FILENAME}" >&2
-        echo "Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -53,9 +51,7 @@ function require_file_or_directory {
 
     if [[ ! -f ${FILENAME} && ! -d ${FILENAME} ]]; then
         echo "File not found: ${FILENAME}" >&2
-        echo "Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -64,9 +60,7 @@ function require_sybolic_link {
 
     if [ ! -h ${LINK_NAME} ]; then
         echo "Symbolic link not found: ${LINK_NAME}" >&2
-        echo "Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -75,9 +69,7 @@ function require_block_special {
 
     if [ ! -b ${BLOCK_FILENAME} ]; then
         echo "Block special: ${BLOCK_FILENAME}" >&2
-        echo "Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
     fi
 }
 
@@ -86,8 +78,30 @@ function require_variable {
 
     if [ ! -v ${LINK_NAME} ]; then
         echo "Variable not set: ${LINK_NAME}" >&2
-        echo "Abort!" >&2
-        stack_trace
-        exit 1
+        require_failed
+    fi
+}
+
+function require_numeric_value {
+    local VARIABLE=${1}
+
+    case ${VARIABLE} in
+        ''|*[!0-9]*)
+            echo "Variable is no numeric value: ${VARIABLE}" >&2
+            require_failed
+            ;;
+    esac
+}
+
+function require_equal_numeric_value {
+    local ACTUAL_VALUE=${1}
+    local EXPECTED_VALUE=${2}
+
+    require_numeric_value ${ACTUAL_VALUE]
+    require_numeric_value ${EXPECTED_VALUE]
+
+    if [ ${ACTUAL_VALUE} != ${EXPECTED_VALUE} ]; then
+        echo "Variable has not expected numeric value: ${LINK_NAME}" >&2
+        require_failed
     fi
 }
