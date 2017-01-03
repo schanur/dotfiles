@@ -17,23 +17,23 @@ source ${DOTFILES_PATH}/lib/bash/help.sh
 
 if [ -n "$DISPLAY" ]; then
     if xmodmap -pke | awk '$3=="=" && $4=="q" {q=$2}
-                           $3=="=" && $4=="w" {w=$2}	
-       		           END {exit w-q==1}'; then
-	setxkbmap de
-	notify-send "X server keyboard layout: de"	
+                           $3=="=" && $4=="w" {w=$2}
+                           END {exit w-q==1}'; then
+        setxkbmap de
+        notify-send "X server keyboard layout: de"
     else
-	setxkbmap dvorak
-	notify-send "X server keyboard layout: dvorak"
+        setxkbmap dvorak
+        notify-send "X server keyboard layout: dvorak"
     fi
-    
+
 elif [ "$TERM" = "linux" ]; then
     if dumpkeys     | awk '$3=="=" && $4=="q" {q=$2}
                            $3=="=" && $4=="w" {w=$2}
-       		           END {exit w-q==1}'; then
-	loadkeys de
-	echo "Terminal keyboard layout: de"
+                           END {exit w-q==1}'; then
+        loadkeys de
+        echo "Terminal keyboard layout: de"
     else
-	loadkeys dvorak
-	echo "Terminal keyboard layout: dvorak"
+        loadkeys dvorak
+        echo "Terminal keyboard layout: dvorak"
     fi
 fi
