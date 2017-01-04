@@ -13,4 +13,5 @@ source ${DOTFILES_PATH}/lib/bash/help.sh
 # source ${DOTFILES_PATH}/lib/bash/config-file
 
 
+# TODO: Use config file for local/dev
 find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d

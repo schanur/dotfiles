@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# Set git remotes by the path of the symbolic link.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/../..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/config.sh
+source ${DOTFILES_PATH}/lib/bash/require.sh
+
+
+# Return the first path after the dev base path.
+# Example: "/local/dev/private/work/git-repo" -> "private"
+function storage_policy_by_path {
+    local DEV_BASE_PATH=${1}
+    local CURRENT_PATH=${2}
+
+    echo ${CURRENT_PATH} \
+        | sed -e 's|^.*'${DEV_BASE_PATH}'||g' \
+        | sed -e 's|/.*$||g'
+}
+
+function remove_all_remotes {
+    local REMOTE
+    for REMOTE in $(git remote); do
+        git remote remove ${REMOTE}
+    done
+}
+
+function remove_remote_by_name {
+    local REMOTE_NAME=${1}
+    git remote remove ${REMOTE_NAME}
+}
+
+function repo_has_remote_name {
+    local REMOTE_NAME=${1}
+    local REPO_HAS_REMOTE="0"
+    case $(git remote | wc -l) in
+        0)
+            true
+            ;;
+        1)
+            REPO_HAS_REMOTE="1"
+            ;;
+        *)
+            echo "More than one remote matches remote name."
+            exit 1
+            ;;
+    esac
+    echo ${REPO_HAS_REMOTE}
+}
+
+# Echo 1 if the repo remote with the name of the first parameter
+# already has the URL of the secons parameter. 0 otherwise.
+function repo_remote_name_has_url {
+    local REMOTE_NAME=${1}
+    local REMOTE_URL=${2}
+    local HAS_URL="0"
+
+    require
+
+    if [ git remote | grep  ]; then
+       true
+    fi
+
+    echo ${HAS_URL}
+}
+
+
+DEV_BASE_PATH="local/dev/"
+STORAGE_POLICY=$(storage_policy_by_path ${DEV_BASE_PATH} $(pwd))
+GIT_REMOTES_CONFIG_FILE="$(absolute_config_file git-remotes.conf)"
+
+echo "Development base path: ${DEV_BASE_PATH}"
+echo "Storage policy:        ${STORAGE_POLICY}"
+echo "Config file:           ${GIT_REMOTES_CONFIG_FILE}"
+echo
+
+if [ "${STORAGE_POLICY}" = "" ]; then
+    echo "Invalid storage policy. Are you in a subfolder of development base path?"
+    exit 1
+fi
+
+if [ $(cat ${GIT_REMOTES_CONFIG_FILE} | grep -c ${STORAGE_POLICY}) = "0" ]; then
+    echo "No remotes found in config file."
+    exit 1
+fi
+
+NEW_REMOTE_LIST="$(cat ${GIT_REMOTES_CONFIG_FILE} \
+    | egrep "^${STORAGE_POLICY}\ " \
+    | cut -f 2 -d ' ')"
+
+echo ${NEW_REMOTE_LIST}
+
