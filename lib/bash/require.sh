@@ -2,7 +2,7 @@
 source ${DOTFILES_PATH}/lib/bash/debug.sh
 
 function require_failed {
-    echo "Abort!"  >&2
+    echo "Abort!" >&2
     stack_trace
     exit 1
 }
@@ -97,8 +97,8 @@ function require_equal_numeric_value {
     local ACTUAL_VALUE=${1}
     local EXPECTED_VALUE=${2}
 
-    require_numeric_value ${ACTUAL_VALUE]
-    require_numeric_value ${EXPECTED_VALUE]
+    require_numeric_value ${ACTUAL_VALUE}
+    require_numeric_value ${EXPECTED_VALUE}
 
     if [ ${ACTUAL_VALUE} != ${EXPECTED_VALUE} ]; then
         echo "Variable has not expected numeric value: ${LINK_NAME}" >&2
