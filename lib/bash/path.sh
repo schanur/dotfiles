@@ -28,6 +28,23 @@ function with_absolute_path {
     echo ${WITH_ABSOLUTE_PATH}
 }
 
+# Print the directory name of the deepest path of the absolute path of
+# the first parameter.
+#
+# Examples:
+# "/home/user/local/test => test"
+# ". => test" (if pwd is /home/user/local/test)
+function deepest_path {
+    local RELATIVE_PATH=${1}
+    local ABSOLUTE_PATH
+    local DEEPEST_PATH
+
+    ABSOLUTE_PATH="$(with_absolute_path ${RELATIVE_PATH})"
+    DEEPEST_PATH="$(basename ${ABSOLUTE_PATH})"
+
+    echo ${DEEPEST_PATH}
+}
+
 ## Maybe useful on systems where readlink is not supported or behaves
 ## differently (Mac OS).
 

@@ -10,6 +10,9 @@ DOTFILES_PATH=${SCRIPT_PATH}/../..
 
 source ${DOTFILES_PATH}/lib/bash/help.sh
 source ${DOTFILES_PATH}/lib/bash/config.sh
+source ${DOTFILES_PATH}/lib/bash/debug.sh
+source ${DOTFILES_PATH}/lib/bash/dry_run.sh
+source ${DOTFILES_PATH}/lib/bash/path.sh
 source ${DOTFILES_PATH}/lib/bash/require.sh
 
 
@@ -27,19 +30,28 @@ function storage_policy_by_path {
 function remove_all_remotes {
     local REMOTE
     for REMOTE in $(git remote); do
-        git remote remove ${REMOTE}
+
+        run_or_simulate "git remote remove ${REMOTE}"
     done
 }
 
 function remove_remote_by_name {
     local REMOTE_NAME=${1}
-    git remote remove ${REMOTE_NAME}
+
+    run_or_simulate "git remote remove ${REMOTE_NAME}"
+}
+
+function add_remote {
+    local REMOTE_NAME=${1}
+    local REMOTE_URL=${2}
+
+    run_or_simulate "git remote add ${REMOTE_NAME} ${REMOTE_URL}"
 }
 
 function repo_has_remote_name {
     local REMOTE_NAME=${1}
     local REPO_HAS_REMOTE="0"
-    case $(git remote | wc -l) in
+    case $(git remote | grep ${REMOTE_NAME} | wc -l) in
         0)
             true
             ;;
@@ -55,16 +67,19 @@ function repo_has_remote_name {
 }
 
 # Echo 1 if the repo remote with the name of the first parameter
-# already has the URL of the secons parameter. 0 otherwise.
+# already has the URL of the second parameter. 0 otherwise.
 function repo_remote_name_has_url {
     local REMOTE_NAME=${1}
     local REMOTE_URL=${2}
+    local FOUND_REMOTE_URL
     local HAS_URL="0"
 
-    require
+    require_equal_numeric_value $(repo_has_remote_name ${REMOTE_NAME}) 1
 
-    if [ git remote | grep  ]; then
-       true
+    FOUND_REMOTE_URL="$(git remote -v | grep "${REMOTE_NAME}" |head -n 1 | tr '\t' ' ' | cut -f 2 -d ' ')"
+
+    if [ "${FOUND_REMOTE_URL}" = "${REMOTE_URL}" ]; then
+        HAS_URL="1"
     fi
 
     echo ${HAS_URL}
@@ -74,10 +89,13 @@ function repo_remote_name_has_url {
 DEV_BASE_PATH="local/dev/"
 STORAGE_POLICY=$(storage_policy_by_path ${DEV_BASE_PATH} $(pwd))
 GIT_REMOTES_CONFIG_FILE="$(absolute_config_file git-remotes.conf)"
+REPO_NAME="$(deepest_path $(pwd))"
 
+echo
 echo "Development base path: ${DEV_BASE_PATH}"
 echo "Storage policy:        ${STORAGE_POLICY}"
 echo "Config file:           ${GIT_REMOTES_CONFIG_FILE}"
+echo "Repository name:       ${REPO_NAME}"
 echo
 
 if [ "${STORAGE_POLICY}" = "" ]; then
@@ -90,9 +108,47 @@ if [ $(cat ${GIT_REMOTES_CONFIG_FILE} | grep -c ${STORAGE_POLICY}) = "0" ]; then
     exit 1
 fi
 
-NEW_REMOTE_LIST="$(cat ${GIT_REMOTES_CONFIG_FILE} \
-    | egrep "^${STORAGE_POLICY}\ " \
-    | cut -f 2 -d ' ')"
+NEW_REMOTE_LINE_NO_LIST="$(cat ${GIT_REMOTES_CONFIG_FILE} \
+    | egrep -n "^${STORAGE_POLICY}\ " \
+    | sed -e 's/:.*$//g')"
 
-echo ${NEW_REMOTE_LIST}
+for LINE_NO in ${NEW_REMOTE_LINE_NO_LIST}; do
+    CONF_FILE_STORAGE_POLICY=$(  cat ${GIT_REMOTES_CONFIG_FILE} | sed -n "${LINE_NO} p" |cut -f 1 -d ' ')
+    CONF_FILE_REMOTE_NAME=$(     cat ${GIT_REMOTES_CONFIG_FILE} | sed -n "${LINE_NO} p" |cut -f 2 -d ' ')
+    CONF_FILE_REMOTE_URL_START=$(cat ${GIT_REMOTES_CONFIG_FILE} | sed -n "${LINE_NO} p" |cut -f 3 -d ' ')
+    FULL_REMOTE_URL="${CONF_FILE_REMOTE_URL_START}/${REPO_NAME}.git"
+    REPO_HAS_REMOTE_NAME=$(repo_has_remote_name ${CONF_FILE_REMOTE_NAME})
+    REPO_REMOTE_NAME_HAS_URL="0"
 
+    # echo "LINE_NO:                     ${LINE_NO}"
+    # echo "CONF_FILE_STORAGE_POLICY:    ${CONF_FILE_STORAGE_POLICY}"
+    # echo "CONF_FILE_REMOTE_NAME:       ${CONF_FILE_REMOTE_NAME}"
+    # echo "CONF_FILE_REMOTE_URL_STRART: ${CONF_FILE_REMOTE_URL_START}"
+    # echo "FULL_REMOTE_URL:             ${FULL_REMOTE_URL}"
+    # echo "REPO_HAS_REMOTE_NAME:        ${REPO_HAS_REMOTE_NAME}"
+
+    if [ ${REPO_HAS_REMOTE_NAME} = "1" ]; then
+        REPO_REMOTE_NAME_HAS_URL="$(repo_remote_name_has_url ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL})"
+    fi
+
+    case "${REPO_HAS_REMOTE_NAME}${REPO_REMOTE_NAME_HAS_URL}" in
+        '00')
+            echo -n "Add entry:    "
+            add_remote ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL}
+            ;;
+        '10')
+            echo -n "Update URL:   "
+            remove_remote_by_name ${CONF_FILE_REMOTE_NAME}
+            add_remote ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL}
+            ;;
+        '11')
+            echo -n "Entry exists: "
+            ;;
+        *)
+            echo -n "Invalid state!"
+            exit 1
+            ;;
+    esac
+    echo "${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL}"
+    # echo
+done

@@ -18,3 +18,7 @@ function stack_trace {
         echo ${I} ${FUNC} ${SRC} ${LINE_NO} >&2
     done
 }
+
+function dbg_msg {
+    echo "${*}" >&2
+}
