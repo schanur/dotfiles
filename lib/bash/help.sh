@@ -158,7 +158,7 @@ function help {
 function parse_help_parameter {
     if [ ${#} -eq 1 ]; then
         case ${1} in
-            '--help'|'-h')
+            '--help'|'-h'|'help')
                 help
                 exit 0
                 ;;
