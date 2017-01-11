@@ -2,6 +2,9 @@
 
 # Set git remotes by the path of the symbolic link.
 
+# Options: -d | --delete-other
+#     If a storage policy was found, delete all existing entries
+#     before adding the new ones.
 
 set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME=$(readlink -f $0)
@@ -76,7 +79,7 @@ function repo_remote_name_has_url {
 
     require_equal_numeric_value $(repo_has_remote_name ${REMOTE_NAME}) 1
 
-    FOUND_REMOTE_URL="$(git remote -v | grep "${REMOTE_NAME}" |head -n 1 | tr '\t' ' ' | cut -f 2 -d ' ')"
+    FOUND_REMOTE_URL="$(git remote -v | egrep "^${REMOTE_NAME}" |head -n 1 | tr '\t' ' ' | cut -f 2 -d ' ')"
 
     if [ "${FOUND_REMOTE_URL}" = "${REMOTE_URL}" ]; then
         HAS_URL="1"
@@ -85,6 +88,9 @@ function repo_remote_name_has_url {
     echo ${HAS_URL}
 }
 
+function parse_arguments {
+    while
+}
 
 DEV_BASE_PATH="local/dev/"
 STORAGE_POLICY=$(storage_policy_by_path ${DEV_BASE_PATH} $(pwd))
@@ -99,7 +105,7 @@ echo "Repository name:       ${REPO_NAME}"
 echo
 
 if [ "${STORAGE_POLICY}" = "" ]; then
-    echo "Invalid storage policy. Are you in a subfolder of development base path?"
+    echo "Invalid storage policy. Are you in a subfolder of the development base path?"
     exit 1
 fi
 
@@ -120,29 +126,30 @@ for LINE_NO in ${NEW_REMOTE_LINE_NO_LIST}; do
     REPO_HAS_REMOTE_NAME=$(repo_has_remote_name ${CONF_FILE_REMOTE_NAME})
     REPO_REMOTE_NAME_HAS_URL="0"
 
+    if [ ${REPO_HAS_REMOTE_NAME} = "1" ]; then
+        REPO_REMOTE_NAME_HAS_URL="$(repo_remote_name_has_url ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL})"
+    fi
+
     # echo "LINE_NO:                     ${LINE_NO}"
     # echo "CONF_FILE_STORAGE_POLICY:    ${CONF_FILE_STORAGE_POLICY}"
     # echo "CONF_FILE_REMOTE_NAME:       ${CONF_FILE_REMOTE_NAME}"
     # echo "CONF_FILE_REMOTE_URL_STRART: ${CONF_FILE_REMOTE_URL_START}"
     # echo "FULL_REMOTE_URL:             ${FULL_REMOTE_URL}"
     # echo "REPO_HAS_REMOTE_NAME:        ${REPO_HAS_REMOTE_NAME}"
-
-    if [ ${REPO_HAS_REMOTE_NAME} = "1" ]; then
-        REPO_REMOTE_NAME_HAS_URL="$(repo_remote_name_has_url ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL})"
-    fi
+    # echo "REPO_REMOTE_NAME_HAS_URL:    ${REPO_REMOTE_NAME_HAS_URL}"
 
     case "${REPO_HAS_REMOTE_NAME}${REPO_REMOTE_NAME_HAS_URL}" in
         '00')
-            echo -n "Add entry:    "
+            echo -n "Add entry:             "
             add_remote ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL}
             ;;
         '10')
-            echo -n "Update URL:   "
+            echo -n "Update URL:            "
             remove_remote_by_name ${CONF_FILE_REMOTE_NAME}
             add_remote ${CONF_FILE_REMOTE_NAME} ${FULL_REMOTE_URL}
             ;;
         '11')
-            echo -n "Entry exists: "
+            echo -n "Entry exists:          "
             ;;
         *)
             echo -n "Invalid state!"
