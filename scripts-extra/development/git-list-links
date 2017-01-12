@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Return a list of all personal git repositories.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/../..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/link.sh
+
+# source ${DOTFILES_PATH}/lib/bash/config-file
+
+
+# TODO: Use config file for local/dev
+# find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d
+
+for REPO_LINK in $(find ~/local/dev -maxdepth 2 -mindepth 2 -type l); do
+    if [ "$(link_target ${REPO_LINK} | cut -f 2 -d '/')" != "all" ]; then
+        echo "Error: Invalid link: ${REPO_LINK} => $(link_target ${REPO_LINK})"
+        # continue
+        exit 1
+    fi
+    echo "${REPO_LINK}"
+done
+
+# find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d
+
