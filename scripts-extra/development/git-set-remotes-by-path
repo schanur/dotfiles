@@ -88,9 +88,26 @@ function repo_remote_name_has_url {
     echo ${HAS_URL}
 }
 
-# function parse_arguments {
-#     while
-# }
+function parse_arguments {
+    # ALL_ARGS_BACKUP="${*}"
+    while [ ${#} -ge 1 ]; do
+        case ${1} in
+            '-d'|'--delete-others')
+                CMD_FLAG__DELETE_OTHERS="1"
+                ;;
+            *)
+                echo "Invalid argument: ${1}"
+                exit 1
+                ;;
+        esac
+        shift
+    done
+}
+
+CMD_FLAG__DELETE_OTHERS="0"
+
+parse_arguments "${@}"
+
 
 DEV_BASE_PATH="local/dev/"
 STORAGE_POLICY=$(storage_policy_by_path ${DEV_BASE_PATH} $(pwd))
@@ -112,6 +129,11 @@ fi
 if [ $(cat ${GIT_REMOTES_CONFIG_FILE} | grep -c ${STORAGE_POLICY}) = "0" ]; then
     echo "No remotes found in config file."
     exit 1
+fi
+
+
+if [ ${CMD_FLAG__DELETE_OTHERS} = "1" ]; then
+    remove_all_remotes
 fi
 
 NEW_REMOTE_LINE_NO_LIST="$(cat ${GIT_REMOTES_CONFIG_FILE} \
