@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Run a git command on all git repositories returned by git-list.
+# Run a command on all git repositories returned by git-list.
 
 
 set -o errexit -o nounset -o pipefail
@@ -20,5 +20,6 @@ fi
 
 for GIT_REPO_PATH in $(git-list); do
     echo ${GIT_REPO_PATH}
-    (cd ${GIT_REPO_PATH} && (git ${PARAMS} || (echo "Failed!" && exit 1)))
+    # (cd ${GIT_REPO_PATH} && (git ${PARAMS} || (echo "Failed!" && exit 1)))
+    (cd ${GIT_REPO_PATH} && (${PARAMS} || (echo "Failed!" && exit 1)))
 done
