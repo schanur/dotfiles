@@ -1,4 +1,6 @@
 
+source ${DOTFILES_PATH}/lib/bash/error.sh
+
 # Sets the global variable GL_STR_MATCH to the number of times the
 # string was found in the file given by parameter 1.
 function file__count_str_match {
@@ -18,9 +20,9 @@ function file__count_str_match {
 }
 
 function file__replace_first_match {
-
+    not_implemented_error
 }
 
 function file__replace_all_matches_in_file {
-
+    not_implemented_error
 }

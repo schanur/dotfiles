@@ -1,5 +1,6 @@
 
 source ${DOTFILES_PATH}/lib/bash/debug.sh
+source ${DOTFILES_PATH}/lib/bash/numerical.sh
 
 function require_failed {
     echo "Abort!" >&2
@@ -85,12 +86,10 @@ function require_variable {
 function require_numeric_value {
     local VARIABLE=${1}
 
-    case ${VARIABLE} in
-        ''|*[!0-9]*)
-            echo "Variable is no numeric value: ${VARIABLE}" >&2
-            require_failed
-            ;;
-    esac
+    if [ $(is_number ${VARIABLE}) -ne 1 ]; then
+        echo "Variable is no numeric value: ${VARIABLE}" >&2
+        require_failed
+    fi
 }
 
 function require_equal_numeric_value {

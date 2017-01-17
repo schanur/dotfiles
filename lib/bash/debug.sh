@@ -1,4 +1,7 @@
 
+source ${DOTFILES_PATH}/lib/bash/string.sh
+
+
 function stack_trace {
     local I
 
@@ -21,4 +24,31 @@ function stack_trace {
 
 function dbg_msg {
     echo "${*}" >&2
+}
+
+function print_var {
+    local VARIABLE_NAME=${1}
+    local INDENTATION_DEPTH
+
+    if [ ${#} -eq 2 ]; then
+        INDENTATION_DEPTH=${2}
+    else
+        (( INDENTATION_DEPTH = ${#VARIABLE_NAME} + 2 ))
+    fi
+
+    echo -n "$(fill_tail "${VARIABLE_NAME}:" ${INDENTATION_DEPTH} ' ')"
+    eval "echo \"\${${VARIABLE_NAME}}\""
+
+}
+
+function print_var_list {
+    local VARIABLE_NAME_LIST=${*}
+    local MAXIMUM_VARIABLE_NAME_LENGTH=$(longest_string_length ${VARIABLE_NAME_LIST})
+    local VARIABLE_NAME
+
+    (( MAXIMUM_VARIABLE_NAME_LENGTH += 2 )) # ": " at end.
+
+    for VARIABLE_NAME in ${VARIABLE_NAME_LIST}; do
+        print_var ${VARIABLE_NAME} ${MAXIMUM_VARIABLE_NAME_LENGTH}
+    done
 }

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Test the lib/bash/git module.
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/..
+
+
+source ${DOTFILES_PATH}/lib/bash/git.sh
+source ${DOTFILES_PATH}/lib/bash/debug.sh
+
+
+# GL_A="123"
+# GL_B=345
+# GL_CD="678 90"
+# print_var_list GL_A GL_B GL_CD
+# echo
+
+github_repos_by_user schanur
+# git_repo_exists "ssh://rudel.homenet.org:443/local/git_serv/emacs.d.git"

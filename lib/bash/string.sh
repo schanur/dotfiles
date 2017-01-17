@@ -1,4 +1,18 @@
 
+# "a bcd ef" => "3"
+function longest_string_length {
+    local STR_LIST="${*}"
+    local MAX_STR_LENGTH=0
+
+    for STR in ${STR_LIST}; do
+        if [ ${#STR} -ge ${MAX_STR_LENGTH} ]; then
+            MAX_STR_LENGTH=${#STR}
+        fi
+    done
+
+    echo ${MAX_STR_LENGTH}
+}
+
 function fill_tail {
     local STRING=${1}
     local LENGTH=${2}

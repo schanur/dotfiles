@@ -1,4 +1,7 @@
 
+source ${DOTFILES_PATH}/lib/bash/error.sh
+
+
 function find_parallel_tool {
     local XJOBS_EXECUTABLE_FOUND=1
 
@@ -22,8 +25,7 @@ function parallel_xjobs {
 }
 
 function parallel_gnu_parallel {
-    echo "Not implemented"
-    exit 2
+    not_implemented_error
 }
 
 function parallel_init {
