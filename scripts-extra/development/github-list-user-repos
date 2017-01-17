@@ -9,12 +9,12 @@ SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 DOTFILES_PATH=${SCRIPT_PATH}/../..
 
 source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/git.sh
 
 
 function main {
     if [ "${#}" -eq "1" ]; then
-        local USERNAME=${1}
-        curl  -s "https://api.github.com/users/${USERNAME}/repos?page=1&per_page=100" |grep html_url |grep "${USERNAME}/" |sed -e "s|.*${USERNAME}/||g" |sed -e "s|\",||g"
+        github_repos_by_user ${1}
     else
         invalid_parameter_exit
     fi
