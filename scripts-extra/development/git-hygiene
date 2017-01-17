@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Run a git command on all git repositories returned by git-list.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/../..
+
+source ${DOTFILES_PATH}/lib/bash/help.sh
+
+
+REPO_REPO_PATH_LIST=$(git-list)
+
+echo ${REPO_REPO_PATH_LIST}

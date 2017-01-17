@@ -105,7 +105,7 @@ function parse_arguments {
 }
 
 CMD_FLAG__DELETE_OTHERS="0"
-
+CMD_FLAG__INIT_REMOTE
 parse_arguments "${@}"
 
 

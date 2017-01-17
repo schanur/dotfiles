@@ -18,4 +18,3 @@ LATEST_AVAILABLE_EMACS_VERSION=$(find /usr/bin -name "emacs??" |sort -V |tail -n
 export TERM=xterm-256color
 ${LATEST_AVAILABLE_EMACS_VERSION} -nw
 exit $?
-
