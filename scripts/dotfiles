@@ -22,14 +22,19 @@ function list_scripts {
     local ABS_SCRIPT_FILENAME
     local RELATIVE_SCRIPT_FILENAME
     local TABBED_FILENAME
-    for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_PATH} |sort); do
-        if [ ! -d  ${ABS_SCRIPT_FILENAME} ]; then
-            RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
-            TABBED_FILENAME=$(fill_tail ${RELATIVE_SCRIPT_FILENAME} 28 " ")
-            # get_short_description ${ABS_SCRIPT_FILENAME}
-
-            echo "${TABBED_FILENAME}$(short_description ${ABS_SCRIPT_FILENAME})"
-        fi
+    for SCRIPT_GROUP_PATH in $(echo ${SCRIPT_PATH} $(find ${DOTFILES_PATH}/scripts-extra -type d)); do
+        echo ${SCRIPT_GROUP_PATH}
+        # continue
+        for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_GROUP_PATH} |sort); do
+            # true
+            echo ${SCRIPT_GROUP_PATH} ${ABS_SCRIPT_FILENAME}
+            # if [ ! -d  ${ABS_SCRIPT_FILENAME} ]; then
+            #     RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
+            #     TABBED_FILENAME=$(fill_tail ${RELATIVE_SCRIPT_FILENAME} 28 " ")
+            #     # get_short_description ${ABS_SCRIPT_FILENAME}
+            #     echo "${TABBED_FILENAME}$(short_description ${ABS_SCRIPT_FILENAME})"
+            # fi
+        done
     done
 }
 
