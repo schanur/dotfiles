@@ -1,5 +1,7 @@
 
+source ${DOTFILES_PATH}/lib/bash/error.sh
+
+
 function flag_option_set {
-    echo "Not implemented yet!"
-    exit 1
+    not_implemented_error
 }
