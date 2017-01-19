@@ -9,42 +9,30 @@ SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 DOTFILES_PATH=${SCRIPT_PATH}/..
 
 source ${DOTFILES_PATH}/lib/bash/help.sh
+source ${DOTFILES_PATH}/lib/bash/path.sh
 source ${DOTFILES_PATH}/lib/bash/string.sh
-
-
-declare -A GL__SCRIPTS_DESCRIPTION
-
-# GL__SCRIPTS_DESCRIPTION=( ["add-license-file"]="Add a license file to a repository" \
-#                                               ["bootstrap_system "]="obsolete")
 
 
 function list_scripts {
     local ABS_SCRIPT_FILENAME
     local RELATIVE_SCRIPT_FILENAME
     local TABBED_FILENAME
-    for SCRIPT_GROUP_PATH in $(echo ${SCRIPT_PATH} $(find ${DOTFILES_PATH}/scripts-extra -type d)); do
-        echo ${SCRIPT_GROUP_PATH}
-        # continue
-        for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_GROUP_PATH} |sort); do
-            # true
-            echo ${SCRIPT_GROUP_PATH} ${ABS_SCRIPT_FILENAME}
-            # if [ ! -d  ${ABS_SCRIPT_FILENAME} ]; then
-            #     RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
-            #     TABBED_FILENAME=$(fill_tail ${RELATIVE_SCRIPT_FILENAME} 28 " ")
-            #     # get_short_description ${ABS_SCRIPT_FILENAME}
-            #     echo "${TABBED_FILENAME}$(short_description ${ABS_SCRIPT_FILENAME})"
-            # fi
+    local SCRIPT_GROUP
+    local SCRIPT_NAME
+
+    for SCRIPT_GROUP_PATH in $(echo ${SCRIPT_PATH} $(find ${DOTFILES_PATH}/scripts-extra -mindepth 1 -type d | sort)); do
+        SCRIPT_GROUP="$(deepest_path ${SCRIPT_GROUP_PATH})"
+        echo
+        echo ${SCRIPT_GROUP}
+        echo $(fill_tail "" ${#SCRIPT_GROUP} "-")
+        for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_GROUP_PATH} -mindepth 1 | sort); do
+            SCRIPT_NAME="$(basename ${ABS_SCRIPT_FILENAME})"
+            RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
+            TABBED_FILENAME=$(fill_tail ${RELATIVE_SCRIPT_FILENAME} 28 " ")
+            echo "${TABBED_FILENAME}$(short_description ${ABS_SCRIPT_FILENAME})"
         done
     done
 }
-
-# absolute_script_filename {
-#     local SCRIPT_NAME=${1}
-#     local SCRIPT_EXISTS=1
-#     local ABS_SCRIPT_FILENAME
-
-
-# }
 
 # Print a section of a documentation of a script.
 function dotfiles_doc {
