@@ -1,4 +1,6 @@
 
+source ${DOTFILES_PATH}/lib/bash/require.sh
+
 # Prints absolute path of file. If the parameter is a directory, the
 # parent directory is printed.
 function absolute_path {
