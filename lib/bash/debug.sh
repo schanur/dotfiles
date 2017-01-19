@@ -26,6 +26,11 @@ function dbg_msg {
     echo "${*}" >&2
 }
 
+# Print variable name and value.
+#
+# Example:
+# print_var VAR1
+# VAR1: abc
 function print_var {
     local VARIABLE_NAME=${1}
     local INDENTATION_DEPTH
@@ -38,9 +43,16 @@ function print_var {
 
     echo -n "$(fill_tail "${VARIABLE_NAME}:" ${INDENTATION_DEPTH} ' ')"
     eval "echo \"\${${VARIABLE_NAME}}\""
-
 }
 
+# Print the names and value of all variable names in a proper
+# aligned table.
+#
+# Example:
+# print_var_list VAR1 VARIABLE2 ANOTHER_VAR
+# VAR1:        abc
+# VARIABLE2:   def
+# ANOTHER_VAR: geh 123
 function print_var_list {
     local VARIABLE_NAME_LIST=${*}
     local MAXIMUM_VARIABLE_NAME_LENGTH=$(longest_string_length ${VARIABLE_NAME_LIST})
