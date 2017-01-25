@@ -1,0 +1,3 @@
+[submodule "vendor/libbivalvia"]
+	path = vendor/libbivalvia
+	url = https://github.com/schanur/libbivalvia.git
