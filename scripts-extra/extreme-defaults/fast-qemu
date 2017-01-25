@@ -55,11 +55,11 @@ function start_vm {
         ${GPU_MODEL}                         \
         ${MACHINE_TYPE}                      \
         -no-fd-bootchk                       \
-        -drive file=${HD_IMAGE},cache=unsafe \
         -boot once=d                         \
         -net nic,${NIC_MODEL}vlan=0          \
         -net user,vlan=0                     \
         -name \"$(basename ${HD_IMAGE})\"    \
+        -drive file=${HD_IMAGE},cache=unsafe \
         ${ARGS}"
 
     echo ${CMD}
