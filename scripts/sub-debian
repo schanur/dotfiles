@@ -8,8 +8,8 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 DOTFILES_PATH=${SCRIPT_PATH}/..
 
-source ${DOTFILES_PATH}/lib/bash/help.sh
-source ${DOTFILES_PATH}/lib/bash/script-su.sh
+source ${DOTFILES_PATH}/lib/bivalvia/help.sh
+source ${DOTFILES_PATH}/lib/bivalvia/script-su.sh
 
 
 INSTALL_NAME=${1}

@@ -18,11 +18,11 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 DOTFILES_PATH=${SCRIPT_PATH}/../..
 
-source ${DOTFILES_PATH}/lib/bash/help.sh
-source ${DOTFILES_PATH}/lib/bash/numerical.sh
-source ${DOTFILES_PATH}/lib/bash/package_management_deb.sh
-source ${DOTFILES_PATH}/lib/bash/script-su.sh
-source ${DOTFILES_PATH}/lib/bash/require.sh
+source ${DOTFILES_PATH}/lib/bivalvia/help.sh
+source ${DOTFILES_PATH}/lib/bivalvia/numerical.sh
+source ${DOTFILES_PATH}/lib/bivalvia/package_management_deb.sh
+source ${DOTFILES_PATH}/lib/bivalvia/script-su.sh
+source ${DOTFILES_PATH}/lib/bivalvia/require.sh
 
 INSTALLED_PACKAGE_LIST=""
 SELECTED_PACKAGE_LIST=""
