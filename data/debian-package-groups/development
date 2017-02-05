@@ -3,6 +3,7 @@ bundler
 check
 clang
 cmake
+colorgcc
 ddd
 doxygen
 doxygen-gui
@@ -38,6 +39,7 @@ python3
 qt5-default
 rake
 ruby-method-source
+shellcheck
 silversearcher-ag
 swig
 valgrind
