@@ -25,6 +25,7 @@ function list_scripts {
         echo
         echo ${SCRIPT_GROUP}
         echo $(fill_tail "" ${#SCRIPT_GROUP} "-")
+        echo
         for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_GROUP_PATH} -mindepth 1 | sort); do
             SCRIPT_NAME="$(basename ${ABS_SCRIPT_FILENAME})"
             RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
