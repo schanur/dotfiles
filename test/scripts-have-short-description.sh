@@ -7,8 +7,8 @@ SCRIPT_FILENAME=$(readlink -f $0)
 SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 DOTFILES_PATH=${SCRIPT_PATH}/..
 
-source ${DOTFILES_PATH}/lib/bash/require.sh
-source ${DOTFILES_PATH}/lib/bash/config.sh
+source ${DOTFILES_PATH}/lib/bivalvia/require.sh
+source ${DOTFILES_PATH}/lib/bivalvia/config.sh
 
 
 dotfiles \
