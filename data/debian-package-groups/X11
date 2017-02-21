@@ -1,3 +1,7 @@
+adwaita-icon-theme
+adwaita-qt
+adwaita-qt-data
+adwaita-qt4
 dunst
 evince
 filezilla
@@ -7,6 +11,8 @@ gedit-plugins
 gksu
 gmtp
 gnome-commander
+gnome-themes-standard
+gnome-themes-standard-data
 i3
 i3lock
 i3status
@@ -23,10 +29,13 @@ network-manager-openvpn-gnome
 network-manager-vpnc-gnome
 network-manager-pptp-gnome
 pdfsam
+qt4-qtconfig
+qt5-style-plugins
 rxvt-unicode-256color
 scrot
 system-config-printer
 wdm
+wireshark
 xfonts-terminus
 xserver-xorg
 xterm

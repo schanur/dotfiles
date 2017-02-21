@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Link .profile to provided profile config file of this repository.
+# Link .config/Trolltech.conf to provided profile config file of this repository.
 
 
 set -o errexit -o nounset -o pipefail
@@ -12,8 +12,8 @@ source ${DOTFILES_PATH}/lib/bivalvia/help.sh
 source ${DOTFILES_PATH}/lib/bivalvia/link.sh
 
 function main() {
-    local LINK_FILEAME_RELATIVE_TO_HOME=".profile"
-    local DOTFILES_FILENAME="${SCRIPT_PATH}/../profile/profile"
+    local LINK_FILEAME_RELATIVE_TO_HOME=".config/Trolltech.conf"
+    local DOTFILES_FILENAME="${SCRIPT_PATH}/../qt4/Trolltech.conf"
 
     backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}
 }
