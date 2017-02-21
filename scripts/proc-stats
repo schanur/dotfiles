@@ -14,7 +14,7 @@ source ${DOTFILES_PATH}/lib/bivalvia/string.sh
 
 function echo_align {
     local STRING=${1}
-    echo -n "$(fill_tail ${STRING}: 25 ' ')"
+    echo -n "$(fill_tail 25 ' ' ${STRING}:)"
 }
 
 PROCESS_ID=${1}
@@ -83,6 +83,6 @@ FIELD_DESCRIPTION=(
 
 I=0
 for STAT_VAR in $(cat ${STAT_FILE}) ; do
-    echo "$(fill_tail ${I}: 3 ' ') $(echo_align ${FIELD_DESCRIPTION[${I}]}) $STAT_VAR"
+    echo "$(fill_tail 3 ' ' ${I}:) $(echo_align ${FIELD_DESCRIPTION[${I}]}) $STAT_VAR"
     let I=I+1
 done
