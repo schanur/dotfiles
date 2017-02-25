@@ -1,8 +1,8 @@
 
 # Software management.
-alias sma='su  -c "apt-get update && aptitude upgrade"'
-alias smud='su -c "apt-get update"'
-alias smug='su -c "aptitude upgrade"'
+alias sma='su  -c "apt update && apt upgrade"'
+alias smud='su -c "apt update"'
+alias smug='su -c "apt upgrade"'
 
 alias ll='ls -la'
 # Show hidden files only.
