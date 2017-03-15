@@ -1,0 +1,9 @@
+gcc-arm-none-eabi
+gdb-arm-none-eabi
+libstdc++-arm-none-eabi-newlib
+lm4flash
+lmicdiusb
+lpc21isp
+libnewlib-arm-none-eabi
+gkrellm-hdplop
+wmhdplop

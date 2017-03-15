@@ -1,0 +1,4 @@
+gcc-msp430
+gdb-msp430
+msp430-libc
+mspdebug
