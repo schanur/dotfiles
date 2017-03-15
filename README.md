@@ -4,7 +4,7 @@
 
 It uses the [bivalvia](https://github.com/schanur/libbivalvia) bash library for some more complex scripts.
 
-Ccurrently contains:
+Currently contains:
    * A lot of aliases and scripts to make the output of programs more useful/colorful
    * A dark theme for following GUI toolkits: Qt5/Qt4/GTK3/GTK2 (Adwaita-dark)
    * Dark theme te command line music player moc
