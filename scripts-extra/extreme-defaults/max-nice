@@ -20,12 +20,27 @@ DOTFILES_PATH=${SCRIPT_PATH}/../..
 source ${DOTFILES_PATH}/lib/bivalvia/help.sh
 
 
-CMD=${*}
-
 IO_BARRIER_DISABLE_CMD="eatmydata"
 IONICE_CMD="ionice -c3"
 NICE_CMD="nice -n 19"
 CHRT_CMD="chrt -i 0"
+
+case "${1}" in
+    -b|--barrier)
+        IO_BARRIER_DISABLE_CMD=""
+        echo "Syncronization directives enabled."
+        shift
+        ;;
+    -*|--*)
+        echo "Unknown option"
+        exit 1
+        ;;
+    *)
+        true
+        ;;
+esac
+
+CMD=${*}
 
 ${IO_BARRIER_DISABLE_CMD} ${IONICE_CMD} ${NICE_CMD} ${CHRT_CMD} ${CMD}
 exit ${?}
