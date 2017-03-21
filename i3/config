@@ -56,7 +56,8 @@ bindsym $mod+Ctrl+v           exec vlc
 bindsym $mod+Ctrl+a           exec "~/local/dev/public/dotfiles/scripts/toggle-keyboard-layout"
 
 # make a screnshot
-bindsym XF86Display           exec "scrot ~/Downloads/Screenshot%Y-%m-%d%H:%M:%S.png"
+bindsym $mod+Ctrl+p           exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
+bindsym XF86Display           exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
