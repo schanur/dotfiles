@@ -22,6 +22,11 @@ function install_component() {
     fi
 }
 
+function init_dependencies() {
+    git submodule init
+    git submodule update
+}
+
 function main () {
     local INSTALL_SCRIPT
     local FIRST_FILE=1;
