@@ -11,7 +11,10 @@
 	tool = meld
 [color]
 	ui = auto
-[core]
-	gitProxy = git-proxy
-[socks]
-	proxy = localhost:1080
+#[core]
+#	gitProxy = git-proxy
+#[socks]
+#	proxy = localhost:1080
+
+[diff "env"]
+	textconv = hexdump -v -C
