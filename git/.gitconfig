@@ -15,3 +15,6 @@
 	gitProxy = git-proxy
 [socks]
 	proxy = localhost:1080
+
+[diff "env"]
+	textconv = hexdump -v -C
