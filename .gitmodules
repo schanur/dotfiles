@@ -1,3 +1,6 @@
 [submodule "vendor/libbivalvia"]
 	path = vendor/libbivalvia
 	url = https://github.com/schanur/libbivalvia.git
+[submodule "vendor/oh-my-zsh"]
+	path = vendor/oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git

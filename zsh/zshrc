@@ -1,5 +1,9 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/ze/.oh-my-zsh
+
+ZSHRC_FILE="$(readlink -e ${(%):-%x})"
+ZSH_PATH="$(dirname ${ZSHRC_FILE})/../vendor/oh-my-zsh"
+
+export ZSH="${ZSH_PATH}"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
