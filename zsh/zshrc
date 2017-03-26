@@ -1,3 +1,9 @@
+
+# Emacs tramp fix.
+echo "TERM:          $TERM"
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+# return
+
 # Path to your oh-my-zsh installation.
 
 ZSHRC_FILE="$(readlink -e ${(%):-%x})"
