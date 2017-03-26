@@ -92,4 +92,7 @@ fi
 
 DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
 
+echo "DOTFILES_PATH: ${DOTFILES_PATH}"
+echo
+
 source ${DOTFILES_PATH}/shared/shellrc
