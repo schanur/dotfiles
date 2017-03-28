@@ -1,4 +1,5 @@
 
+echo "Set PATH:"
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/admin"
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/development"
@@ -6,4 +7,5 @@ export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/extreme-defaul
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/multimedia"
 
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
+echo "Load alias files:"
 source ${DOTFILES_PATH}/alias/all.sh
