@@ -1,7 +1,7 @@
 aqemu
 bridge-utils
 cgmanager
-cgroups-tool
+cgroup-tools
 libpam-cgroup
 libpam-cgfs
 lxc
