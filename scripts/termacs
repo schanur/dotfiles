@@ -14,6 +14,10 @@ source ${DOTFILES_PATH}/lib/bivalvia/help.sh
 find /usr/bin -name "emacs??" |sort -V
 
 LATEST_AVAILABLE_EMACS_VERSION=$(find /usr/bin -name "emacs??" |sort -V |tail -n 1)
+if [ "${LATEST_AVAILABLE_EMACS_VERSION}" = "" ]; then
+    echo "No emacs version found. Abort!"
+    exit 1
+fi
 
 export TERM=xterm-256color
 ${LATEST_AVAILABLE_EMACS_VERSION} -nw
