@@ -20,5 +20,5 @@ if [ "${LATEST_AVAILABLE_EMACS_VERSION}" = "" ]; then
 fi
 
 export TERM=xterm-256color
-${LATEST_AVAILABLE_EMACS_VERSION} -nw
+${LATEST_AVAILABLE_EMACS_VERSION} -nw *$
 exit $?
