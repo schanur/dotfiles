@@ -90,7 +90,7 @@ function git_status {
 
 function warn_if_license_file_missing {
     local GIT_REPO_PATH=${1}
-    if [ ! -f ${GIT_REPO_PATH}/LICENSE.md ]; then
+    if [ ! -f ${GIT_REPO_PATH}/LICENSE.md -a ! -f ${GIT_REPO_PATH}/LICENSE.txt ]; then
         echo "No license file for repository: ${GIT_REPO_PATH}"
     fi
 }
