@@ -4,6 +4,8 @@ echo "TERM:          $TERM"
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 # return
 
+export SHELL_NAME="zsh"
+
 # Path to your oh-my-zsh installation.
 
 ZSHRC_FILE="$(readlink -e ${(%):-%x})"
