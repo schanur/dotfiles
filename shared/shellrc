@@ -9,6 +9,19 @@ export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/multimedia"
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
 echo "Load alias files:"
 source ${DOTFILES_PATH}/alias/all.sh
+
+CD_PATH_LIST=".:${HOME}:${HOME}/local:${HOME}/local/dev:${HOME}/local/dev/all"
+
+case ${SHELL_NAME} in
+    bash)
+        CDPATH=${CD_PATH_LIST}
+        ;;
+    zsh)
+        CDPATH=${CD_PATH_LIST}
+        # cdpath=${CD_PATH_LIST}
+        ;;
+esac
+
 echo "------------------------------------------------------------------------"
 echo -n "Alias of the day: "
 alias-of-the-day
