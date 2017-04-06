@@ -1,4 +1,12 @@
+echo "------------------------------------------------------------------------"
+echo "sharedrc"
+echo
 
+echo "SHELL_NAME: ${SHELL_NAME}"
+
+BIVALVIA_PATH="${DOTFILES_PATH}/lib/bivalvia"
+
+echo
 echo "Set PATH:"
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/admin"
@@ -7,8 +15,9 @@ export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/extreme-defaul
 export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/multimedia"
 
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
-echo "Load alias files:"
+echo -n "Load alias files:"
 source ${DOTFILES_PATH}/alias/all.sh
+echo
 
 CD_PATH_LIST=".:${HOME}:${HOME}/local:${HOME}/local/dev:${HOME}/local/dev/all"
 
