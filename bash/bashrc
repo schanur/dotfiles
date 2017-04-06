@@ -52,8 +52,9 @@ if [ -n "$force_color_prompt" ]; then
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
 	color_prompt=yes
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -113,6 +114,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
+export DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
 
 source ${DOTFILES_PATH}/shared/shellrc

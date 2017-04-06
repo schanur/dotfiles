@@ -96,7 +96,7 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
+export DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
 
 echo "DOTFILES_PATH: ${DOTFILES_PATH}"
 echo
