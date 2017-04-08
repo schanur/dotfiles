@@ -10,3 +10,7 @@ alias l.='ls -d .* --color=auto'
 
 alias du1='du --max-depth=1'
 alias du2='du --max-depth=2'
+
+# tmux
+alias t='tmux -2'
+alias ta='tmux attach'
