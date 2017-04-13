@@ -21,6 +21,16 @@ echo
 
 CD_PATH_LIST=".:${HOME}:${HOME}/local:${HOME}/local/dev:${HOME}/local/dev/all"
 
+# If user defined additional directories to add to CD_PATH, use them too.
+EXTRA_CD_PATH_FILE="${HOME}/.config/dotfiles/cdpath"
+if [ -r ${EXTRA_CD_PATH_FILE} ]; then
+    for EXTRA_CD_PATH in $(cat ${EXTRA_CD_PATH_FILE}); do
+        CD_PATH_LIST="${CD_PATH_LIST}:${EXTRA_CD_PATH}"
+    done
+fi
+
+echo "CD_PATH_LIST: ${CD_PATH_LIST}"
+
 case ${SHELL_NAME} in
     bash)
         CDPATH=${CD_PATH_LIST}
