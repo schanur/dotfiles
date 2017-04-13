@@ -16,5 +16,19 @@
 #[socks]
 #	proxy = localhost:1080
 
+
 [diff "env"]
 	textconv = hexdump -v -C
+
+[alias]
+        undo = reset --soft HEAD^
+
+#[commit]
+#        pgpSign = true
+
+[merge]
+        ff = only
+
+[push]
+        default = simple
+
