@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# List all scripts with a short description what they are doing.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME=$(readlink -f $0)
+SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
+DOTFILES_PATH=${SCRIPT_PATH}/..
+
+source ${DOTFILES_PATH}/lib/bivalvia/help.sh
+
+
+function entry_exists {
+
+}
+
+function shortcut_to_target_path {
+
+}
+
+function go {
+
+}
+
+function add {
+
+}
+
+function delete {
+
+}
+
+function list {
+
+}
+
+function main {
+    if [ "${#}" -eq "0" ]; then
+        no_param
+    else
+        case ${1} in
+            go)
+                go {2}
+                ;;
+            add)
+                add {2}
+                ;;
+            delete)
+                delete {2}
+                ;;
+            list)
+                list {2}
+                ;;
+            *)
+                invalid_parameter_exit
+                ;;
+        esac
+    fi
+
+}
+alias ftg='fast-travel go'
+alias fta='fast-travel add'
+alias ftd='fast-travel del'
+alias ftl='fast-travel list'
