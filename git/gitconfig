@@ -1,0 +1,34 @@
+[user]
+        name = Bjoern Griebenow
+        email = b.griebenow@web.de
+[pack]
+        windowMemory = 100m
+        packSizeLimit = 100m
+        threads = 1
+[svn]
+        rmdir = true
+[diff]
+        tool = meld
+[color]
+        ui = auto
+#[core]
+#       gitProxy = git-proxy
+#[socks]
+#       proxy = localhost:1080
+
+
+[diff "env"]
+      textconv = hexdump -v -C
+
+[alias]
+        undo = reset --soft HEAD^
+
+#[commit]
+#        pgpSign = true
+
+[merge]
+        ff = only
+
+[push]
+        default = simple
+
