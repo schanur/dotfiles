@@ -13,7 +13,7 @@ source ${DOTFILES_PATH}/lib/bivalvia/link.sh
 
 
 function main() {
-    local LINK_FILEAME_RELATIVE_TO_HOME=".bashrc"
+    local LINK_FILENAME_RELATIVE_TO_HOME=".bashrc"
     local DOTFILES_FILENAME="${SCRIPT_PATH}/../bash/bashrc"
 
     backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}

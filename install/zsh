@@ -10,10 +10,10 @@ source ${DOTFILES_PATH}/lib/bivalvia/link.sh
 
 
 function main() {
-    local LINK_FILEAME_RELATIVE_TO_HOME=".zshrc"
+    local LINK_FILENAME_RELATIVE_TO_HOME=".zshrc"
     local DOTFILES_FILENAME="${SCRIPT_PATH}/../zsh/zshrc"
 
-    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILEAME_RELATIVE_TO_HOME}
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
 }
 
 main
