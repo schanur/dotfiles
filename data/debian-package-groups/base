@@ -43,6 +43,7 @@ rzip
 samba
 sl
 slurm
+smbnetfs
 sshuttle
 sysstat
 unace
