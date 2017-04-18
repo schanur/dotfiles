@@ -142,7 +142,7 @@ function main {
 
 GL_PRINT_PROCESSED_REPOS=0
 
-GL_GIT_REPO_PATH_LIST=" $(git-list)"
+GL_GIT_REPO_PATH_LIST="$(git-list)"
 
 
 main "${GL_GIT_REPO_PATH_LIST}"

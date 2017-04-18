@@ -9,9 +9,20 @@ SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
 DOTFILES_PATH=${SCRIPT_PATH}/../..
 
 source ${DOTFILES_PATH}/lib/bivalvia/help.sh
+source ${DOTFILES_PATH}/lib/bivalvia/search.sh
 
-# source ${DOTFILES_PATH}/lib/bash/config-file
 
+REPO_PATH="${HOME}/local/dev/all"
+REPO_IGNORE_FILENAME="${REPO_PATH}/repo_ignore"
+
+
+# find "${REPO_PATH}" -maxdepth 1 -mindepth 1 -type d
+# exit 0
 
 # TODO: Use config file for local/dev
-find ~/local/dev/all -maxdepth 1 -mindepth 1 -type d
+for REPO_PATH in $(find "${REPO_PATH}" -maxdepth 1 -mindepth 1 -type d); do
+    REPO_NAME="$(basename ${REPO_PATH})"
+    if [ $(exact_string_match_count_in_file "${REPO_IGNORE_FILENAME}" "${REPO_NAME}") -eq 0 ]; then
+        echo ${REPO_PATH}
+    fi
+done
