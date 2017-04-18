@@ -28,8 +28,19 @@ if [ -r ${EXTRA_CD_PATH_FILE} ]; then
         CD_PATH_LIST="${CD_PATH_LIST}:${EXTRA_CD_PATH}"
     done
 fi
-
 echo "CD_PATH_LIST: ${CD_PATH_LIST}"
+
+echo "Search .executable_path files in all repositories:"
+for REPO_PATH in $(git-list); do
+    local REPO_EXECUTABLE_PATH_FILENAME="${REPO_PATH}/.executable_path"
+    if [ -r ${REPO_EXECUTABLE_PATH_FILENAME} ]; then
+        for EXECUTABLE_PATH in $(cat ${REPO_EXECUTABLE_PATH_FILENAME}); do
+            local ABSOLUTE_EXECUTABLE_PATH="$(dirname ${REPO_EXECUTABLE_PATH_FILENAME})/${EXECUTABLE_PATH}"
+            echo "${REPO_EXECUTABLE_PATH_FILENAME}: ${ABSOLUTE_EXECUTABLE_PATH}"
+            CD_PATH_LIST="${CD_PATH_LIST}:${ABSOLUTE_EXECUTABLE_PATH}"
+        done
+    fi
+done
 
 case ${SHELL_NAME} in
     bash)
@@ -40,6 +51,9 @@ case ${SHELL_NAME} in
         # cdpath=${CD_PATH_LIST}
         ;;
 esac
+echo
+echo "Final CDPATH:"
+echo ${CDPATH}
 
 echo "------------------------------------------------------------------------"
 echo -n "Alias of the day: "
