@@ -32,10 +32,10 @@ echo "CD_PATH_LIST: ${CD_PATH_LIST}"
 
 echo "Search .executable_path files in all repositories:"
 for REPO_PATH in $(git-list); do
-    local REPO_EXECUTABLE_PATH_FILENAME="${REPO_PATH}/.executable_path"
+    REPO_EXECUTABLE_PATH_FILENAME="${REPO_PATH}/.executable_path"
     if [ -r ${REPO_EXECUTABLE_PATH_FILENAME} ]; then
         for EXECUTABLE_PATH in $(cat ${REPO_EXECUTABLE_PATH_FILENAME}); do
-            local ABSOLUTE_EXECUTABLE_PATH="$(dirname ${REPO_EXECUTABLE_PATH_FILENAME})/${EXECUTABLE_PATH}"
+            ABSOLUTE_EXECUTABLE_PATH="$(dirname ${REPO_EXECUTABLE_PATH_FILENAME})/${EXECUTABLE_PATH}"
             echo "${REPO_EXECUTABLE_PATH_FILENAME}: ${ABSOLUTE_EXECUTABLE_PATH}"
             PATH="${PATH}:${ABSOLUTE_EXECUTABLE_PATH}"
         done
