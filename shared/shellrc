@@ -37,7 +37,7 @@ for REPO_PATH in $(git-list); do
         for EXECUTABLE_PATH in $(cat ${REPO_EXECUTABLE_PATH_FILENAME}); do
             local ABSOLUTE_EXECUTABLE_PATH="$(dirname ${REPO_EXECUTABLE_PATH_FILENAME})/${EXECUTABLE_PATH}"
             echo "${REPO_EXECUTABLE_PATH_FILENAME}: ${ABSOLUTE_EXECUTABLE_PATH}"
-            CD_PATH_LIST="${CD_PATH_LIST}:${ABSOLUTE_EXECUTABLE_PATH}"
+            PATH="${PATH}:${ABSOLUTE_EXECUTABLE_PATH}"
         done
     fi
 done
