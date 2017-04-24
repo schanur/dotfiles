@@ -31,6 +31,8 @@ function main () {
     local INSTALL_SCRIPT
     local FIRST_FILE=1;
 
+    init_dependencies
+
     for INSTALL_SCRIPT in $(find ${SCRIPT_PATH}/install ! -type d); do
         if [ ${FIRST_FILE} = "1" ]; then
             FIRST_FILE=0
