@@ -4,3 +4,6 @@
 [submodule "vendor/oh-my-zsh"]
 	path = vendor/oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "vendor/shell-status-prompt"]
+	path = vendor/shell-status-prompt
+	url = https://github.com/schanur/shell-status-prompt.git

@@ -55,6 +55,8 @@ echo
 echo "Final CDPATH:"
 echo ${CDPATH}
 
+source ${DOTFILES_PATH}/vendor/shell-status-prompt/shell-status-prompt.sh
+
 echo "------------------------------------------------------------------------"
 echo -n "Alias of the day: "
 alias-of-the-day
