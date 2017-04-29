@@ -46,20 +46,20 @@ function start_vm {
     #               -net nic,model=virtio"
 
 
-    CMD="eatmydata                           \
-        ${EMU_BINARY}                        \
-        -smp 2,sockets=1,cores=2,threads=1   \
-        ${CPU_MODEL}                         \
-        ${ENABLE_KVM}                        \
-        -m 2048                              \
-        ${GPU_MODEL}                         \
-        ${MACHINE_TYPE}                      \
-        -no-fd-bootchk                       \
-        -boot once=d                         \
-        -net nic,${NIC_MODEL}vlan=0          \
-        -net user,vlan=0                     \
-        -name \"$(basename ${HD_IMAGE})\"    \
-        -drive file=${HD_IMAGE},cache=unsafe \
+    CMD="eatmydata                                      \
+        ${EMU_BINARY}                                   \
+        -smp 2,sockets=1,cores=2,threads=1              \
+        ${CPU_MODEL}                                    \
+        ${ENABLE_KVM}                                   \
+        -m 2048                                         \
+        ${GPU_MODEL}                                    \
+        ${MACHINE_TYPE}                                 \
+        -no-fd-bootchk                                  \
+        -boot once=d                                    \
+        -net nic,${NIC_MODEL}vlan=0                     \
+        -net user,vlan=0                                \
+        -name \"$(basename ${HD_IMAGE})\"               \
+        -drive file=${HD_IMAGE},cache=unsafe,discard=on \
         ${ARGS}"
 
     echo ${CMD}
