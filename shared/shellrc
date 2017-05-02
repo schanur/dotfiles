@@ -30,7 +30,7 @@ if [ -r ${EXTRA_CD_PATH_FILE} ]; then
 fi
 echo "CD_PATH_LIST: ${CD_PATH_LIST}"
 
-echo "Search .executable_path files in all repositories:"
+echo ".executable_path files: "
 for REPO_PATH in $(git-list); do
     REPO_EXECUTABLE_PATH_FILENAME="${REPO_PATH}/.executable_path"
     if [ -r ${REPO_EXECUTABLE_PATH_FILENAME} ]; then
