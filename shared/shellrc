@@ -57,6 +57,8 @@ echo ${CDPATH}
 
 source ${DOTFILES_PATH}/vendor/shell-status-prompt/shell-status-prompt.sh
 
+export NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
+export MAKEFLAGS="-j $(( NUMCPUS * 2 ))"
 
 echo "------------------------------------------------------------------------"
 
