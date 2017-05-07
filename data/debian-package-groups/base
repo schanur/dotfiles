@@ -8,6 +8,10 @@ apparmor-utils
 aptitude
 arj
 autojump
+avahi-daemon
+avahi-discover
+avahi-dnsconfd
+avahi-utils
 beep
 bridge-utils
 cifs-utils
@@ -27,6 +31,7 @@ jq
 kwalify
 lhasa
 lm-sensors
+lockfile-progs
 lynx
 lrzip
 lzip
@@ -38,6 +43,7 @@ nfs-common
 nmap
 openssh-server
 powertop
+procmail
 rsync
 rzip
 samba
