@@ -17,6 +17,10 @@ function echo_align {
     echo -n "$(fill_tail 25 ' ' ${STRING}:)"
 }
 
+if [ ${#} -ne 1 ]; then
+    invalid_parameter_exit
+fi
+
 PROCESS_ID=${1}
 STAT_FILE="/proc/${PROCESS_ID}/stat"
 
