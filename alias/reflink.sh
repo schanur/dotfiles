@@ -1,2 +1,2 @@
 
-alias cp='cp --reflink=auto --sparse=always'
+alias cp='cp --reflink=auto'
