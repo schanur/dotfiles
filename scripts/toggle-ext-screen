@@ -11,43 +11,63 @@
 
 
 set -o errexit -o nounset -o pipefail
-SCRIPT_FILENAME=$(readlink -f $0)
-SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-DOTFILES_PATH=${SCRIPT_PATH}/..
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
 
-source ${DOTFILES_PATH}/lib/bivalvia/help.sh
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/debug.sh"
 
 
 INTERNAL_SCREEN_NAME="LVDS-1"
 EXTERNAL_SCREEN_NAME="VGA-1"
 
-function active_connected_screens() {
-    xrandr |grep "*" |grep -c "+"
+XRANDR_OUTPUT=""
+
+function cache_xrandr_output {
+    XRANDR_OUTPUT="$(xrandr)"
 }
 
-function active_disconnected_screens() {
-    xrandr |grep "*" |grep -c "+"
+# function active_connected_screens {
+#     echo "${XRANDR_OUTPUT}" | grep "*" | grep -c "+"
+# }
+
+# function active_disconnected_screens {
+#     echo "${XRANDR_OUTPUT}" | grep "*" | grep -c "+"
+# }
+
+function second_screen_preffered_resolution {
+    echo "${XRANDR_OUTPUT}" | grep "[ *]+" | tail -n 1 | tr -s ' ' | cut -f 2 -d ' '
 }
 
 function active_screens() {
-    expr $(active_connected_screens) + $(active_disconnected_screens)
-
+    echo "${XRANDR_OUTPUT}" | grep -c "*+"
+    # expr $(active_connected_screens) + $(active_disconnected_screens)
 }
 
-function screen_on() {
-    CMD="xrandr --output ${EXTERNAL_SCREEN_NAME} --mode 1440x900 --left-of ${INTERNAL_SCREEN_NAME}"
+function screen_on {
+    local NATIVE_RESOLUTION=$(second_screen_preffered_resolution)
+
+    CMD="\
+xrandr --output  ${EXTERNAL_SCREEN_NAME}
+       --mode    ${NATIVE_RESOLUTION}
+       --left-of ${INTERNAL_SCREEN_NAME}
+"
     echo ${CMD}
     ${CMD}
 }
 
-function screen_off() {
-    CMD="xrandr --output ${EXTERNAL_SCREEN_NAME} --off"
+function screen_off {
+    CMD="\
+xrandr --output ${EXTERNAL_SCREEN_NAME} --off
+"
     echo ${CMD}
     ${CMD}
 }
 
-function screen_toggle() {
+function screen_toggle {
     local ACTIVE_SCREEN_CNT=$(active_screens)
+    local PREFFERED_RESOLUTION=$(second_screen_preffered_resolution)
 
     case ${ACTIVE_SCREEN_CNT} in
         1)
@@ -62,8 +82,10 @@ function screen_toggle() {
     esac
 }
 
-function main() {
-    active_screens
+function main {
+    cache_xrandr_output
+    echo "Active screens: $(active_screens)"
+
     screen_toggle
 }
 
