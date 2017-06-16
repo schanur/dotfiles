@@ -16,7 +16,8 @@ alias t='tmux -2'
 alias ta='tmux attach'
 
 # fast travel.
-alias ftg='fast-travel go'
-alias fta='fast-travel add'
-alias ftd='fast-travel delete'
-alias ftl='fast-travel list'
+# alias ftg='fast-travel go'
+# alias fta='fast-travel add'
+# alias ftd='fast-travel delete'
+# alias ftl='fast-travel list'
+
