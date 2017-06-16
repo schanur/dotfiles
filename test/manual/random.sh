@@ -1,5 +1,11 @@
 #!/bin/bash
 
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+
 # Read n bytes from /dev/urandom and covert it to a decimal string
 # representation. Valid input is 1, 2, 4, 8.
 function random_n_byte_as_decimal {

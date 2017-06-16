@@ -68,8 +68,8 @@ plugins=(git)
   export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 
-if [ -d ${ZSH} ]; then
-    source $ZSH/oh-my-zsh.sh
+if [ -d "${ZSH}" ]; then
+    source "${ZSH}/oh-my-zsh.sh"
 fi
 
 # You may need to manually set your language environment
@@ -103,4 +103,4 @@ export DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
 echo "DOTFILES_PATH: ${DOTFILES_PATH}"
 echo
 
-source ${DOTFILES_PATH}/shared/shellrc
+source "${DOTFILES_PATH}/shared/shellrc"

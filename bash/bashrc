@@ -117,4 +117,4 @@ fi
 
 export DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
 
-source ${DOTFILES_PATH}/shared/shellrc
+source "${DOTFILES_PATH}/shared/shellrc"

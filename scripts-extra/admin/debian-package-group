@@ -14,15 +14,17 @@
 
 
 set -o errexit -o nounset -o pipefail
-SCRIPT_FILENAME=$(readlink -f $0)
-SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-DOTFILES_PATH=${SCRIPT_PATH}/../..
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
 
-source ${DOTFILES_PATH}/lib/bivalvia/help.sh
-source ${DOTFILES_PATH}/lib/bivalvia/numerical.sh
-source ${DOTFILES_PATH}/lib/bivalvia/package_management_deb.sh
-source ${DOTFILES_PATH}/lib/bivalvia/script-su.sh
-source ${DOTFILES_PATH}/lib/bivalvia/require.sh
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/list.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/numerical.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/package_management_deb.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/string.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 
 INSTALLED_PACKAGE_LIST=""
 SELECTED_PACKAGE_LIST=""

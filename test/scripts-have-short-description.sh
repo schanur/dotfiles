@@ -3,12 +3,12 @@
 #
 
 set -o errexit -o nounset -o pipefail
-SCRIPT_FILENAME=$(readlink -f $0)
-SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-DOTFILES_PATH=${SCRIPT_PATH}/..
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
 
-source ${DOTFILES_PATH}/lib/bivalvia/require.sh
-source ${DOTFILES_PATH}/lib/bivalvia/config.sh
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
 
 
 dotfiles \

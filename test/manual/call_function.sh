@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -o errexit -o nounset -o pipefail
-SCRIPT_FILENAME=$(readlink -f $0)
-SCRIPT_PATH=$(dirname $SCRIPT_FILENAME)
-DOTFILES_PATH=${SCRIPT_PATH}/../..
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
 
-source ${DOTFILES_PATH}/lib/bash/debug.sh
+source "${DOTFILES_PATH}/lib/bash/debug.sh"
 
 
 function test_local_vars {
