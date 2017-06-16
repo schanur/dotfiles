@@ -1,0 +1,4 @@
+
+
+unclutter -idle 2 &
+redshift &
