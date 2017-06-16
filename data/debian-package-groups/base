@@ -20,9 +20,6 @@ conntrack
 dvorak7min
 emacs
 emacs24-dbg
-emacs25
-emacs25-dbg
-emacs25-el
 exfat-utils
 figlet
 gddrescue
@@ -59,7 +56,6 @@ smbclient
 sshfs
 thin-provisioning-tools
 tmux
-tmuxinator
 vim
 xjobs
 xloadimage
