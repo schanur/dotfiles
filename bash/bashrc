@@ -115,6 +115,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
+BASHRC_FILE="$(readlink -f ${BASH_SOURCE[0]})"
+export DOTFILES_PATH="$(dirname ${BASHRC_FILE})/.."
 
 source "${DOTFILES_PATH}/shared/shellrc"

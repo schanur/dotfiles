@@ -9,7 +9,8 @@ export SHELL_NAME="zsh"
 # Path to your oh-my-zsh installation.
 
 ZSHRC_FILE="$(readlink -e ${(%):-%x})"
-ZSH_PATH="$(dirname ${ZSHRC_FILE})/../vendor/oh-my-zsh"
+export DOTFILES_PATH="$(dirname ${ZSHRC_FILE})/.."
+ZSH_PATH="${DOTFILES_PATH}/vendor/oh-my-zsh"
 
 export ZSH="${ZSH_PATH}"
 
@@ -96,11 +97,5 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-
-export DOTFILES_PATH="${HOME}/local/dev/all/dotfiles"
-
-echo "DOTFILES_PATH: ${DOTFILES_PATH}"
-echo
 
 source "${DOTFILES_PATH}/shared/shellrc"
