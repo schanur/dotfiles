@@ -13,8 +13,7 @@ source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
 
 function main() {
     local LINK_FILENAME_RELATIVE_TO_HOME=".emacs.d"
-    # 'FIXME: Load emacs path from config file.
-    local EMACS_PATH="${HOME}/local/dev/all/emacs.d"
+    local EMACS_PATH="${DOTFILES_PATH}/vendor/emacs.d"
 
     if [ ! -d ${EMACS_PATH} ]; then
         echo "No Emacs configuration found. Skip installation"

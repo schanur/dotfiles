@@ -7,3 +7,6 @@
 [submodule "vendor/shell-status-prompt"]
 	path = vendor/shell-status-prompt
 	url = https://github.com/schanur/shell-status-prompt.git
+[submodule "vendor/emacs.d"]
+	path = vendor/emacs.d
+	url = https://github.com/schanur/emacs.d.git
