@@ -7,7 +7,6 @@ colorgcc
 ddd
 doxygen
 doxygen-gui
-ffmpeg-doc
 flex
 gcc
 gdb
@@ -34,7 +33,6 @@ make
 markdown
 meld
 pandoc
-phantomjs
 pry
 python3
 qt5-default

@@ -1,7 +1,4 @@
 adwaita-icon-theme
-adwaita-qt
-adwaita-qt-data
-adwaita-qt4
 dunst
 evince
 filezilla
@@ -33,7 +30,6 @@ network-manager-vpnc-gnome
 network-manager-pptp-gnome
 pdfsam
 qt4-qtconfig
-qt5-style-plugins
 qtcurve
 ruby-notify
 rxvt-unicode-256color
