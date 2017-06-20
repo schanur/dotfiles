@@ -99,3 +99,6 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source "${DOTFILES_PATH}/shared/shellrc"
+
+
+export CONF_FILE_LOADED__ZSHRC=1

@@ -100,3 +100,6 @@ echo
 
 echo -n "Alias of the day: "
 alias-of-the-day
+
+
+export CONF_FILE_LOADED__SHELLRC=1

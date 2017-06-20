@@ -2,3 +2,6 @@
 
 unclutter -idle 2 &
 redshift &
+
+
+export CONF_FILE_LOADED__X11SESSION=1
