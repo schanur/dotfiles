@@ -8,11 +8,11 @@ BIVALVIA_PATH="${DOTFILES_PATH}/lib/bivalvia"
 
 echo
 echo "Set PATH:"
-export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts"
-export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/admin"
-export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/development"
-export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/extreme-defaults"
-export PATH="${PATH}:${HOME}/local/dev/all/dotfiles/scripts-extra/multimedia"
+export PATH="${PATH}:${DOTFILES_PATH}/scripts"
+export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/admin"
+export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/development"
+export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/extreme-defaults"
+export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/multimedia"
 
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
 echo -n "Load alias files:"
