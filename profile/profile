@@ -22,9 +22,9 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/local/dev/all/dotfiles/scripts" ] ; then
-    PATH="$HOME/local/dev/all/dotfiles/scripts:$PATH"
-fi
+#if [ -d "$HOME/local/dev/all/dotfiles/scripts" ] ; then
+#    PATH="$HOME/local/dev/all/dotfiles/scripts:$PATH"
+#fi
 
 export QT_QPA_PLATFORMTHEME=gtk2
 export QT_STYLE_OVERRIDE=gtk
