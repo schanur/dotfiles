@@ -26,8 +26,9 @@ fi
 #    PATH="$HOME/local/dev/all/dotfiles/scripts:$PATH"
 #fi
 
-export QT_QPA_PLATFORMTHEME=gtk2
-export QT_STYLE_OVERRIDE=gtk
+# export QT_QPA_PLATFORMTHEME=gtk2
+# export QT_STYLE_OVERRIDE=adwaita-dark
+export QT_STYLE_OVERRIDE=gtk+
 # QT_QPA_PLATFORMTHEME
 
 export CONF_FILE_LOADED__PROFILE=1
