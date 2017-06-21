@@ -39,6 +39,7 @@ ncompress
 nfs-common
 nmap
 openssh-server
+peco
 powertop
 procmail
 rsync
