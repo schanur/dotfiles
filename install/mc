@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Link ~/.bashrc to provided bashrc config file of this repository.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+
+function main() {
+    local CONFIG_LINK_FILENAME_RELATIVE_TO_HOME=".config/mc/ini"
+    local CONFIG_DOTFILES_FILENAME="${DOTFILES_PATH}/mc/ini"
+    local SKINS_LINK_FILENAME_RELATIVE_TO_HOME=".local/share/mc/skins"
+    local SKINS_DOTFILES_FILENAME="${DOTFILES_PATH}/mc/skins"
+
+    backup_user_config_and_create_dotfiles_link ${CONFIG_DOTFILES_FILENAME} ${CONFIG_LINK_FILENAME_RELATIVE_TO_HOME}
+    backup_user_config_and_create_dotfiles_link ${SKINS_DOTFILES_FILENAME}  ${SKINS_LINK_FILENAME_RELATIVE_TO_HOME}
+}
+
+main
