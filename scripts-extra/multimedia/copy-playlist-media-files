@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Copy all media files referenced by the playlist file to a single directory
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/path.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+function copy_playlist {
+    local PLAYLIST_FILE="${1}"
+    local TARGET_PATH="${2}"
+
+    cat "${PLAYLIST_FILE}" \
+        | grep location \
+        | sed -e 's/<location>//g' \
+        | sed -e 's|</location>||g' \
+        | sed -e 's|^\ *||g' \
+        | xmlstarlet unesc \
+        | while read SOURCE_FILE
+    do
+        if [ -r "${SOURCE_FILE}" ]; then
+            echo "Copy: ${SOURCE_FILE}"
+            cp "${SOURCE_FILE}" "${TARGET_PATH}/"
+        else
+            "File nor found or not readable: ${SOURCE_FILE}"
+        fi
+    done
+}
+
+function main {
+    local TARGET_PATH
+    local PLAYLIST_FILE
+    case $# in
+        # 0)
+            # echo "No target path given. Expecting current path."
+            # TARGET_PATH="."
+            # ;;
+        2)
+            if [ -r "${1}" ]; then
+                PLAYLIST_FILE="${1}"
+            else
+                echo "Playlist file not found or is not readable. Abort!"
+                exit 1
+            fi
+            if [ -d "${2}" ]; then
+                TARGET_PATH="${2}"
+            else
+                echo "Target path does not exist. Abort!"
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Invalid parameters. Abort!"
+            exit 1
+    esac
+
+    copy_playlist "${PLAYLIST_FILE}" "${TARGET_PATH}"
+}
+
+main "${@}"
