@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# Backup the home directory to a remote server per rsync/SSH.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+REMOTE_HOST="192.168.0.210"
+
+USERNAME="$(whoami)"
+
+LOG_FILE="/home/${USERNAME}/backup_home.log"
+LAST_SUCCESS_FILE="/home/${USERNAME}/local/succ_timestamp"
+REMOTE_BACKUP_PATH="/media/backup_raid/backup/home/${USERNAME}"
+EXCLUDE_FILE="${DOTFILES_PATH}/data/home_backup_ignore_list"
+# REMOTE_LOG_FILE="/media/backup_raid/backup/home/log/${USERNAME}/log"
+
+DRY_RUN=0
+
+function transfer_log {
+    rsync -a -v -e ssh ${LOG_FILE} "${USERNAME}"@"${REMOTE_HOST}":"${REMOTE_LOG_FILE}"
+}
+
+function update_required {
+    local CURRENT_TIMESTAMP
+    local LAST_SUCCESS_TIMESTAMP
+    local TIME_DIFF
+    local MAX_ALLOWED_TIME_DIFF
+    local UPDATE_REQUIRED=0
+
+    CURRENT_TIMESTAMP="$(date +%s)"
+
+    if [ -r ${LAST_SUCCESS_FILE} ]; then
+        LAST_SUCCESS_TIMESTAMP=$(date +%s -r ${LAST_SUCCESS_FILE})
+    else
+        LAST_SUCCESS_TIMESTAMP=0 # Use epoch timestamp.
+    fi
+
+    (( TIME_DIFF = CURRENT_TIMESTAMP - LAST_SUCCESS_TIMESTAMP ))
+    (( MAX_ALLOWED_TIME_DIFF = 60 * 60 * 8 )) # 8 Hours
+
+    if [ ${TIME_DIFF} -ge ${MAX_ALLOWED_TIME_DIFF} ]; then
+        UPDATE_REQUIRED=1
+    fi
+
+    echo "Time check: Current: ${CURRENT_TIMESTAMP} Last success: ${LAST_SUCCESS_TIMESTAMP} Time diff: ${TIME_DIFF} Max allowed time diff: ${MAX_ALLOWED_TIME_DIFF} Update required: ${UPDATE_REQUIRED}" >> ${LOG_FILE}
+
+    echo ${UPDATE_REQUIRED}
+}
+
+
+if [ ${DRY_RUN} -eq 1 ]; then
+    LOG_FILE="/dev/stderr"
+fi
+
+if [ ! -r ${EXCLUDE_FILE} ]; then
+    echo "No exclude file found. Abort!"
+    exit 1
+fi
+
+if [ "$(update_required)" -ne 1 ]; then
+    echo "No update required. Quit."
+    exit 0
+fi
+
+echo "########################################################################" >> ${LOG_FILE}
+echo "########################################################################" >> ${LOG_FILE}
+echo "########################################################################" >> ${LOG_FILE}
+echo  "rsync cronjob started: $(date)" >> ${LOG_FILE}
+
+RSYNC_COMMAND="rsync -a -v --progress -e ssh --delete-during --delete-excluded --exclude-from=${EXCLUDE_FILE} /home/${USERNAME}/ ${USERNAME}@${REMOTE_HOST}:${REMOTE_BACKUP_PATH}/"
+ERRORS=0
+
+if [ ${DRY_RUN} -eq 1 ]; then
+    echo "rsync command:"
+    echo ${RSYNC_COMMAND}
+    exit 0
+else
+    ${RSYNC_COMMAND} || ERRORS=1
+fi
+
+if [ ${ERRORS} -eq 1 ]; then
+    echo "Errors occured:"
+    ${RSYNC_COMMAND} >>${LOG_FILE} 2>&1
+else
+    echo "Update success file timestamp."
+    touch ${LAST_SUCCESS_FILE}
+fi
+
+echo  "rsync cronjob finished: $(date)" >> ${LOG_FILE}
+echo "########################################################################" >> ${LOG_FILE}
+
+# transfer_log
