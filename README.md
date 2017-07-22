@@ -7,9 +7,12 @@ It uses the [bivalvia](https://github.com/schanur/libbivalvia) bash library for 
 Currently contains:
    * A lot of aliases and scripts to make the output of programs more useful/colorful
    * A dark theme for following GUI toolkits: Qt5/Qt4/GTK3/GTK2 (Adwaita-dark)
-   * Dark theme te command line music player moc
+   * Load same config files with and without login manager
+   * Dark theme for the command line music player moc
+   * Dark theme for midnight commander
    * rc files for Bash and Zsh
    * software package group manager with similar functionality to Debians tasksel
    * i3 config
-   * mtux config
+   * tmux config
+   * Nice default config for git
    * More than 40 scripts that makes your life easier.
