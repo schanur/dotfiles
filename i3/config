@@ -55,7 +55,7 @@ bindsym $mod+Ctrl+v           exec vlc
 # was choosen because it is at the same position at both layouts.
 bindsym $mod+Ctrl+a           exec "~/local/dev/public/dotfiles/scripts/toggle-keyboard-layout"
 
-# make a screnshot
+# Make a screenshot
 bindsym $mod+Ctrl+p           exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
 bindsym XF86Display           exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
 
