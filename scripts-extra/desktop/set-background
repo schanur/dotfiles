@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Set a picture as background. It gets automatically scaled.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+IMAGE_FILENAME=$1
+
+feh --bg-scale $IMAGE_FILENAME

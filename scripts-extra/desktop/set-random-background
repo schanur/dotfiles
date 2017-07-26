@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Set a random picture found in a directory or its subdirectories as background image.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/random.sh"
+
+
+RANDOM_SELECTION_PATH="${1}"
+RANDOM_FILENAME_FROM_PATH="$(random_file_from_path_recursive "${RANDOM_SELECTION_PATH}")"
+
+echo "Randomly selected image: ${RANDOM_FILENAME_FROM_PATH}"
+
+"${SCRIPT_PATH}/set-background" "${RANDOM_FILENAME_FROM_PATH}"

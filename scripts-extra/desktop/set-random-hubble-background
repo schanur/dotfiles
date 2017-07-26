@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Set a random picture found in a directory or its subdirectories as background image.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+IMAGE_CACHE_PATH="${HOME}/.cache/dotfiles/background-images"
+
+"${SCRIPT_PATH}/set-random-background" "${IMAGE_CACHE_PATH}"

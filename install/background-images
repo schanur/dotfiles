@@ -1,0 +1,60 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+IMAGE_CACHE_PATH="${HOME}/.cache/dotfiles/background-images"
+
+
+function download_hubble_top_100 {
+    require_executable "wget"
+    require_executable "unzip"
+
+    local HUBBLE_TOP_100_DOWNLOAD_URL="https://www.spacetelescope.org/static/images/zip/top100/top100-large.zip"
+    local ARCHIVE_FILE="${IMAGE_CACHE_PATH}/top100-large.zip"
+
+    if [ ! -d "${IMAGE_CACHE_PATH}" ]; then
+        echo "Create background image cache path"
+        mkdir -p "${IMAGE_CACHE_PATH}"
+    fi
+
+    if [ ! -f "${ARCHIVE_FILE}" ]; then
+        echo "Download image archive: ${HUBBLE_TOP_100_DOWNLOAD_URL}"
+        wget "${HUBBLE_TOP_100_DOWNLOAD_URL}" -O "${ARCHIVE_FILE}"
+    fi
+
+    if [ -f "${ARCHIVE_FILE}" ]; then
+        echo "Extract image archive: ${HUBBLE_TOP_100_DOWNLOAD_URL}"
+        unzip -d "${IMAGE_CACHE_PATH}" "${ARCHIVE_FILE}"
+        echo "Delete archive file."
+        rm "${ARCHIVE_FILE}"
+    fi
+}
+
+# Returns true if image cache path contins at least 100 JPEG images
+function is_installed {
+    local IS_INSTALLED=0
+
+    if [ -d ${IMAGE_CACHE_PATH} ]; then
+        if [ $(find ${IMAGE_CACHE_PATH} -name "*.jpg" | wc -l) -ge 100 ]; then
+            IS_INSTALLED=1
+        fi
+    fi
+
+    echo ${IS_INSTALLED}
+}
+
+function main() {
+    if [ $(is_installed) -eq 0 ]; then
+        download_hubble_top_100
+    fi
+}
+
+main

@@ -10,6 +10,7 @@ echo
 echo "Set PATH:"
 export PATH="${PATH}:${DOTFILES_PATH}/scripts"
 export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/admin"
+export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/desktop"
 export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/development"
 # export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/extreme-defaults"
 export PATH="${PATH}:${DOTFILES_PATH}/scripts-extra/multimedia"
