@@ -59,6 +59,9 @@ bindsym $mod+Ctrl+a           exec "~/local/dev/public/dotfiles/scripts/toggle-k
 bindsym $mod+Ctrl+p           exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
 bindsym XF86Display           exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
 
+# Change background to a random one
+bindsym $mod+Ctrl+b           exec "/home/ze/local/dev/public/dotfiles/scripts-extra/desktop/set-random-hubble-background"
+
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return           exec "~/local/dev/public/dotfiles/scripts/durxvt"
