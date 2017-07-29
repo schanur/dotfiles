@@ -2,6 +2,8 @@
 
 # Backup the home directory to a remote server per rsync/SSH.
 
+# Usage
+
 
 set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME="$(readlink -f "${0}")"
@@ -22,6 +24,26 @@ EXCLUDE_FILE="${DOTFILES_PATH}/data/home_backup_ignore_list"
 # REMOTE_LOG_FILE="/media/backup_raid/backup/home/log/${USERNAME}/log"
 
 DRY_RUN=0
+FORCE_RUN=0
+
+function parse_cmd_line_parameter {
+    while [ ${#} -ne 0 ]; do
+        case ${1} in
+            '-d'|'--dry')
+                DRY_RUN=1
+                ;;
+
+            '-f'|'--force')
+                FORCE_RUN=1
+                ;;
+            *)
+                echo "Invalid command line parameter: ${1}"
+                exit 1
+                ;;
+        esac
+        shift
+    done
+}
 
 function transfer_log {
     rsync -a -v -e ssh ${LOG_FILE} "${USERNAME}"@"${REMOTE_HOST}":"${REMOTE_LOG_FILE}"
@@ -54,6 +76,7 @@ function update_required {
     echo ${UPDATE_REQUIRED}
 }
 
+parse_cmd_line_parameter "$@"
 
 if [ ${DRY_RUN} -eq 1 ]; then
     LOG_FILE="/dev/stderr"
@@ -65,8 +88,12 @@ if [ ! -r ${EXCLUDE_FILE} ]; then
 fi
 
 if [ "$(update_required)" -ne 1 ]; then
-    echo "No update required. Quit."
-    exit 0
+    if [ ${FORCE_RUN} -eq 1 ]; then
+        echo "No update required but \"force\" was set."
+    else
+        echo "No update required. Quit."
+        exit 0
+    fi
 fi
 
 echo "########################################################################" >> ${LOG_FILE}
