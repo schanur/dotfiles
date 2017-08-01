@@ -20,17 +20,17 @@ function list_scripts {
     local SCRIPT_GROUP
     local SCRIPT_NAME
 
-    for SCRIPT_GROUP_PATH in $(echo "${SCRIPT_PATH} $(find ${DOTFILES_PATH}/scripts-extra -mindepth 1 -type d | sort)); do
-        SCRIPT_GROUP="$(deepest_path ${SCRIPT_GROUP_PATH})"
+    for SCRIPT_GROUP_PATH in $(echo "${SCRIPT_PATH}" "$(find "${DOTFILES_PATH}/scripts-extra" -mindepth 1 -type xd | sort)"); do
+        SCRIPT_GROUP="$(deepest_path "${SCRIPT_GROUP_PATH}")"
         echo
         echo ${SCRIPT_GROUP}
         echo $(fill_tail ${#SCRIPT_GROUP} "-" "")
         echo
-        for ABS_SCRIPT_FILENAME in $(find ${SCRIPT_GROUP_PATH} -mindepth 1 | sort); do
-            SCRIPT_NAME="$(basename ${ABS_SCRIPT_FILENAME})"
-            RELATIVE_SCRIPT_FILENAME=$(basename ${ABS_SCRIPT_FILENAME})
-            TABBED_FILENAME=$(fill_tail 28 " " ${RELATIVE_SCRIPT_FILENAME})
-            echo "${TABBED_FILENAME}$(short_description ${ABS_SCRIPT_FILENAME})"
+        for ABS_SCRIPT_FILENAME in $(find "${SCRIPT_GROUP_PATH}" -mindepth 1 | sort); do
+            SCRIPT_NAME="$(basename "${ABS_SCRIPT_FILENAME}")"
+            RELATIVE_SCRIPT_FILENAME="$(basename "${ABS_SCRIPT_FILENAME}")"
+            TABBED_FILENAME="$(fill_tail 28 " " "${RELATIVE_SCRIPT_FILENAME}")"
+            echo "${TABBED_FILENAME}$(short_description "${ABS_SCRIPT_FILENAME}")"
         done
     done
 }
@@ -47,13 +47,13 @@ function dotfiles_doc {
     local SCRIPT_NAME=${2}
     case ${SECTION} in
         'short')
-            short_description ${SCRIPT_NAME}
+            short_description "${SCRIPT_NAME}"
         ;;
         'long')
-            long_description ${SCRIPT_NAME}
+            long_description "${SCRIPT_NAME}"
             ;;
         'usage')
-            usage ${SCRIPT_NAME}
+            usage "${SCRIPT_NAME}"
             ;;
         *)
             invalid_parameter_exit "Unknown documentation section: ${SECTION}."
