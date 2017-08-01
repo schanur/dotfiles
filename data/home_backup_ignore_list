@@ -13,12 +13,55 @@
 
 .bash_history
 
-# Personal cache directory
+# LXC
+local/vm/lxc
+.local/share/lxc/
+
+# Podcast media files
+gPodder/Download/
+gPodder/Downloads/
+
+# 'local' filesystem structure
 local/cache
+local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
+local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
 
 
-gpodder/Download
-gpodder/Downloads
+# Video folders
+Videos
+dwhelper
+
+# Mount points
+/net
+
+# History and state files
+.zsh_history
+.config/pulse/
+
+# Firfox
+.mozilla/firefox/*/saved-telemetry-pings/
+.mozilla/firefox/*/sessionstore-backups/
+.mozilla/firefox/*/storage/permanent/moz-safe-about+home
+.mozilla/firefox/*/weave/changes/
+
+# Thunderbird
+.icedove/wspne1tl.default/datareporting/aborted-session-ping
+
+# Programs we use but we are not interested in the state/backup
+/.git-credential-cache
+# .zcompdump*
+# .zsh-update
+local/data/bitcoin_chain_data/
+
+
+# Security
+.bitcoin/wallet.dat
+wallet.dat*
+wallet.tar*
+
+# Downloaded content that gets reloaded
+.local/share/xmoto/Levels/downloaded
+
 
 ###############################################
 # directories, probably not worth a backup    #
