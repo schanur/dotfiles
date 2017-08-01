@@ -197,3 +197,16 @@ bar {
         # separator_symbol "="
         font             pango:DejaVu Sans Mono 8
 }
+
+# tztime local {
+#         format = "%A, %d.%m.%Y %H:%M:%S"
+# }
+
+# tztime local {
+#         format = "%Y-%m-%d %H:%M:%S"
+# }
+
+# tztime berlin {
+#         format = "%Y-%m-%d %H:%M:%S %Z"
+#         timezone = "Europe/Berlin"
+# }
