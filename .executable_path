@@ -1,6 +1,5 @@
 scripts
-scripts/admin
-scripts/desktop
-scripts/development
-scripts/extreme-defaults
-scripts/multimedia
+scripts-extra/admin
+scripts-extra/desktop
+scripts-extra/development
+scripts-extra/multimedia
