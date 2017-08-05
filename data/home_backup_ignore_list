@@ -62,6 +62,8 @@ wallet.tar*
 # Downloaded content that gets reloaded
 .local/share/xmoto/Levels/downloaded
 
+# Gimp
+.gimp*/*swap*
 
 ###############################################
 # directories, probably not worth a backup    #
