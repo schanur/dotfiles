@@ -78,6 +78,17 @@ export NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
 export MAKEFLAGS="-j $(( NUMCPUS * 2 ))"
 
 
+# echo "------------------------------------------------------------------------"
+
+# echo "SHELL_NAME:         ${SHELL_NAME}"
+# echo "DOTFILES_PATH:      ${DOTFILES_PATH}"
+# echo "BIVALVIA_PATH:      ${BIVALVIA_PATH}"
+# echo "CDPATH:             ${CDPATH}"
+# echo "NUMCPUS:            ${NUMCPUS}"
+# echo "MAKEFLAGS:          ${MAKEFLAGS}"
+# echo "CD_PATH_LIST:       ${CD_PATH_LIST}"
+# echo "EXTRA_CD_PATH_FILE: ${EXTRA_CD_PATH_FILE}"
+
 echo "------------------------------------------------------------------------"
 
 echo -ne "date:\n  "
