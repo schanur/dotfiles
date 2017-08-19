@@ -1,2 +1,3 @@
 
-alias pretty-path="echo $PATH | tr ':' '\n'"
+alias pretty-path='eval echo ${PATH} | tr ":" "\n"'
+
