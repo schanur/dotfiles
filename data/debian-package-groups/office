@@ -1,5 +1,7 @@
 libreoffice
+libreoffice-help-en-gb
 libreoffice-librelogo
+libreoffice-math
 libreoffice-nlpsolver
 libreoffice-ogltrans
 libreoffice-pdfimport
@@ -9,3 +11,4 @@ libreoffice-script-provider-js
 libreoffice-script-provider-python
 libreoffice-sdbc-postgresql
 libreoffice-wiki-publisher
+mythes-de
