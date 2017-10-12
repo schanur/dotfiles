@@ -42,6 +42,7 @@ lzip
 mc
 moreutils
 mosh
+mtr
 ncompress
 nfs-common
 nmap
