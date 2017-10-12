@@ -40,7 +40,10 @@ function main () {
         else
             echo
         fi
-        install_component ${INSTALL_SCRIPT}
+
+        if [ -x ${INSTALL_SCRIPT} ]; then
+           install_component ${INSTALL_SCRIPT}
+        fi
     done
 }
 
