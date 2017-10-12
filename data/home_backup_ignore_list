@@ -13,6 +13,9 @@
 
 .bash_history
 
+# Cargo crate cache
+.cargo/registry
+
 # LXC
 local/vm/lxc
 .local/share/lxc/
