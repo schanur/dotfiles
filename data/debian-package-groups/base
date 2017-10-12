@@ -50,6 +50,7 @@ openssh-server
 peco
 powertop
 procmail
+pv
 rsync
 rzip
 safecopy
