@@ -45,6 +45,7 @@ ruby-method-source
 shellcheck
 silversearcher-ag
 swig
+twine
 valgrind
 wordnet
 xorg-dev
