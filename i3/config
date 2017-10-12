@@ -16,6 +16,30 @@ set $mod Mod4
 font pango:monospace 0
 new_window 1pixel
 
+
+# set $ws1  "1:scratch"
+# set $ws2  "2:dev"
+# set $ws3  "3:ssh"
+# set $ws4  "4:var1"
+# set $ws5  "5:var2"
+# set $ws6  "6:vm"
+# set $ws7  "7:mm"
+# set $ws8  "8:comm"
+# set $ws9  "9:mail"
+# set $ws10 "0:web"
+
+set $ws1  "1:scratch"
+set $ws2  "2:dev"
+set $ws3  "3:ssh"
+set $ws4  "4:var1"
+set $ws5  "5:var2"
+set $ws6  "6:mm"
+set $ws7  "7:vm"
+set $ws8  "8:comm"
+set $ws9  "9:mail"
+set $ws10 "10:web"
+
+
 # border / titlebar
 new_window normal
 hide_edge_borders vertical
@@ -29,9 +53,18 @@ for_window [class="Vlc"]              border pixel 0
 for_window [class="mpv"]              border pixel 0
 for_window [class="Pcmanfm"]          border pixel 0
 for_window [class="Firefox"]          border pixel 0
-for_window [class="Geary"]            border pixel 0
-for_window [class="Lmms"]             border pixel 0
 for_window [class="Feh"]              border pixel 0
+for_window [class="Kodi"]             fullscreen
+
+# application rules
+# assign     [class="URxvt"]            $ws1
+assign     [class="Vlc"]              $ws6
+assign     [class="Gpodder"]          $ws6
+assign     [class="Steam"]            $ws6
+assign     [class="Kodi"]             $ws6
+assign     [class="Gajim"]            $ws8
+assign     [class="Thunderbird"]      $ws9
+assign     [class="Firefox"]          $ws10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -127,28 +160,28 @@ bindsym $mod+a                focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1                workspace 1
-bindsym $mod+2                workspace 2
-bindsym $mod+3                workspace 3
-bindsym $mod+4                workspace 4
-bindsym $mod+5                workspace 5
-bindsym $mod+6                workspace 6
-bindsym $mod+7                workspace 7
-bindsym $mod+8                workspace 8
-bindsym $mod+9                workspace 9
-bindsym $mod+0                workspace 10
+bindsym $mod+1                workspace $ws1
+bindsym $mod+2                workspace $ws2
+bindsym $mod+3                workspace $ws3
+bindsym $mod+4                workspace $ws4
+bindsym $mod+5                workspace $ws5
+bindsym $mod+6                workspace $ws6
+bindsym $mod+7                workspace $ws7
+bindsym $mod+8                workspace $ws8
+bindsym $mod+9                workspace $ws9
+bindsym $mod+0                workspace $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1          move container to workspace 1
-bindsym $mod+Shift+2          move container to workspace 2
-bindsym $mod+Shift+3          move container to workspace 3
-bindsym $mod+Shift+4          move container to workspace 4
-bindsym $mod+Shift+5          move container to workspace 5
-bindsym $mod+Shift+6          move container to workspace 6
-bindsym $mod+Shift+7          move container to workspace 7
-bindsym $mod+Shift+8          move container to workspace 8
-bindsym $mod+Shift+9          move container to workspace 9
-bindsym $mod+Shift+0          move container to workspace 10
+bindsym $mod+Shift+1          move container to workspace $ws1
+bindsym $mod+Shift+2          move container to workspace $ws2
+bindsym $mod+Shift+3          move container to workspace $ws3
+bindsym $mod+Shift+4          move container to workspace $ws4
+bindsym $mod+Shift+5          move container to workspace $ws5
+bindsym $mod+Shift+6          move container to workspace $ws6
+bindsym $mod+Shift+7          move container to workspace $ws7
+bindsym $mod+Shift+8          move container to workspace $ws8
+bindsym $mod+Shift+9          move container to workspace $ws9
+bindsym $mod+Shift+0          move container to workspace $ws10
 
 # Mode workspaces to different outputs (aka monitors)
 # TODO: Make this work generic: xrandr names can be different.
