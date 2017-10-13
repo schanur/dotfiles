@@ -1,4 +1,5 @@
 emacs25
 emacs25-dbg
 emacs25-el
+python3-tmuxp
 tmuxinator
