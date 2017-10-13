@@ -4,6 +4,10 @@ alias sma='su  -c "apt update && apt upgrade"'
 alias smud='su -c "apt update"'
 alias smug='su -c "apt upgrade"'
 
+alias asn='apt-cache search --names-only'
+
+
+
 alias ll='ls -la'
 # Show hidden files only.
 alias l.='ls -d .* --color=auto'
