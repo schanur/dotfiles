@@ -33,8 +33,31 @@ function secondary_screen_name {
     echo "${XRANDR_OUTPUT}" | grep ' connected' | tail -n 1 | cut -f 1 -d ' '
 }
 
-function second_screen_preffered_resolution {
-    echo "${XRANDR_OUTPUT}" | grep "[ *]+" | tail -n 1 | tr -s ' ' | cut -f 2 -d ' '
+function highest_resolution_of_screen {
+    local SCREEN_NAME="${1}"
+
+    echo "${XRANDR_OUTPUT}" \
+        | awk -v screen="${SCREEN_NAME}" '
+BEGIN {
+    a = 0
+}
+{
+    if ($1 == screen) {
+        a = 1
+    } else {
+        if (a == 1) {
+            if ($1 ~ /[0-9]+x[0-9]+/) {
+                print $1
+            } else {
+                a = a
+            }
+        }
+    }
+}
+' \
+        | sort -n \
+        | tail -n 1
+}
 
 function connected_screens() {
     echo "${XRANDR_OUTPUT}" | grep -c ' connected'
