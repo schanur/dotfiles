@@ -28,6 +28,7 @@ new_window 1pixel
 # set $ws9  "9:mail"
 # set $ws10 "0:web"
 
+set $ws0  "0:test0"
 set $ws1  "1:scratch"
 set $ws2  "2:dev"
 set $ws3  "3:ssh"
@@ -38,6 +39,8 @@ set $ws7  "7:vm"
 set $ws8  "8:comm"
 set $ws9  "9:mail"
 set $ws10 "10:web"
+set $ws11 "11:test1"
+set $ws12 "12:test2"
 
 
 # border / titlebar
@@ -160,28 +163,34 @@ bindsym $mod+a                focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1                workspace $ws1
-bindsym $mod+2                workspace $ws2
-bindsym $mod+3                workspace $ws3
-bindsym $mod+4                workspace $ws4
-bindsym $mod+5                workspace $ws5
-bindsym $mod+6                workspace $ws6
-bindsym $mod+7                workspace $ws7
-bindsym $mod+8                workspace $ws8
-bindsym $mod+9                workspace $ws9
-bindsym $mod+0                workspace $ws10
+bindsym $mod+dead_circumflex       workspace $ws0
+bindsym $mod+1                     workspace $ws1
+bindsym $mod+2                     workspace $ws2
+bindsym $mod+3                     workspace $ws3
+bindsym $mod+4                     workspace $ws4
+bindsym $mod+5                     workspace $ws5
+bindsym $mod+6                     workspace $ws6
+bindsym $mod+7                     workspace $ws7
+bindsym $mod+8                     workspace $ws8
+bindsym $mod+9                     workspace $ws9
+bindsym $mod+0                     workspace $ws10
+bindsym $mod+ssharp                workspace $ws11
+bindsym $mod+dead_acute            workspace $ws12
 
 # move focused container to workspace
-bindsym $mod+Shift+1          move container to workspace $ws1
-bindsym $mod+Shift+2          move container to workspace $ws2
-bindsym $mod+Shift+3          move container to workspace $ws3
-bindsym $mod+Shift+4          move container to workspace $ws4
-bindsym $mod+Shift+5          move container to workspace $ws5
-bindsym $mod+Shift+6          move container to workspace $ws6
-bindsym $mod+Shift+7          move container to workspace $ws7
-bindsym $mod+Shift+8          move container to workspace $ws8
-bindsym $mod+Shift+9          move container to workspace $ws9
-bindsym $mod+Shift+0          move container to workspace $ws10
+bindsym $mod+Shift+dead_circumflex move container to workspace $ws0
+bindsym $mod+Shift+1               move container to workspace $ws1
+bindsym $mod+Shift+2               move container to workspace $ws2
+bindsym $mod+Shift+3               move container to workspace $ws3
+bindsym $mod+Shift+4               move container to workspace $ws4
+bindsym $mod+Shift+5               move container to workspace $ws5
+bindsym $mod+Shift+6               move container to workspace $ws6
+bindsym $mod+Shift+7               move container to workspace $ws7
+bindsym $mod+Shift+8               move container to workspace $ws8
+bindsym $mod+Shift+9               move container to workspace $ws9
+bindsym $mod+Shift+0               move container to workspace $ws10
+bindsym $mod+Shift+ssharp          move container to workspace $ws11
+bindsym $mod+Shift+dead_acute      move container to workspace $ws12
 
 # Mode workspaces to different outputs (aka monitors)
 # TODO: Make this work generic: xrandr names can be different.
