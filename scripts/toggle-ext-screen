@@ -19,47 +19,49 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/debug.sh"
 
 
-INTERNAL_SCREEN_NAME="LVDS-1"
-EXTERNAL_SCREEN_NAME="VGA-1"
-
 XRANDR_OUTPUT=""
 
 function cache_xrandr_output {
     XRANDR_OUTPUT="$(xrandr)"
 }
 
-# function active_connected_screens {
-#     echo "${XRANDR_OUTPUT}" | grep "*" | grep -c "+"
-# }
+function primary_screen_name {
+    echo "${XRANDR_OUTPUT}" | grep ' connected' | head -n 1 | cut -f 1 -d ' '
+}
 
-# function active_disconnected_screens {
-#     echo "${XRANDR_OUTPUT}" | grep "*" | grep -c "+"
-# }
+function secondary_screen_name {
+    echo "${XRANDR_OUTPUT}" | grep ' connected' | tail -n 1 | cut -f 1 -d ' '
+}
 
 function second_screen_preffered_resolution {
     echo "${XRANDR_OUTPUT}" | grep "[ *]+" | tail -n 1 | tr -s ' ' | cut -f 2 -d ' '
+
+function connected_screens() {
+    echo "${XRANDR_OUTPUT}" | grep -c ' connected'
 }
 
 function active_screens() {
-    echo "${XRANDR_OUTPUT}" | grep -c "*+"
-    # expr $(active_connected_screens) + $(active_disconnected_screens)
+    echo "${XRANDR_OUTPUT}" | egrep -c "^   .*\*"
 }
 
-function screen_on {
-    local NATIVE_RESOLUTION=$(second_screen_preffered_resolution)
+function screen_on_max_resolution {
+    local SCREEN_NAME="${1}"
+    local NATIVE_RESOLUTION="$(highest_resolution_of_screen ${SCREEN_NAME})"
 
     CMD="\
-xrandr --output  ${EXTERNAL_SCREEN_NAME}
+xrandr --output  ${SCREEN_NAME}
        --mode    ${NATIVE_RESOLUTION}
-       --left-of ${INTERNAL_SCREEN_NAME}
+       --left-of $(primary_screen_name)
 "
     echo ${CMD}
     ${CMD}
 }
 
 function screen_off {
+    local SCREEN_NAME="${1}"
+
     CMD="\
-xrandr --output ${EXTERNAL_SCREEN_NAME} --off
+xrandr --output ${SCREEN_NAME} --off
 "
     echo ${CMD}
     ${CMD}
@@ -67,14 +69,14 @@ xrandr --output ${EXTERNAL_SCREEN_NAME} --off
 
 function screen_toggle {
     local ACTIVE_SCREEN_CNT=$(active_screens)
-    local PREFFERED_RESOLUTION=$(second_screen_preffered_resolution)
+    #local PREFFERED_RESOLUTION=$(second_screen_preffered_resolution)
 
     case ${ACTIVE_SCREEN_CNT} in
         1)
-            screen_on
+            screen_on_max_resolution "$(secondary_screen_name)"
             ;;
         2)
-            screen_off
+            screen_off               "$(secondary_screen_name)"
             ;;
         *)
             echo "Wrong number of currently active screens: ${ACTIVE_SCREEN_CNT}"
