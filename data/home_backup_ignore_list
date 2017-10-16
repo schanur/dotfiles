@@ -16,6 +16,9 @@
 # Cargo crate cache
 .cargo/registry
 
+# Rust suite update files
+.rustup
+
 # LXC
 local/vm/lxc
 .local/share/lxc/
