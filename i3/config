@@ -252,3 +252,9 @@ bar {
 #         format = "%Y-%m-%d %H:%M:%S %Z"
 #         timezone = "Europe/Berlin"
 # }
+
+
+# exec gpodder
+# exec gajim
+# exec thunderbird
+# exec ~/local/bin/firefox/firefox/firefox
