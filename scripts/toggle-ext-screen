@@ -107,12 +107,36 @@ function screen_toggle {
     esac
 }
 
+function debug {
+    highest_resolution_of_screen "$(secondary_screen_name)"
+    echo "
+Primary screen name:                    $(primary_screen_name)
+Secondary screen name:                  $(secondary_screen_name)
+Secondary screen preferred resolutions: $(highest_resolution_of_screen $(secondary_screen_name))
+Connected screens:                      $(connected_screens)
+Active screens:                         $(active_screens)
+"
+
+    echo ""
+}
+
 function main {
     cache_xrandr_output
-    echo "Active screens: $(active_screens)"
+
+    if [ ${#} -eq 1 ]; then
+        echo "test"
+        case "${1}" in
+            '-v'|'--verbose')
+                debug
+                ;;
+            *)
+                echo "Invalid parameter: ${1}"
+                exit 1
+                ;;
+        esac
+    fi
 
     screen_toggle
 }
 
-main
-
+main "$@"
