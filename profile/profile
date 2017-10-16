@@ -31,4 +31,8 @@ fi
 export QT_STYLE_OVERRIDE=gtk2
 # QT_QPA_PLATFORMTHEME
 
+# Added by rustup script.
+# export PATH="$HOME/.cargo/bin:$PATH"
+
+
 export CONF_FILE_LOADED__PROFILE=1
