@@ -11,12 +11,14 @@ SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}/.."
 
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 
 
-REMOTE_HOST="192.168.0.210"
-
+GL_REMOTE_USERNAME="$(whoami)"
 USERNAME="$(whoami)"
 
+CONFIG_FILE_BASENAME="sync-home.conf"
 LOG_FILE="/home/${USERNAME}/backup_home.log"
 LAST_SUCCESS_FILE="/home/${USERNAME}/local/succ_timestamp"
 REMOTE_BACKUP_PATH="/media/backup_raid/backup/home/${USERNAME}"
@@ -26,18 +28,32 @@ EXCLUDE_FILE="${DOTFILES_PATH}/data/home_backup_ignore_list"
 DRY_RUN=0
 FORCE_RUN=0
 
+HOURS_BETWEEN_BACKUP=8
+
+
 function parse_cmd_line_parameter {
     while [ ${#} -ne 0 ]; do
         case ${1} in
             '-d'|'--dry')
                 DRY_RUN=1
                 ;;
-
             '-f'|'--force')
                 FORCE_RUN=1
                 ;;
+            # '-h'|'--remote-host')
+            #     shift; if [ ${#} -eq 0 ]; then echo "Missing host parameter."; exit 1; fi
+            #     RSYNC_HOME__REMOTE_HOST=${1}
+            #     ;;
+            # '-p'|'--port')
+            #     shift; if [ ${#} -eq 0 ]; then echo "Missing port parameter."; exit 1; fi
+            #     RSYNC_HOME__REMOTE_PORT=1
+            #     ;;
+            # '-u'|'--username')
+            #     shift; if [ ${#} -eq 0 ]; then echo "Missing username parameter."; exit 1; fi
+            #     GL_REMOTE_USERNAME=1
+            #     ;;
             *)
-                echo "Invalid command line parameter: ${1}"
+                echo "Invalid command line parameter: ${1}"xs
                 exit 1
                 ;;
         esac
@@ -45,8 +61,67 @@ function parse_cmd_line_parameter {
     done
 }
 
+function load_config {
+    if [ "$(config_file_exists "${CONFIG_FILE_BASENAME}")" -eq 0 ]; then
+        echo "No config file found."
+        exit 1
+    fi
+    load_config_file "${CONFIG_FILE_BASENAME}"
+
+    require_variable RSYNC_HOME__REMOTE_HOST
+    require_variable RSYNC_HOME__REMOTE_PORT
+    require_variable RSYNC_HOME__REMOTE_HOSTNAME
+    require_variable RSYNC_HOME__REMOTE_BASE_PATH
+}
+
+function local_hostname_over_ssh {
+    local REMOTE_HOST="${1}"
+    local REMOTE_PORT="${2}"
+
+    echo "REMOTE_HOST             $REMOTE_HOST" >&2
+    echo "REMOTE_PORT             $REMOTE_PORT" >&2
+
+    ssh -p ${REMOTE_PORT} ${REMOTE_HOST} -C "hostname"
+}
+
+function run_rsync {
+    local JOB_DESC="${1}"
+
+    local REMOTE_HOST="${2}"
+    local REMOTE_PORT="${3}"
+
+    local REMOTE_USERNAME="${4}"
+
+    local SOURCE="${5}"
+    local TARGET="${6}"
+
+    for I in $(seq 1 6); do shift; done
+    # echo "remaining parameters"
+
+    # print_var_list JOB_DESC REMOTE_HOST REMOTE_PORT SOURCE TARGET
+    echo "JOB_DESC:               $JOB_DESC"        >&2
+    echo "REMOTE_HOST:            $REMOTE_HOST"     >&2
+    echo "REMOTE_PORT:            $REMOTE_PORT"     >&2
+    echo "REMOTE_USERNAME:        $REMOTE_USERNAME" >&2
+    echo "SOURCE:                 $SOURCE"          >&2
+    echo "TARGET:                 $TARGET"          >&2
+
+    if [ ${DRY_RUN=0} -eq 1 ]; then
+        echo "Run in dry mode: ${JOB_DESC}"
+        echo "rsync -a -v -e \"ssh -p ${REMOTE_PORT}\" --progress --delete-during --delete-excluded --exclude-from=${EXCLUDE_FILE} ${SOURCE} ${USERNAME}@${REMOTE_HOST}:${TARGET}"
+    else
+        echo "${JOB_DESC}"
+        rsync       -a -v -e  "ssh -p ${REMOTE_PORT}"  --progress --delete-during --delete-excluded --exclude-from="${EXCLUDE_FILE}" "${SOURCE}" "${USERNAME}"@"${REMOTE_HOST}":"${TARGET}"
+    fi
+}
+
 function transfer_log {
-    rsync -a -v -e ssh ${LOG_FILE} "${USERNAME}"@"${REMOTE_HOST}":"${REMOTE_LOG_FILE}"
+    run_rsync "Transfer log file" "${RSYNC_HOME__REMOTE_HOST}" "${RSYNC_HOME__REMOTE_PORT}" "${GL_REMOTE_USERNAME}" "${LOG_FILE}" "${REMOTE_LOG_FILE}"
+}
+
+function transfer_data {
+    echo "REMOTE_BACKUP_PATH:     ${REMOTE_BACKUP_PATH}/"
+    run_rsync "Transfer data"     "${RSYNC_HOME__REMOTE_HOST}" "${RSYNC_HOME__REMOTE_PORT}" "${GL_REMOTE_USERNAME}" "/home/${USERNAME}/" "${REMOTE_BACKUP_PATH}/"
 }
 
 function update_required {
@@ -65,7 +140,7 @@ function update_required {
     fi
 
     (( TIME_DIFF = CURRENT_TIMESTAMP - LAST_SUCCESS_TIMESTAMP ))
-    (( MAX_ALLOWED_TIME_DIFF = 60 * 60 * 8 )) # 8 Hours
+    (( MAX_ALLOWED_TIME_DIFF = 60 * 60 * HOURS_BETWEEN_BACKUP ))
 
     if [ ${TIME_DIFF} -ge ${MAX_ALLOWED_TIME_DIFF} ]; then
         UPDATE_REQUIRED=1
@@ -76,8 +151,11 @@ function update_required {
     echo ${UPDATE_REQUIRED}
 }
 
+echo "parse_cmd_line_parameter"
 parse_cmd_line_parameter "$@"
+load_config
 
+LOG_FILE="/dev/stderr"
 if [ ${DRY_RUN} -eq 1 ]; then
     LOG_FILE="/dev/stderr"
 fi
@@ -99,28 +177,32 @@ fi
 echo "########################################################################" >> ${LOG_FILE}
 echo "########################################################################" >> ${LOG_FILE}
 echo "########################################################################" >> ${LOG_FILE}
-echo  "rsync cronjob started: $(date)" >> ${LOG_FILE}
+echo  "rsync cronjob started:  $(date)" >> ${LOG_FILE}
 
-RSYNC_COMMAND="rsync -a -v --progress -e ssh --delete-during --delete-excluded --exclude-from=${EXCLUDE_FILE} /home/${USERNAME}/ ${USERNAME}@${REMOTE_HOST}:${REMOTE_BACKUP_PATH}/"
-ERRORS=0
 
-if [ ${DRY_RUN} -eq 1 ]; then
-    echo "rsync command:"
-    echo ${RSYNC_COMMAND}
-    exit 0
-else
-    ${RSYNC_COMMAND} || ERRORS=1
-fi
+ACTUAL_REMOTE_HOSTNAME="$(local_hostname_over_ssh ${RSYNC_HOME__REMOTE_HOST} ${RSYNC_HOME__REMOTE_PORT} ${GL_REMOTE_USERNAME})"
+# REMOTE_HOSTNAME_MSG="Remote responded with local hostname: "
+
+# echo ${REMOTE_HOSTNAME_MSG} >> ${LOG_FILE}
+# if [ ${DRY_RUN} -eq 0 ]; then
+echo "ACTUAL_REMOTE_HOSTNAME: ${ACTUAL_REMOTE_HOSTNAME}"
+# fi
+
+
+
+ERRORS=0; transfer_data || ERRORS=1
 
 if [ ${ERRORS} -eq 1 ]; then
     echo "Errors occured:"
-    ${RSYNC_COMMAND} >>${LOG_FILE} 2>&1
 else
-    echo "Update success file timestamp."
-    touch ${LAST_SUCCESS_FILE}
+    if [ ${DRY_RUN} -eq 0 ]; then
+        echo "Update success file timestamp."
+        touch ${LAST_SUCCESS_FILE}
+    fi
 fi
 
 echo  "rsync cronjob finished: $(date)" >> ${LOG_FILE}
 echo "########################################################################" >> ${LOG_FILE}
 
-# transfer_log
+echo "transfer log:"
+# tranfer_log
