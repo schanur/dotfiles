@@ -5,7 +5,7 @@ apparmor-notify
 apparmor-profiles
 apparmor-profiles-extra
 apparmor-utils
-apt-files
+apt-file
 aptitude
 arj
 autojump

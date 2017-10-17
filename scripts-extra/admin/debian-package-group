@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/bin/bash --debugger
 
 # Install a predefined set of packages.
 
@@ -11,9 +12,19 @@
 # list-group-items $$PACKAGE_GROUPS  List all packages of a package group.
 # list-groups                        List all package groups.
 # stats                              Show statistics how many percent of a package group is installed.
+# group-stats                        Show statistics how many percent of a package group is installed.
 
+# export PS4="\$BASH_SOURCE: $BASH_LINENO> "
+# export PS4="\$BASH_LINENO> "
 
-set -o errexit -o nounset -o pipefail
+# set -xv
+# export PS4="\$(basename $BASH_SOURCE): $BASH_LINENO> "
+# export PS4="\$FUNCNAME: $LINENO> "
+
+# set -o errexit -o nounset
+
+# set -o errexit -o nounset -o pipefail
+
 SCRIPT_FILENAME="$(readlink -f "${0}")"
 SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}/../.."
@@ -22,9 +33,12 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/list.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/numerical.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/package_management_deb.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/parse.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/safe_defaults.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/string.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
 
 INSTALLED_PACKAGE_LIST=""
 SELECTED_PACKAGE_LIST=""
@@ -54,27 +68,64 @@ function pre_requirements {
     apt-get install ${PACKAGE_LIST_EARLY_2}
 }
 
+# Gets called by all commands that require at least one package group
+# as additional parameter.
+function require_package_group {
+    # echo "require_package_group parameter: $*"
+    if [ ${#} -eq 0 ]; then
+        # echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        invalid_parameter_exit "No package group given."
+    fi
+    # echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}
+
+
+# Convert the group name into the filename, that contains the package
+# names.
+function group_filename {
+    local PACKAGE_GROUP=${1}
+    local PACKAGE_GROUP_FILENAME=${DEBIAN_PACKAGE_GROUP_PATH}/${PACKAGE_GROUP}
+
+    echo "${PACKAGE_GROUP_FILENAME}"
+}
+
+# List all packages in a package group.
 function list_group_items {
     local PACKAGE_GROUP=${1}
-    local PACKAGE_GOUP_FILENAME=${DEBIAN_PACKAGE_GROUP_PATH}/${PACKAGE_GROUP}
+    local PACKAGE_GROUP_FILENAME
 
-    require_file ${PACKAGE_GOUP_FILENAME}
+    PACKAGE_GROUP_FILENAME="$(group_filename ${PACKAGE_GROUP})"
+    require_file ${PACKAGE_GROUP_FILENAME}
 
-    cat ${PACKAGE_GOUP_FILENAME}
+    filter_active_bash_lines ${PACKAGE_GROUP_FILENAME}
+}
+
+# Prints the number of packages in a package group.
+function package_group_package_list_size {
+    local PACKAGE_GROUP="${1}"
+
+    list_group_items | wc -l
 }
 
 function list_package_groups {
-    find ${DEBIAN_PACKAGE_GROUP_PATH} |sed -e "s|.*/||g"
+    find "${DEBIAN_PACKAGE_GROUP_PATH}" ! -type d | sed -e "s|.*/||g" | sort | uniq
 }
 
+# Prints "1" if package exists in distributions repository. "0"
+# otherwise.
 function package_exists {
     local PACKAGE_EXISTS=1
 
+    # TODO: Not implemented.
     # dpkg -l "$1" &> /dev/null || PACKAGE_EXISTS=0
 
     echo ${PACKAGE_EXISTS}
 }
 
+# Add all packages of a package group to the global variable
+# SELECTED_PACKAGE_LIST, which contains selected packages. This is
+# necessary if the user wants to process an action on more than one
+# package group.
 function add_package_group_to_selected_package_list {
     local PACKAGE_GROUP=${1}
     local PACKAGE
@@ -90,6 +141,9 @@ function add_package_group_to_selected_package_list {
     done
 }
 
+# Add all packages of all package groups given as parameter to a
+# global variable SELECTED_PACKAGE_LIST. TODO: Do not use global
+# variable.
 function parse_all_package_groups {
     local PACKAGE_GROUP_LIST=${*}
     local PACKAGE_GROUP
@@ -100,72 +154,133 @@ function parse_all_package_groups {
     done
 }
 
+# Install all packages stored on the global variable
+# SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function install_packages {
     apt-get install ${SELECTED_PACKAGE_LIST}
 }
 
+# Remove all packages stored on the global variable
+# SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function remove_packages {
     apt-get remove ${SELECTED_PACKAGE_LIST}
 }
 
+# Remove all packages and its configuration files stored on the global
+# variable SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function purge_packages {
     apt-get remove --purge ${SELECTED_PACKAGE_LIST}
 }
 
+# Prints "Check if an package is installed on the system."
 function package_is_installed {
-    local PACKAGE_NAME=${1}
+    # local PACKAGE_NAME=${1}
 
-    echo "INSTALLED_PACKAGE_LIST"
+    # echo "INSTALLED_PACKAGE_LIST"
+    echo "1"
 }
 
-function statistics {
+function global_statistics {
     local PACKAGE_GROUP
     local PACKAGE
 
-    INSTALLED_PACKAGE_LIST="$(installed_deb_packages)"
-    for PACKAGE_GROUP in $(list_package_groups); do
-        for PACKAGE in $(list_group_items); do
-y
-        done
+
+    for PACKAGE_GROUP in $(list_package_groups | sort); do
+        package_group_statistics "${PACKAGE_GROUP}"
     done
+}
+
+# Returns a list with packages in a package group that are mot
+# installed on the system.
+function package_group_statistics {
+    local PACKAGE_GROUP="${1}"
+    local PACKAGE_IS_INSTALLED
+    local PACKAGE_COUNT
+    local INSTALLED_COUNT
+    local NOT_INSTALLED_COUNT
+    local NOT_INSTALLED_LIST
+    local INSTALLED_PACKAGE_LIST
+    local LONGEST_PACKAGE_GROUP_STR_LENGTH
+    local STATS_HORIZONTAL_ALIGN
+
+    INSTALLED_PACKAGE_LIST="$(installed_deb_packages_without_arch | sort)"
+
+    INSTALLED_COUNT=0
+    NOT_INSTALLED_COUNT=0
+    NOT_INSTALLED_LIST=""
+
+    LONGEST_PACKAGE_GROUP_STR_LENGTH=$(longest_string_length $(list_package_groups))
+    (( STATS_HORIZONTAL_ALIGN = LONGEST_PACKAGE_GROUP_STR_LENGTH + 2 ))
+    for PACKAGE in $(list_group_items ${PACKAGE_GROUP}); do
+        PACKAGE_IS_INSTALLED=$(echo "${INSTALLED_PACKAGE_LIST}" | (grep -cFxe "${PACKAGE}" || true))
+        if [ ${PACKAGE_IS_INSTALLED} -eq 1 ]; then
+            (( INSTALLED_COUNT+=1 ))
+            true
+        else
+            (( NOT_INSTALLED_COUNT+=1 ))
+            NOT_INSTALLED_LIST="${NOT_INSTALLED_LIST} ${PACKAGE}"
+        fi
+    done
+    (( PACKAGE_COUNT = INSTALLED_COUNT + NOT_INSTALLED_COUNT ))
+
+    echo -n "$(fill_tail           ${STATS_HORIZONTAL_ALIGN} ' ' "${PACKAGE_GROUP}") "
+    echo -n "$(fill_tail             5                       ' ' "${INSTALLED_COUNT}":"${NOT_INSTALLED_COUNT}"): "
+    echo -n "$(fill_tail             5                       ' ' "$(fraction_to_percentage ${INSTALLED_COUNT} ${PACKAGE_COUNT})%") "
+    echo    "$(fill_ellipsis_tail  180                       ' ' "${NOT_INSTALLED_LIST}")"
 }
 
 function main {
     if [ "${#}" -ge "1" ]; then
         local OPERATION=${1}
+        local CMD_LINE_PARAMS="${*}"
         shift
-        local PACKAGE_GROUPS="${@}"
+        local PACKAGE_GROUPS
 
         case ${OPERATION} in
             install)
+                echo ">>>>>>>>>> ${CMD_LINE_PARAMS} <<<<<<< $PACKAGE_GROUPS"
                 run_as_root "${CMD_LINE_PARAMS}"
+                echo "pre_requirements"
                 pre_requirements
+                echo "require_package_group"
+                # require_package_group
+                PACKAGE_GROUPS="${*}"
+                echo "parse_all_package_groups: $PACKAGE_GROUPS"
                 parse_all_package_groups ${PACKAGE_GROUPS}
+                echo "install_packages"
                 install_packages
                 ;;
             remove)
                 run_as_root "${CMD_LINE_PARAMS}"
                 pre_requirements
+                require_package_group
+                PACKAGE_GROUPS="${*}"
                 parse_all_package_groups ${PACKAGE_GROUPS}
                 remove_packages
                 ;;
             remove-purge)
                 run_as_root "${CMD_LINE_PARAMS}"
                 pre_requirements
+                require_package_group
                 parse_all_package_groups ${PACKAGE_GROUPS}
                 purge_packages
                 ;;
             list-group-items)
+                require_package_group
                 list_group_items         ${PACKAGE_GROUPS}
                 ;;
             list-groups)
                 list_package_groups
                 ;;
             stats)
-                statistics
+                global_statistics
+                ;;
+            group-stats)
+                require_package_group
+                package_group_statistics ${PACKAGE_GROUPS}
                 ;;
             *)
-                echo "fatal"
+                echo "Unknown command. Abort!"
                 exit 1
                 ;;
         esac
