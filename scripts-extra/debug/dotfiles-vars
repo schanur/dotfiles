@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Print important variables of dotfiles to support debugging
+
+
+set -o errexit -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/debug.sh"
+source "${DOTFILES_PATH}/lib/shell/sub_term.sh"
+
+
+run_in_sub_terminal "${@}"
+
+echo
+echo "------------------------------------------------------------------------"
+
+print_var_list \
+SCRIPT_FILENAME \
+SCRIPT_PATH \
+DOTFILES_PATH \
+CONF_FILE_LOADED__BASHRC \
+CONF_FILE_LOADED__PROFILE \
+CONF_FILE_LOADED__SHELLRC \
+CONF_FILE_LOADED__X11SESSION \
+CONF_FILE_LOADED__XINITRC \
+CONF_FILE_LOADED__ZSHRC
+
+echo "------------------------------------------------------------------------"
+echo
+echo "Press return key to exit."
+read
