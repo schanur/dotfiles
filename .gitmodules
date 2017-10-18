@@ -10,3 +10,6 @@
 [submodule "vendor/emacs.d"]
 	path = vendor/emacs.d
 	url = https://github.com/schanur/emacs.d.git
+[submodule "vendor/rsync-homedir-excludes"]
+	path = vendor/rsync-homedir-excludes
+	url = https://github.com/rubo77/rsync-homedir-excludes

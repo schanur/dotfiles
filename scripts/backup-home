@@ -13,6 +13,7 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+source "${DOTFILES_PATH}/lib/shell/rsync.sh"
 
 
 GL_REMOTE_USERNAME="$(whoami)"
@@ -22,7 +23,6 @@ CONFIG_FILE_BASENAME="sync-home.conf"
 LOG_FILE="/home/${USERNAME}/backup_home.log"
 LAST_SUCCESS_FILE="/home/${USERNAME}/local/succ_timestamp"
 REMOTE_BACKUP_PATH="/media/backup_raid/backup/home/${USERNAME}"
-EXCLUDE_FILE="${DOTFILES_PATH}/data/home_backup_ignore_list"
 # REMOTE_LOG_FILE="/media/backup_raid/backup/home/log/${USERNAME}/log"
 
 DRY_RUN=0
@@ -108,10 +108,10 @@ function run_rsync {
 
     if [ ${DRY_RUN=0} -eq 1 ]; then
         echo "Run in dry mode: ${JOB_DESC}"
-        echo "rsync -a -v -e \"ssh -p ${REMOTE_PORT}\" --progress --delete-during --delete-excluded --exclude-from=${EXCLUDE_FILE} ${SOURCE} ${USERNAME}@${REMOTE_HOST}:${TARGET}"
+        echo "rsync -a -v -e \"ssh -p ${REMOTE_PORT}\" --progress --delete-during --delete-excluded $(rsync_exclude_file_parameter_list)  ${SOURCE} ${USERNAME}@${REMOTE_HOST}:${TARGET}"
     else
         echo "${JOB_DESC}"
-        rsync       -a -v -e  "ssh -p ${REMOTE_PORT}"  --progress --delete-during --delete-excluded --exclude-from="${EXCLUDE_FILE}" "${SOURCE}" "${USERNAME}"@"${REMOTE_HOST}":"${TARGET}"
+        rsync       -a -v -e  "ssh -p ${REMOTE_PORT}"  --progress --delete-during --delete-excluded $(rsync_exclude_file_parameter_list) "${SOURCE}" "${USERNAME}"@"${REMOTE_HOST}":"${TARGET}"
     fi
 }
 
@@ -158,11 +158,6 @@ load_config
 LOG_FILE="/dev/stderr"
 if [ ${DRY_RUN} -eq 1 ]; then
     LOG_FILE="/dev/stderr"
-fi
-
-if [ ! -r ${EXCLUDE_FILE} ]; then
-    echo "No exclude file found. Abort!"
-    exit 1
 fi
 
 if [ "$(update_required)" -ne 1 ]; then

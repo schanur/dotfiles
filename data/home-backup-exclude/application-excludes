@@ -1,0 +1,60 @@
+# Bitcoin:
+/.bitcoin/blocks/
+/.bitcoin/chainstate/
+/.bitcoin/debug.log
+/.bitcoin/mount_point/
+/.bitcoin/wallet.dat
+wallet.dat*
+wallet.tar*
+
+# Browser Downloads
+/Downloads/
+
+# Cargo crate cache
+/.cargo/registry
+
+# Chrome
+/.config/google-chrome/
+
+# gPodder
+/gPodder/Download/
+/gPodder/Downloads/
+
+# 'local' filesystem structure
+/local/cache/
+/local/data/bitcoin_chain_data/
+/local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
+/local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
+/local/vm/lxc/
+
+# LXC
+/.local/share/lxc/
+
+# Multimedia files
+dwhelper/
+
+# Mount points
+/net
+
+# Rust suite update files
+/.rustup
+
+# Shell history
+/.bash_history
+/.zsh_history
+
+# Firfox
+.mozilla/firefox/*/saved-telemetry-pings/
+.mozilla/firefox/*/sessionstore-backups/
+.mozilla/firefox/*/weave/changes/
+.mozilla/firefox/*/storage
+
+# Thunderbird
+.icedove/*/Cache/
+.icedove/wspne1tl.default/datareporting/aborted-session-ping/
+
+# Downloaded content that gets reloaded
+/.local/share/xmoto/Levels/downloaded/
+
+# Gimp
+/.gimp*/*swap*
