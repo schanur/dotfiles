@@ -118,7 +118,7 @@ fi
 BASHRC_FILE="$(readlink -f ${BASH_SOURCE[0]})"
 export DOTFILES_PATH="$(dirname ${BASHRC_FILE})/.."
 
-source "${DOTFILES_PATH}/shared/shellrc"
+source "${DOTFILES_PATH}/shared/shellrc.sh"
 
 
 export CONF_FILE_LOADED__BASHRC=1

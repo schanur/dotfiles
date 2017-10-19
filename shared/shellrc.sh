@@ -77,6 +77,9 @@ source ${DOTFILES_PATH}/vendor/shell-status-prompt/shell-status-prompt.sh
 export NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
 export MAKEFLAGS="-j $(( NUMCPUS * 2 ))"
 
+# Set 'ls' directory color to purple
+# LS_COLORS=$LS_COLORS:'di=0;35:' ; export LS_COLORS
+LS_COLORS=$LS_COLORS:'di=0;96:' ; export LS_COLORS
 
 # echo "------------------------------------------------------------------------"
 
