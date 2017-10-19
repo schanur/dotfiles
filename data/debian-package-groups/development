@@ -30,7 +30,7 @@ libpcap-dev
 libsdl2-dev
 libtinyxml-dev
 lldb
-lua5.2
+lua5.3
 make
 markdown
 meld
