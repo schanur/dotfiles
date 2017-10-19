@@ -21,6 +21,7 @@ wallet.tar*
 /gPodder/Downloads/
 
 # 'local' filesystem structure
+/local/autogen/emacs_backup/
 /local/cache/
 /local/data/bitcoin_chain_data/
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
