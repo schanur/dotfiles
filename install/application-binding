@@ -1,0 +1,40 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+
+function main() {
+    local APPLICATIONS_TARGET_BASE_PATH
+    local APPLICATIONS_SOURCE_BASE_PATH
+    local LINK_FILENAME_RELATIVE_TO_HOME
+    local DOTFILES_FILENAME
+
+    APPLICATIONS_TARGET_BASE_PATH=".local/share/applications"
+    APPLICATIONS_SOURCE_BASE_PATH="${SCRIPT_PATH}/../applications"
+
+    LINK_FILENAME_RELATIVE_TO_HOME="${APPLICATIONS_TARGET_BASE_PATH}/defaults.list"
+    DOTFILES_FILENAME="${APPLICATIONS_SOURCE_BASE_PATH}/defaults.list"
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+
+    LINK_FILENAME_RELATIVE_TO_HOME="${APPLICATIONS_TARGET_BASE_PATH}/mimeinfo.cache"
+    DOTFILES_FILENAME="${APPLICATIONS_SOURCE_BASE_PATH}/mimeinfo.cache"
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+
+    # Create a link for each .desktop file
+    for DESKTOP_FILE in $(find "${APPLICATIONS_SOURCE_BASE_PATH}" -name "*.desktop"); do
+        DESKTOP_BASE_FILENAME="$(basename ${DESKTOP_FILE})"
+        LINK_FILENAME_RELATIVE_TO_HOME="${APPLICATIONS_TARGET_BASE_PATH}/${DESKTOP_BASE_FILENAME}"
+        DOTFILES_FILENAME="${APPLICATIONS_SOURCE_BASE_PATH}/${DESKTOP_BASE_FILENAME}"
+        backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+    done
+}
+
+main
