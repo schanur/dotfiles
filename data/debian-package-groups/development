@@ -21,14 +21,19 @@ grip
 g++
 highlight
 imediff2
+libarchive-dev                                                    # Zeal
 libclang-dev
 libcrypto++-dev
 libglib2.0-doc
 libgraphviz-dev
 liblz4-dev
 libpcap-dev
+libqt5webkit5-dev                                                 # Zeal
+libqt5x11extras5-dev                                              # Zeal
 libsdl2-dev
+libsqlite3-dev
 libtinyxml-dev
+libxcb-keysyms1-dev                                               # Zeal
 lldb
 lua5.3
 make
