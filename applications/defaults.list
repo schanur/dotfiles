@@ -1,2 +1,5 @@
 [Default Applications]
+
 application/pdf=mupdf-usercreated.desktop
+
+video/x-msvideo=mpv-usercreated.desktop
