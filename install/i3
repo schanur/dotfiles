@@ -25,6 +25,10 @@ function main() {
     LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/custom_i3status"
     DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/custom_i3status"
     backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/toolbox.sh"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/toolbox.sh"
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
 }
 
 main

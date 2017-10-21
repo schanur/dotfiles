@@ -180,6 +180,16 @@ bindsym $mod+Shift+r          restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e          exec    "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
 
+bindsym XF86AudioRaiseVolume       exec ".config/i3/toolbox.sh AudioRaiseVolume"
+bindsym XF86AudioLowerVolume       exec ".config/i3/toolbox.sh AudioLowerVolume"
+
+bindsym XF86MonBrightnessUp        exec ".config/i3/toolbox.sh MonBrightnessUp"
+bindsym XF86MonBrightnessDown      exec ".config/i3/toolbox.sh MonBrightnessDown"
+
+# bindsym XF86TouchpadToggle         exec ".config/i3/toolbox.sh TouchpadToggle"
+bindsym XF86Explorer               exec ".config/i3/toolbox.sh TouchpadToggle"
+
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
