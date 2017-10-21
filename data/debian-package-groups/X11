@@ -31,6 +31,7 @@ network-manager-pptp-gnome
 pdfsam
 qt4-qtconfig
 qtcurve
+rofi                                                              # dmenu replacement and window switcher
 ruby-notify
 rxvt-unicode-256color
 scrot
