@@ -9,8 +9,11 @@ BIVALVIA_PATH="${DOTFILES_PATH}/lib/bivalvia"
 echo
 echo "Set PATH:"
 
+echo "Load man page settings"
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
-echo -n "Load alias files:"
+echo "Load GUI toolkit colors"
+source ${DOTFILES_PATH}/shared/gui_toolkit_colors.sh
+echo -n "Load alias files"
 source ${DOTFILES_PATH}/alias/all.sh
 echo
 

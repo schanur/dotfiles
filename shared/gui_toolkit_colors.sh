@@ -1,0 +1,9 @@
+
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+export QT_STYLE_OVERRIDE=gtk2
+# export QT_QPA_PLATFORMTHEME=gtk2
+# export QT_STYLE_OVERRIDE=adwaita-dark
+# QT_QPA_PLATFORMTHEME
+
+export CONF_FILE_LOADED__GUI_TOOLKIT_COLORS=1

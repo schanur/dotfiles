@@ -9,8 +9,6 @@ if [ -d "$HOME/local/dev/all/dotfiles/scripts" ] ; then
     PATH="$HOME/local/dev/all/dotfiles/scripts:$PATH"
 fi
 
-export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-
 xsetroot -solid darkred
 
 
