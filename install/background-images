@@ -43,11 +43,10 @@ function is_installed {
     local IS_INSTALLED=0
 
     if [ -d ${IMAGE_CACHE_PATH} ]; then
-        if [ $(find ${IMAGE_CACHE_PATH} -name "*.jpg" | wc -l) -ge 100 ]; then
+        if [ $(find ${IMAGE_CACHE_PATH} -name "*.jpg" | wc -l) -ge 50 ]; then
             IS_INSTALLED=1
         fi
     fi
-
     echo ${IS_INSTALLED}
 }
 
