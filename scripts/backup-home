@@ -16,6 +16,8 @@ source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 source "${DOTFILES_PATH}/lib/shell/rsync.sh"
 
 
+set_config_path "${DOTFILES_PATH}/config"
+
 GL_REMOTE_USERNAME="$(whoami)"
 USERNAME="$(whoami)"
 

@@ -19,6 +19,8 @@ source "${DOTFILES_PATH}/lib/bivalvia/path.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 
 
+set_config_path "${DOTFILES_PATH}/config"
+
 # Return the first path after the dev base path.
 # Example: "/local/dev/private/work/git-repo" -> "private"
 function storage_policy_by_path {
