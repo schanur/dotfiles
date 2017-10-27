@@ -1,0 +1,22 @@
+dict
+dict-bouvier                                                      # law dictionary
+dict-de-en
+dict-elements                                                     # physics and chemistry
+dict-foldoc                                                       # Computing dictionary
+dict-freedict-deu-eng
+dict-freedict-deu-fra
+dict-freedict-eng-deu
+dict-freedict-fra-deu
+dict-gazetteer2k                                                  # Gegraphic data
+dict-gazetteer2k-counties                                         # Gegraphic data
+dict-gazetteer2k-places                                           # Gegraphic data
+dict-gazetteer2k-zips                                             # Gegraphic data
+dict-gcide
+dict-jargon
+dict-moby-thesaurus                                               # Large english thesaurus
+dict-vera                                                         # Acronyms
+dict-wn
+dictconv
+dictd
+dictfmt
+diction                                                           # English and german rules + 'styles' and 'diction' tools
