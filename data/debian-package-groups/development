@@ -51,6 +51,7 @@ shellcheck
 silversearcher-ag
 swig
 twine
+upx-ucl
 valgrind
 wordnet
 xorg-dev
