@@ -4,7 +4,6 @@ bundler
 check
 clang
 cmake
-colorgcc
 ddd
 doxygen
 doxygen-gui
