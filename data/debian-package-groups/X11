@@ -1,6 +1,9 @@
 adwaita-icon-theme
+adwaita-qt
+adwaita-qt4
 dunst
 evince
+feh                                                               # Required by set-background script
 filezilla
 file-roller
 gedit
@@ -31,11 +34,13 @@ network-manager-pptp-gnome
 pdfsam
 qt4-qtconfig
 qtcurve
+redshift
 rofi                                                              # dmenu replacement and window switcher
 ruby-notify
 rxvt-unicode-256color
 scrot
 system-config-printer
+unclutter                                                         # Hide mousecursor on mouse inactivity
 wdm
 wireshark
 xfonts-terminus
