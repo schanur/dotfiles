@@ -3,6 +3,7 @@ bison
 bundler
 check
 clang
+closure-linter                                                    # Javascript linter
 cmake
 ddd
 doxygen
