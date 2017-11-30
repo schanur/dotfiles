@@ -31,7 +31,7 @@ source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 INSTALLED_PACKAGE_LIST=""
 SELECTED_PACKAGE_LIST=""
 
-DEBIAN_PACKAGE_GROUP_PATH="${DOTFILES_PATH}/data/debian-package-groups"
+DEBIAN_PACKAGE_GROUP_PATH="${DOTFILES_PATH}/data/debian-package-groups/generic"
 
 
 CMD_LINE_PARAMS="${@}"
