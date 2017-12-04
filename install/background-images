@@ -15,6 +15,16 @@ source "${DOTFILES_PATH}/lib/shell/install.sh"
 IMAGE_CACHE_PATH="${HOME}/.cache/dotfiles/background-images"
 
 
+function download_pluto_picture {
+    local PLUTO_URL="https://blogs.nasa.gov/pluto/wp-content/uploads/sites/253/2015/09/nh-Figure1.jpg"
+
+
+}
+
+# function pluto_picture_is_installed {
+
+# }
+
 function download_hubble_top_100 {
     require_executable "wget"
     require_executable "unzip"
@@ -41,7 +51,7 @@ function download_hubble_top_100 {
 }
 
 # Returns true if image cache path contins at least 100 JPEG images
-function is_installed {
+function hubble_top_100_is_installed {
     local IS_INSTALLED=0
 
     if [ -d ${IMAGE_CACHE_PATH} ]; then
@@ -57,5 +67,7 @@ function main() {
         download_hubble_top_100
     fi
 }
+
+exit 0
 
 main
