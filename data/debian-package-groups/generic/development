@@ -44,7 +44,6 @@ pandoc
 pry
 python3
 python3-pip
-python3-rope
 qt5-default
 rake
 ruby-method-source
