@@ -9,6 +9,8 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
 
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
 
 function main() {
     local LINK_FILENAME_RELATIVE_TO_HOME

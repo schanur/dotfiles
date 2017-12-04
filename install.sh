@@ -5,6 +5,8 @@ SCRIPT_FILENAME="$(readlink -f "${0}")"
 SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}"
 
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
 
 function install_component() {
     local INSTALL_SCRIPT=${1}
@@ -23,16 +25,9 @@ function install_component() {
     fi
 }
 
-function init_dependencies() {
-    git submodule init
-    git submodule update
-}
-
 function main () {
     local INSTALL_SCRIPT
     local FIRST_FILE=1;
-
-    init_dependencies
 
     for INSTALL_SCRIPT in $(find ${SCRIPT_PATH}/install ! -type d); do
         if [ ${FIRST_FILE} = "1" ]; then

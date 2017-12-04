@@ -9,6 +9,8 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
 
 IMAGE_CACHE_PATH="${HOME}/.cache/dotfiles/background-images"
 

@@ -9,6 +9,9 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 source "${DOTFILES_PATH}/lib/bivalvia/path_variable.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/error.sh"
 
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
+
 # function link_dot_tmux_to_repo() {
 #     local HOME_PATH="~"
 #     local REPO_PATH=${SCRIPT_PATH}/../tmux

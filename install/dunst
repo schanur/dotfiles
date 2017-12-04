@@ -6,11 +6,12 @@ SCRIPT_FILENAME="$(readlink -f "${0}")"
 SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}/.."
 
-
 # shellcheck   source=../lib/bivalvia/help.sh
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 # shellcheck   source=../lib/bivalvia/link.sh
 source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+source "${DOTFILES_PATH}/lib/shell/install.sh"
 
 
 function main() {
