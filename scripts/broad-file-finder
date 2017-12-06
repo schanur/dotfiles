@@ -16,4 +16,4 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 SEARCH_STRING="${@}"
 
 
-find . -iname "*${SEARCH_STRING}*"
+find . -iname "*${SEARCH_STRING}*" |grep --color "${SEARCH_STRING}"
