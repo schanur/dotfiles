@@ -25,3 +25,8 @@ alias ta='tmux attach'
 # alias ftd='fast-travel delete'
 # alias ftl='fast-travel list'
 
+# git
+alias gc='git-credentials'
+alias ggc='git-global-credentials'
+
+

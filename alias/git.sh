@@ -13,3 +13,7 @@ alias git-brutal-credential-fix='git-change-credentials -a b.griebenow@web.de "B
 alias gbcf='git-brutal-credential-fix'
 
 alias git-search-history='git rev-list --all | xargs git grep'
+
+
+alias git-credentials='git config user.name && git config user.email'
+alias git-global-credentials='git config --global user.name && git config --global user.email'
