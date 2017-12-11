@@ -33,6 +33,7 @@ network-manager-vpnc-gnome
 network-manager-pptp-gnome
 pdfsam
 qt4-qtconfig
+qt5-style-plugins                                                 # Dark theme support for QT5 apps
 qtcurve
 redshift
 rofi                                                              # dmenu replacement and window switcher
