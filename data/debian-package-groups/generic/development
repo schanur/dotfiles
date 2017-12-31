@@ -40,6 +40,7 @@ lua5.3
 make
 markdown
 meld
+nemiver                                                           # Graphical C/C++ debugger
 pandoc
 pry
 python3
