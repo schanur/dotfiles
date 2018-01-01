@@ -43,6 +43,7 @@ system-config-printer
 unclutter                                                         # Hide mousecursor on mouse inactivity
 wdm
 wireshark
+xdotool
 xfonts-terminus
 xserver-xorg
 xterm
