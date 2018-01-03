@@ -29,7 +29,6 @@ htop
 hunspell
 hunspell-de-de-frami
 hunspell-tools
-imagemagick
 jq
 kwalify
 lhasa
@@ -70,6 +69,5 @@ thin-provisioning-tools
 tmux
 vim
 xjobs
-xloadimage
 xz-utils
 zsh

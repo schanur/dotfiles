@@ -4,6 +4,7 @@ gimp
 gmusicbrowser
 gpodder
 grilo-plugins-0.3
+imagemagick
 knowthelist
 libc++-dev                                                        # Required by Discord
 mpv
@@ -11,4 +12,5 @@ musique
 rhythmbox
 sxiv
 vlc
+xloadimage
 youtube-dl
