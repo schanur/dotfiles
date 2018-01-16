@@ -6,7 +6,8 @@ alias smug='su -c "apt upgrade"'
 
 alias asn='apt-cache search --names-only'
 
-
+# backup
+alias tb='tar-snapshot-to-backup-path'
 
 alias ll='ls -la'
 # Show hidden files only.
