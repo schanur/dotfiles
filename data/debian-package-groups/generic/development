@@ -16,12 +16,14 @@ gitg
 gitk
 git-cola
 git-extras
+git-ftp
 global
 graphviz
 grip
 g++
 highlight
 imediff2
+lftp                                                              # Required by git-ftp pull
 libarchive-dev                                                    # Zeal
 libclang-dev
 libcrypto++-dev
