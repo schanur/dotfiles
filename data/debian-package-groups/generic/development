@@ -9,6 +9,7 @@ ddd
 doxygen
 doxygen-gui
 enscript
+extra-cmake-modules                                               # Zeal
 flex
 gcc
 gdb
