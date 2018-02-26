@@ -12,3 +12,4 @@ libreoffice-script-provider-python
 libreoffice-sdbc-postgresql
 libreoffice-wiki-publisher
 mythes-de
+texlive-latex-base                                                # Required by Emacs org mode latex PDF export

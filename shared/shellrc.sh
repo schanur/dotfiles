@@ -17,7 +17,8 @@ echo -n "Load alias files"
 source ${DOTFILES_PATH}/alias/all.sh
 echo
 
-CD_PATH_LIST=".:${HOME}:${HOME}/local:${HOME}/local/dev:${HOME}/local/dev/all:$HOME/.cargo/bin"
+CD_PATH_LIST=".:${HOME}:${HOME}/.local/bin:${HOME}/local:${HOME}/local/dev:${HOME}/local/dev/all:${HOME}/.cargo/bin:${HOME}/node_modules/.bin"
+PATH_LIST=":${HOME}/.local/bin:${HOME}/.cargo/bin:${HOME}/node_modules/.bin"
 
 # If user defined additional directories to add to CD_PATH, use them too.
 EXTRA_CD_PATH_FILE="${HOME}/.config/dotfiles/cdpath"
@@ -48,7 +49,8 @@ function load_exectuable_path_file {
     fi
 }
 
-export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.local/bin/"
+export PATH="${PATH}:${PATH_LIST}"
+# export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.local/bin/"
 echo ".executable_path files: "
 for REPO_PATH in $("${DOTFILES_PATH}/scripts-extra/development/git-list"); do
     # echo $REPO_PATH
