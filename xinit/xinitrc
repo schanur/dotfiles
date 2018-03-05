@@ -11,6 +11,6 @@ fi
 
 xsetroot -solid darkred
 
-echo "xinitrc: $0" >> /home/ze/user.log
+echo "xinitrc: $0" >> $HOME/user.log
 
 export CONF_FILE_LOADED__XINITRC=1

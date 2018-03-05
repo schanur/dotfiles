@@ -29,6 +29,6 @@ fi
 # Added by rustup script.
 # export PATH="$HOME/.cargo/bin:$PATH"
 
-echo "profile: $0" >> /home/ze/user.log
+echo "profile: $0" >> $HOME/user.log
 
 export CONF_FILE_LOADED__PROFILE=1
