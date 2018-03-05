@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Start an VLC without decoration and signal i3 a special window behavior.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+PARAMS="${@}"
+
+vlc --qt-display-mode=2 --width=500 --height=400 --no-video-deco ${PARAMS} &
+VLC_PID=${!}
+echo ${!}
+xdotool
+# vlc -I dummy --width=500 --height=400 --video-x=100 --video-y=100 --no-video-deco ${PARAMS}
