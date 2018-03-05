@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Backup sync: Use rsync over SSH with default options for backups.
+# Backup sync: Use rsync with default options for backups. Works local or over SSH
 
 # Test
 
@@ -10,10 +10,13 @@
 # -E,     --executability         preserve executability
 # -S,     --sparse                handle sparse files efficiently
 # -x,     --one-file-system       don't cross filesystem boundaries
-# -z,     --compress              compress file data during the transfer
-# -v,     --verbose               increase verbosity
 #         --partial               keep partially transferred files
+#
+# If you want to use the script for machine local rsync operations,
+# remove the "-e ssh" option.
 # -e ssh, --rsh=ssh               specify the remote shell to use (we use SSH)
+# -z,     --compress              compress file data during the transfer
+#
 #
 # The following options may be inappropriate for your use cases:
 #
@@ -21,8 +24,6 @@
 # drives, network filesystems, etc. are mounted in the directory you
 # want to backup.
 #
-# If you want to use the script for machine local rsync operations,
-# remove the "-e ssh" option.
 
 
 set -o errexit -o nounset -o pipefail
@@ -33,15 +34,34 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
 
-function rsync_cmd {
+USE_SSH=0
+
+function rsync_cmd_ssh {
     local PARAMS=${*}
-    rsync -aXESxzve "ssh -T -o Compression=yes" --progress --partial ${PARAMS}
+    rsync -aXESxze "ssh -T -o Compression=yes" --partial ${PARAMS}
+    exit $?
+}
+
+function rsync_cmd_local {
+    local PARAMS=${*}
+    rsync -aXESx --partial ${PARAMS}
     exit $?
 }
 
 function main {
+    local USE_SSH=0
+    if [ "${#}" -ge "3" ]; then
+        if [ "${1}" = "-s" ]; then
+            USE_SSH=1
+            shift
+        fi
+    fi
     if [ "${#}" -ge "2" ]; then
-        rsync_cmd "${@}"
+        if [ "${USE_SSH}" -eq 1 ]; then
+            rsync_cmd_ssh   "${@}"
+        else
+            rsync_cmd_local "${@}"
+        fi
         EXIT_STATUS=$?
         exit ${EXIT_STATUS}
     else
