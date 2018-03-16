@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Recursively convert all WAV files to FLAC format and delete input files.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/path.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+function main {
+    find . -iname '*.wav' | while read -r WAV_FILENAME; do
+        if [ ! -d "${WAV_FILENAME}" ]; then
+            FLAC_FILENAME="${WAV_FILENAME%.*}.flac"
+            echo "${WAV_FILENAME} => ${FLAC_FILENAME}"
+
+            flac --best -e -m "${WAV_FILENAME}"
+            if [ ! -f "${FLAC_FILENAME}" ]; then
+                echo "FLAC file missing after encode."
+                exit 1
+            fi
+            rm "${WAV_FILENAME}"
+        fi
+    done
+}
+
+main "${@}"
