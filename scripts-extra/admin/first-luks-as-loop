@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Create a loopback device for the first LUKS partition found in the first 30 megabytes
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+
+CMD_LINE_PARAMS="${@}"
+
+
+function main {
+    if [ "${#}" -eq "1" ]; then
+        local BLOCK_DEV="${1}"
+        local LOOP_DEV="$(losetup -f)"
+        local SEARCH_BYTES="31457280"
+        if [ "${LOOP_DEV}" = "" ]; then
+            echo "No empty loop device found."
+            exit 1
+        fi
+        echo "Block device:                      ${BLOCK_DEV}"
+        echo "Free loop device:                  ${LOOP_DEV}"
+        echo "Search range:                      ${SEARCH_BYTES} bytes"
+
+        local HEX_LUKS_OFFSET="$(hexdump -n "${SEARCH_BYTES}" -C "${BLOCK_DEV}" |grep "LUKS" | head -n 1 | cut -f 1 -d ' ')"
+        if [ "${HEX_LUKS_OFFSET}" = "" ]; then
+            echo "No LUKS partition found."
+            exit 1
+        fi
+        local DEC_LUKS_OFFSET=$((16#${HEX_LUKS_OFFSET}))
+
+
+        echo "Found LUKS partition offset (hex): 0x${HEX_LUKS_OFFSET} bytes"
+        echo "Found LUKS partition offset (dec): ${DEC_LUKS_OFFSET} bytes"
+
+        losetup --offset "${DEC_LUKS_OFFSET}" "${LOOP_DEV}" "${BLOCK_DEV}"
+
+        echo
+        echo "Loop device created."
+    else
+        invalid_parameter_exit
+    fi
+
+}
+
+main "${@}"
