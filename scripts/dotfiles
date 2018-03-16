@@ -20,7 +20,7 @@ function list_scripts {
     local SCRIPT_GROUP
     local SCRIPT_NAME
 
-    for SCRIPT_GROUP_PATH in $(echo "${SCRIPT_PATH}" "$(find "${DOTFILES_PATH}/scripts-extra" -mindepth 1 -type xd | sort)"); do
+    for SCRIPT_GROUP_PATH in $(echo "${SCRIPT_PATH}" "$(find "${DOTFILES_PATH}/scripts-extra" -mindepth 1 -type d | sort)"); do
         SCRIPT_GROUP="$(deepest_path "${SCRIPT_GROUP_PATH}")"
         echo
         echo ${SCRIPT_GROUP}
