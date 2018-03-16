@@ -27,7 +27,8 @@ wallet.tar*
 /local/data/bitcoin_chain_data/
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
 /local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
-/local/vm/lxc/
+/local/vm/
+/local/media/
 
 # LXC
 /.local/share/lxc/
