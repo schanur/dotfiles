@@ -45,10 +45,11 @@ dwhelper/
 /.zsh_history
 
 # Firfox
-.mozilla/firefox/*/saved-telemetry-pings/
-.mozilla/firefox/*/sessionstore-backups/
-.mozilla/firefox/*/weave/changes/
-.mozilla/firefox/*/storage
+#.mozilla/firefox/*/saved-telemetry-pings/
+#.mozilla/firefox/*/sessionstore-backups/
+#.mozilla/firefox/*/weave/changes/
+#.mozilla/firefox/*/storage
+.mozilla/
 
 # Thunderbird
 .icedove/*/Cache/
