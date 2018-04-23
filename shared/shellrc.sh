@@ -42,7 +42,7 @@ function load_exectuable_path_file {
             ABSOLUTE_EXECUTABLE_PATH="$(dirname ${EXECUTABLE_PATH_FILENAME})"
         fi
         # echo "EXECUTABLE_PATH: ${EXECUTABLE_PATH_FILENAME}: ${ABSOLUTE_EXECUTABLE_PATH}"
-        echo "  Add:  ${EXECUTABLE_PATH_FILENAME} -> ${ABSOLUTE_EXECUTABLE_PATH}"
+        echo "  Add to path variable:       ${EXECUTABLE_PATH_FILENAME} -> ${ABSOLUTE_EXECUTABLE_PATH}"
         export PATH="${PATH}:${ABSOLUTE_EXECUTABLE_PATH}"
         done
     fi
@@ -52,11 +52,19 @@ export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.local/bin/"
 echo ".executable_path files: "
 for REPO_PATH in $("${DOTFILES_PATH}/scripts-extra/development/git-list"); do
     # echo $REPO_PATH
-    if [              "${REPO_PATH}" = ""         ]; then echo "  Ignore empty list entry.";                 continue; fi # Can happen if "git-list" returned empty list.
-    if [ $(basename "${REPO_PATH}")  = "dotfiles" ]; then echo "  Skip: ${REPO_PATH}. It gets loaded later."; continue; fi
+    if [              "${REPO_PATH}" = ""         ]; then echo "  Ignore empty list entry.";          continue; fi # Can happen if "git-list" returned empty list.
+    if [ $(basename "${REPO_PATH}")  = "dotfiles" ]; then echo "  Skip (be the last to load): ${REPO_PATH}"; continue; fi
 
     REPO_EXECUTABLE_PATH_FILENAME="${REPO_PATH}/.executable_path"
     load_exectuable_path_file "${REPO_EXECUTABLE_PATH_FILENAME}"
+
+    # Load bash completion script (works in zsh too).
+    for COMPLETION_FILENAME in $(find "${REPO_PATH}" -name "*-completion.bash"); do
+        if [ -r "${COMPLETION_FILENAME}" ]; then
+            echo "  Load bash completion file:  ${COMPLETION_FILENAME}"
+            source "${COMPLETION_FILENAME}"
+        fi
+    done
 done
 
 load_exectuable_path_file "${DOTFILES_PATH}/.executable_path"
@@ -79,6 +87,8 @@ source ${DOTFILES_PATH}/vendor/shell-status-prompt/shell-status-prompt.sh
 
 export NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
 export MAKEFLAGS="-j $(( NUMCPUS * 2 ))"
+
+export RUST_SRC_PATH=${HOME}/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
 # Set 'ls' directory color to purple
 # LS_COLORS=$LS_COLORS:'di=0;35:' ; export LS_COLORS

@@ -12,6 +12,14 @@ ZSHRC_FILE="$(readlink -e ${(%):-%x})"
 export DOTFILES_PATH="$(dirname ${ZSHRC_FILE})/.."
 ZSH_PATH="${DOTFILES_PATH}/vendor/oh-my-zsh"
 
+# Load support for bash completion files
+autoload bashcompinit
+bashcompinit
+source /path/to/your/bash_completion_file
+
+
+########################################################################
+
 export ZSH="${ZSH_PATH}"
 
 # Set name of the theme to load.
