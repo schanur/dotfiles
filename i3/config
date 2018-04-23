@@ -87,6 +87,7 @@ bindsym             $mod+Return                   exec "~/local/dev/public/dotfi
 # kill focused window
 bindsym             $mod+Shift+q                  kill
 
+# Rofi application/file launcher
 bindsym             $mod+k                        exec "rofi -show combi -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
 bindsym             $mod+l                        exec "rofi -show run"
 bindsym             $mod+Tab                      exec "rofi -show window"
@@ -107,7 +108,7 @@ bindsym             $mod+Shift+l                  move up
 bindsym             $mod+Shift+odiaeresis         move right
 
 # Show floating window on all workspaces
-bindsym             $mod+y sticky toggle
+bindsym             $mod+y                        sticky toggle
 
 # alternatively, you can use the cursor keys:
 bindsym             $mod+Shift+Left               move left
