@@ -21,8 +21,5 @@ function tar_snapshot_to_backup_dir_func {
     mv -v "${SNAPSHOT_FILENAME}" "${BACKUP_PATH}"
 }
 
-BACKUP_FILE_OR_PATH=${1}
-BACKUP_FILENAME=${BACKUP_FILE_OR_PATH}
-
 alias tar-snapshot='tar_snapshot_func'
 alias tar-snapshot-to-backup-path='tar_snapshot_to_backup_dir_func'
