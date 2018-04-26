@@ -15,8 +15,6 @@ ZSH_PATH="${DOTFILES_PATH}/vendor/oh-my-zsh"
 # Load support for bash completion files
 autoload bashcompinit
 bashcompinit
-source /path/to/your/bash_completion_file
-
 
 ########################################################################
 
