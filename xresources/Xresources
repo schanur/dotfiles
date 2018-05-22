@@ -1,0 +1,17 @@
+! urxvt*font:     xft:Terminus-18
+! urxvt*boldFont: xft:Terminus-18
+
+! Fonts
+! URxvt.font:                                       xft:Consolas:pixelsize=18
+! URxvt.boldFont:                                   xft:Consolas:bold:pixelsize=18
+! URxvt.italicFont:                                 xft:Consolas:italic:pixelsize=18
+! URxvt.boldItalicFont:                             xft:Consolas:bold:italic:pixelsize=18
+
+URxvt.font:                                       xft:Terminus:pixelsize=18
+URxvt.boldFont:                                   xft:Terminus:bold:pixelsize=18
+URxvt.italicFont:                                 xft:Terminus:italic:pixelsize=18
+URxvt.boldItalicFont:                             xft:Terminus:bold:italic:pixelsize=18
+
+URxvt.foreground:                                 grey
+URxvt.background:                                 black
+
