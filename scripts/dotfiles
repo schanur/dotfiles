@@ -9,6 +9,7 @@ SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}/.."
 
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/message.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/path.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/string.sh"
 
@@ -34,6 +35,7 @@ function list_scripts {
         done
     done
 }
+
 
 # Print a section of a documentation of a script.
 function dotfiles_doc {
@@ -61,15 +63,15 @@ function dotfiles_doc {
     esac
 }
 
+
 # Default action if script is called without parameters.
 function no_param {
     list_scripts
 }
 
-function main() {
-    if [ "${#}" -eq "0" ]; then
-        no_param
-    else
+
+function parse_params {
+    while [ "${#}" -gt "1" ]; do
         case ${1} in
             doc)
                 shift
@@ -79,7 +81,18 @@ function main() {
                 invalid_parameter_exit
                 ;;
         esac
+
+    done
+}
+
+
+function main() {
+    if [ "${#}" -eq "0" ]; then
+        no_param
+    else
+        parse_params "${@}"
     fi
 }
+
 
 main "${@}"
