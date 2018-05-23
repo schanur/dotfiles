@@ -29,7 +29,7 @@ function list_scripts {
         for ABS_SCRIPT_FILENAME in $(find "${SCRIPT_GROUP_PATH}" -mindepth 1 | sort); do
             SCRIPT_NAME="$(basename "${ABS_SCRIPT_FILENAME}")"
             RELATIVE_SCRIPT_FILENAME="$(basename "${ABS_SCRIPT_FILENAME}")"
-            TABBED_FILENAME="$(fill_tail 28 " " "${RELATIVE_SCRIPT_FILENAME}")"
+            TABBED_FILENAME="$(fill_tail 30 " " "${RELATIVE_SCRIPT_FILENAME}")"
             echo "${TABBED_FILENAME}$(short_description "${ABS_SCRIPT_FILENAME}")"
         done
     done
