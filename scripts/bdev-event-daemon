@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Wait for block device udev events and run a script if the UUID matches.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+BDEV_EVENT_HANDLER_BASE_PATH="${HOME}/.config/dotfiles/bdev-event-handlers"
+
+# while true; do
+
+# stdbuf -i 0 -o 0 -e 0
+# udevadm monitor --subsystem-match=usb --udev
+
+
+#!/bin/sh
+
+#    | sed 1,3d \
+
+if [ ! -d "${BDEV_EVENT_HANDLER_BASE_PATH}" ]; then
+    echo "Create path: ${BDEV_EVENT_HANDLER_BASE_PATH}"
+    mkdir -p          "${BDEV_EVENT_HANDLER_BASE_PATH}"
+fi
+
+stdbuf -oL -- udevadm monitor --udev -s block \
+    | sed -u 1,3d \
+    | while read -r -- _ _ EVENT_TYPE DEV_PATH _; do
+
+    HAS_UUID=1
+    HAS_DEV_NAME=1
+    # udevadm info -p /sys/"${DEV_PATH}"
+    DEV_UUID="$(udevadm info -p /sys/"${DEV_PATH}" | grep 'S: disk/by-uuid/' | cut -f 3 -d '/')"  || HAS_UUID=0
+    DEV_NAME="$(udevadm info -p /sys/"${DEV_PATH}" | grep 'E: DEVNAME='      | cut -f 2 -d '=')"  || HAS_DEV_NAME=0
+
+    echo "${EVENT_TYPE} ${DEV_PATH} ${DEV_UUID}"
+
+    if [ "${DEV_UUID}" != "" ]; then
+        UUID_EVENT_PATH="${BDEV_EVENT_HANDLER_BASE_PATH}/${DEV_UUID}"
+        UUID_EVENT_HANDLER_SCRIPT="${UUID_EVENT_PATH}/${EVENT_TYPE}"
+        # echo "UUID_EVENT_PATH: ${UUID_EVENT_PATH}"
+        # echo "UUID_EVENT_HANDLER_SCRIPT: ${UUID_EVENT_HANDLER_SCRIPT}"
+        if [ -d "${UUID_EVENT_PATH}" ]; then
+            if [ -x "${UUID_EVENT_HANDLER_SCRIPT}" ]; then
+                EVENT_HANDLER_RET_CODE=0
+                echo "Event handler script found: ${UUID_EVENT_HANDLER_SCRIPT}"
+                "${UUID_EVENT_HANDLER_SCRIPT}" || EVENT_HANDLER_RET_CODE=$?
+                # echo "EVENT_HANDLER_RET_CODE: ${EVENT_HANDLER_RET_CODE}"
+            fi
+        fi
+    fi
+done

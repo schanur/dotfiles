@@ -1,0 +1,56 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+
+
+USERNAME="$(whoami)"
+UUID="$(basename "${SCRIPT_PATH}")"
+DEV_BY_UUID="/dev/disk/by-uuid/${UUID}"
+UNLOCKED_DEV_BY_UUID="/dev/mapper/luks-${UUID}"
+KEY_FILE="${SCRIPT_PATH}/keyfile"
+
+SYNC_SOURCE_PATH="${HOME}/local/dev/"
+SYNC_SOURCE_BASEPATH="$(basename "${SYNC_SOURCE_PATH}")"
+
+echo "USERNAME:             ${USERNAME}"
+echo "UUID:                 ${UUID}"
+echo "DEV_BY_UUID:          ${DEV_BY_UUID}"
+echo "UNLOCKED_DEV_BY_UUID: ${UNLOCKED_DEV_BY_UUID}"
+echo "KEY_FILE:             ${KEY_FILE}"
+
+
+if [ ! -h "${DEV_BY_UUID}" ]; then
+    echo "Block device or partition not found: ${DEV_BY_UUID}"
+    exit 1
+fi
+
+udisksctl unlock             -b "${DEV_BY_UUID}"          --key-file "${KEY_FILE}"
+# MOUNT_MSG="$(udisksctl mount -b "${UNLOCKED_DEV_BY_UUID}" --options "compress")"
+MOUNT_MSG="$(udisksctl mount -b "${UNLOCKED_DEV_BY_UUID}")"
+MOUNT_POINT="$(echo "${MOUNT_MSG}" | cut -f 4 -d ' ' | cut -f 1 -d '.')"
+echo "Device unlocked and mounted at '${MOUNT_POINT}'"
+SYNC_TARGET_PATH="${MOUNT_POINT}/${HOSTNAME}/${USERNAME}/${SYNC_SOURCE_BASEPATH}"
+
+echo "MOUNT_MSG:            ${MOUNT_MSG}"
+echo "MOUNT_POINT:          ${MOUNT_POINT}"
+echo "SYNC_TARGET_PATH:     ${SYNC_TARGET_PATH}"
+echo "SYNC_SOURCE_PATH:     ${SYNC_SOURCE_PATH}"
+echo "SYNC_SOURCE_BASEPATH: ${SYNC_SOURCE_BASEPATH}"
+
+if [ ! -d "${SYNC_TARGET_PATH}" ]; then
+    mkdir -p "${SYNC_TARGET_PATH}"
+fi
+
+SYNC_STATS_SUMMARY=$(bsync --info=stats2 --delete-during "${SYNC_SOURCE_PATH}" "${SYNC_TARGET_PATH}")
+TOTAL_FILE_TRANSFER_SIZE="$(echo "${SYNC_STATS_SUMMARY}" | grep 'Total transferred file size:' | cut -f 2 -d ':')"
+
+# echo "SYNC_STATS_SUMMARY:   ${SYNC_STATS_SUMMARY}"
+echo "TOTAL_FILE_TRANSFER_SIZE: ${TOTAL_FILE_TRANSFER_SIZE}"
+
+udisksctl unmount            -b "${UNLOCKED_DEV_BY_UUID}"
+udisksctl lock               -b "${DEV_BY_UUID}"
+udisksctl power-off          -b "${DEV_BY_UUID}"
+echo "Device unmounted, locked and powered off."
