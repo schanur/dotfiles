@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Create a loopback device for a partition inside a block device image file.
+
+
+# Usage:
+#
+# mount            $$IMG_FILE $$PARTITION_NUMBER $$MOUNT_POINT Mont the specified partition from the image file onto the mount point.
+# unmount          $$MOUNT_POINT                               Unmount the partition and also destroy the created loopback device.
+# list_partitions  $$IMG_FILE                                  Show the partition table of the image file
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+
+CMD_LINE_PARAMS="${@}"
+
+
+
+function main {
+    if [ "${#}" -ge "1" ]; then
+        local OPERATION=${1}
+        shift
+        local PACKAGE_GROUPS="${@}"
+
+        case ${OPERATION} in
+            install)
+                run_as_root "${CMD_LINE_PARAMS}"
+                pre_requirements
+                parse_all_package_groups ${PACKAGE_GROUPS}
+                install_packages
+                ;;
+            remove)
+                run_as_root "${CMD_LINE_PARAMS}"
+                pre_requirements
+                parse_all_package_groups ${PACKAGE_GROUPS}
+                remove_packages
+                ;;
+            remove-purge)
+                run_as_root "${CMD_LINE_PARAMS}"
+                pre_requirements
+                parse_all_package_groups ${PACKAGE_GROUPS}
+                purge_packages
+                ;;
+            list-group-items)
+                list_group_items         ${PACKAGE_GROUPS}
+                ;;
+            list-groups)
+                list_package_groups
+                ;;
+            stats)
+                statistics
+                ;;
+            *)
+                echo "fatal"
+                exit 1
+                ;;
+        esac
+    else
+        invalid_parameter_exit
+    fi
+
+}
+
+main "${@}"
