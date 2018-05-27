@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Move every movie file in a directory into a separate subdirectory with the same name but without file extension.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+function main {
+    for FILE in *; do
+        if [ ! -d "${FILE}" ]; then
+            FILE_SUFFIX="${FILE##*.}"
+            case "${FILE_SUFFIX,,}" in
+                mkv|avi|mp4|m4v|mpg)
+                    PATHNAME="${FILE%.*}"
+                    if [ ! -d "${PATHNAME}" ]; then
+                        echo "Move ${FILE} => ${PATHNAME}"
+                        mkdir "${PATHNAME}"
+                        mv "${FILE}" "${PATHNAME}"
+                    else
+                        echo "Path already exists: ${PATHNAME}. Skip."
+                    fi
+                    ;;
+                *)
+                    echo "Unknown suffix: '${FILE_SUFFIX}'. Skip."
+                    ;;
+            esac
+        fi
+    done
+}
+
+
+main "${@}"
