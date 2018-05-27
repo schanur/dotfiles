@@ -24,12 +24,14 @@ function padded_track_number {
     echo ${PADDED_TRACK_NUMBER}
 }
 
+
 function is_valid_ripperx_input {
     local ALBUM_PATH=${1}
 
     # FIXME: Implement real check.
     echo "1"
 }
+
 
 function unify_album_ripperx {
     local ALBUM_PATH=${1}
@@ -50,6 +52,7 @@ function unify_album_ripperx {
     done
 }
 
+
 function unify_album {
     local ALBUM_PATH=${1}
 
@@ -57,6 +60,7 @@ function unify_album {
         unify_album_ripperx ${ALBUM_PATH}
     fi
 }
+
 
 function main {
     local ALBUM_PATH=""
@@ -69,5 +73,6 @@ function main {
 
     unify_album ${ALBUM_PATH}
 }
+
 
 main "${@}"

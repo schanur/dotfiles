@@ -14,9 +14,11 @@ source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
 # TODO: What is about parameters?
 run_as_root
 
+
 function is_mounted() {
     true
 }
+
 
 function mount_net_share() {
     sshfs -o reconnect,allow_other,ro ${USERNAME}@${HOSTNAME}:${REMOTE_PATH} ${MOUNT_PATH}

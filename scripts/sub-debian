@@ -17,6 +17,7 @@ INSTALL_PATH=${INSTALL_NAME}
 
 CHROOT_USER="ze"
 
+
 function install_debian_oldstable {
     if [ ! -f ${INSTALL_PATH}/debootstrap.succ ]; then
         mkdir -p ${INSTALL_PATH}
@@ -24,6 +25,7 @@ function install_debian_oldstable {
         touch ${INSTALL_PATH}/debootstrap.succ
     fi
 }
+
 
 function run_schroot {
     # schroot --chroot=${INSTALL_PATH}
@@ -33,9 +35,11 @@ function run_schroot {
         # -o directory=${INSTALL_PATH}
 }
 
+
 function main {
     install_debian_oldstable
     run_schroot
 }
+
 
 main

@@ -25,6 +25,7 @@ function install_component() {
     fi
 }
 
+
 function main () {
     local INSTALL_SCRIPT
     local FIRST_FILE=1;
@@ -41,5 +42,6 @@ function main () {
         fi
     done
 }
+
 
 main

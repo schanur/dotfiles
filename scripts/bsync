@@ -36,20 +36,26 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
 USE_SSH=0
 
+
 function rsync_cmd_ssh {
     local PARAMS=${*}
+
     rsync -aXESxze "ssh -T -o Compression=yes" --partial ${PARAMS}
     exit $?
 }
 
+
 function rsync_cmd_local {
     local PARAMS=${*}
+
     rsync -aXESx --partial ${PARAMS}
     exit $?
 }
 
+
 function main {
     local USE_SSH=0
+
     if [ "${#}" -ge "3" ]; then
         if [ "${1}" = "-s" ]; then
             USE_SSH=1
@@ -68,5 +74,6 @@ function main {
         invalid_parameter_exit
     fi
 }
+
 
 main "${@}"

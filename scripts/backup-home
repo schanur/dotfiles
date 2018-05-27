@@ -63,6 +63,7 @@ function parse_cmd_line_parameter {
     done
 }
 
+
 function load_config {
     if [ "$(config_file_exists "${CONFIG_FILE_BASENAME}")" -eq 0 ]; then
         echo "No config file found."
@@ -76,6 +77,7 @@ function load_config {
     require_variable RSYNC_HOME__REMOTE_BASE_PATH
 }
 
+
 function local_hostname_over_ssh {
     local REMOTE_HOST="${1}"
     local REMOTE_PORT="${2}"
@@ -85,6 +87,7 @@ function local_hostname_over_ssh {
 
     ssh -p ${REMOTE_PORT} ${REMOTE_HOST} -C "hostname"
 }
+
 
 function run_rsync {
     local JOB_DESC="${1}"
@@ -117,14 +120,17 @@ function run_rsync {
     fi
 }
 
+
 function transfer_log {
     run_rsync "Transfer log file" "${RSYNC_HOME__REMOTE_HOST}" "${RSYNC_HOME__REMOTE_PORT}" "${GL_REMOTE_USERNAME}" "${LOG_FILE}" "${REMOTE_LOG_FILE}"
 }
+
 
 function transfer_data {
     echo "REMOTE_BACKUP_PATH:     ${REMOTE_BACKUP_PATH}/"
     run_rsync "Transfer data"     "${RSYNC_HOME__REMOTE_HOST}" "${RSYNC_HOME__REMOTE_PORT}" "${GL_REMOTE_USERNAME}" "/home/${USERNAME}/" "${REMOTE_BACKUP_PATH}/"
 }
+
 
 function update_required {
     local CURRENT_TIMESTAMP

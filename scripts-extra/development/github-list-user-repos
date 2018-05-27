@@ -20,4 +20,5 @@ function main {
     fi
 }
 
+
 main "${@}"

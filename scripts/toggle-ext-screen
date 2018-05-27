@@ -25,13 +25,16 @@ function cache_xrandr_output {
     XRANDR_OUTPUT="$(xrandr)"
 }
 
+
 function primary_screen_name {
     echo "${XRANDR_OUTPUT}" | grep ' connected' | head -n 1 | cut -f 1 -d ' '
 }
 
+
 function secondary_screen_name {
     echo "${XRANDR_OUTPUT}" | grep ' connected' | tail -n 1 | cut -f 1 -d ' '
 }
+
 
 function highest_resolution_of_screen {
     local SCREEN_NAME="${1}"
@@ -59,13 +62,16 @@ BEGIN {
         | tail -n 1
 }
 
+
 function connected_screens() {
     echo "${XRANDR_OUTPUT}" | grep -c ' connected'
 }
 
+
 function active_screens() {
     echo "${XRANDR_OUTPUT}" | egrep -c "^   .*\*"
 }
+
 
 function screen_on_max_resolution {
     local SCREEN_NAME="${1}"
@@ -80,6 +86,7 @@ xrandr --output  ${SCREEN_NAME}
     ${CMD}
 }
 
+
 function screen_off {
     local SCREEN_NAME="${1}"
 
@@ -89,6 +96,7 @@ xrandr --output ${SCREEN_NAME} --off
     echo ${CMD}
     ${CMD}
 }
+
 
 function screen_toggle {
     local ACTIVE_SCREEN_CNT=$(active_screens)
@@ -107,6 +115,7 @@ function screen_toggle {
     esac
 }
 
+
 function debug {
     highest_resolution_of_screen "$(secondary_screen_name)"
     echo "
@@ -119,6 +128,7 @@ Active screens:                         $(active_screens)
 
     echo ""
 }
+
 
 function main {
     cache_xrandr_output
@@ -138,5 +148,6 @@ function main {
 
     screen_toggle
 }
+
 
 main "$@"

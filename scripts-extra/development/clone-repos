@@ -21,6 +21,7 @@ GITHUB__USER_BASE_DOMAIN="https://github.com/${GITHUB__USERNAME}"
 #     (cd local/dev && git clone --recursive --origin ${REPO_ORIGIN_NAME} ${REPO_ADDRESS})
 # }
 
+
 # function clone_repos() {
 #     local REPO_LIST="${1}"
 #     local REPO
@@ -29,6 +30,7 @@ GITHUB__USER_BASE_DOMAIN="https://github.com/${GITHUB__USERNAME}"
 #     done
 # }
 
+
 function create_repo_path_structure() {
     mkdir -p ${GL_CONF__REPO_CLONE_PATH}
     mkdir -p ${GL_CONF__REPO_PUBLIC_PATH}
@@ -36,14 +38,17 @@ function create_repo_path_structure() {
     mkdir -p ${GL_CONF__REPO_PRIVATE_PATH}
 }
 
+
 # fnuction github_repo_name_to_repo_address() {
 
 # }
+
 
 # function github_repo_name_list_to_repo_address_list() {
 #     local
 #     for
 # }
+
 
 # We distinguish between repos under active development and non
 # continued ones, which would only clutter the directory structure. If
@@ -58,6 +63,7 @@ function link_public_repo() {
         ln -s -r ${GL_CONF__REPO_CLONE_PATH}/${REPO_NAME} ${GL_CONF__REPO_PUBLIC_PATH}/${REPO_NAME}
     fi
 }
+
 
 function main() {
     local REPO_NAME
@@ -84,6 +90,7 @@ function main() {
     # clone_repos "${GITHUB_REPO_LIST}"
 }
 
+
 GL__DISCONTINUED_FILE_NAME="DISCONTINUED_REPOSITORY"
 GL__GITHUB_CLONE_CMD_LIST=""
 
@@ -94,5 +101,6 @@ GL_CONF__REPO_CLONE_PATH="${GL_CONF__REPO_BASE_PATH}/all"
 GL_CONF__REPO_PUBLIC_PATH="${GL_CONF__REPO_BASE_PATH}/public"
 GL_CONF__REPO_INACTIVE_PUBLIC_PATH="${GL_CONF__REPO_BASE_PATH}/inactive_public"
 GL_CONF__REPO_PRIVATE_PATH="${GL_CONF__REPO_BASE_PATH}/private"
+
 
 main

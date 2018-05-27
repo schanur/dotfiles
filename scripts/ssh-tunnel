@@ -11,6 +11,7 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
 
+
 if [ ${#} != "1" ]; then
     invalid_parameter_exit
 fi
@@ -23,3 +24,4 @@ echo "GATEWAY_HOSTNAME: ${GATEWAY_HOSTNAME}"
 
 sshuttle --remote="${GATEWAY_HOSTNAME}" 0.0.0.0/0
 exit $?
+

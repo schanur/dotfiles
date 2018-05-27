@@ -15,25 +15,31 @@ function entry_exists {
 
 }
 
+
 function shortcut_to_target_path {
 
 }
+
 
 function go {
 
 }
 
+
 function add {
 
 }
+
 
 function delete {
 
 }
 
+
 function list {
 
 }
+
 
 function main {
     if [ "${#}" -eq "0" ]; then
@@ -59,6 +65,7 @@ function main {
     fi
 
 }
+
 alias ftg='fast-travel go'
 alias fta='fast-travel add'
 alias ftd='fast-travel del'

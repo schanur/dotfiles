@@ -30,6 +30,7 @@ echo "bsync ${HOME} ${RSYNC_HOME__REMOTE_USERNAME}@${RSYNC_HOME__REMOTE_HOST}:${
 ATTEMPTS=0
 MAX_ATTEMPTS=10
 
+
 while [ 1 ]; do
     (( ATTEMPTS = ATTEMPTS + 1 ))
     echo "Start attempt ${ATTEMPTS}."

@@ -21,6 +21,7 @@ function print_repo_depth_indentation {
     done
 }
 
+
 function print_repo {
     local GIT_REPO_PATH=${1}
     local SUB_REPO_DEPTH=${2}
@@ -28,6 +29,7 @@ function print_repo {
     print_repo_depth_indentation ${SUB_REPO_DEPTH}
     echo ${GIT_REPO_PATH}
 }
+
 
 function print_repo_if_conf_set {
     local GIT_REPO_PATH=${1}
@@ -38,6 +40,7 @@ function print_repo_if_conf_set {
     fi
 }
 
+
 function assert_git_repo {
     local GIT_REPO_PATH=${1}
 
@@ -45,6 +48,7 @@ function assert_git_repo {
     # repository.
     # (cd ${GIT_REPO_PATH} && git status > dev/null)
 }
+
 
 function git_repo_has_uncommited_changes {
     local GIT_REPO_PATH=${1}
@@ -59,6 +63,7 @@ function git_repo_has_uncommited_changes {
     echo "${HAS_UNCOMMITED_CHANGES}"
 }
 
+
 function git_repo_has_commits_not_pushed {
     local GIT_REPO_PATH=${1}
     local HAS_COMMIT_NOT_PUSHED=0
@@ -69,6 +74,7 @@ function git_repo_has_commits_not_pushed {
 
     echo ${HAS_COMMIT_NOT_PUSHED}
 }
+
 
 function git_repo_has_notable_changes {
     local GIT_REPO_PATH=${1}
@@ -81,6 +87,7 @@ function git_repo_has_notable_changes {
     echo ${HAS_NOTABLE_CHANGES}
 }
 
+
 function git_status {
     local GIT_REPO_PATH=${1}
 
@@ -88,12 +95,14 @@ function git_status {
     (cd ${GIT_REPO_PATH} && git --no-pager log --branches --not --remotes --oneline)
 }
 
+
 function warn_if_license_file_missing {
     local GIT_REPO_PATH=${1}
     if [ ! -f ${GIT_REPO_PATH}/LICENSE.md -a ! -f ${GIT_REPO_PATH}/LICENSE.txt ]; then
         echo "No license file for repository: ${GIT_REPO_PATH}"
     fi
 }
+
 
 function print_changed_files_in_repo_path {
     local GIT_REPO_PATH=${1}
@@ -108,6 +117,7 @@ function print_changed_files_in_repo_path {
     fi
     warn_if_license_file_missing ${GIT_REPO_PATH}
 }
+
 
 # Call "print_changed_files_in_repo_path()" for path itself and all
 # submodules.
@@ -126,6 +136,7 @@ function print_changed_files_in_repo_path_recursive {
     fi
 }
 
+
 function print_changed_files_for_repo_list() {
     local GIT_REPO_PATH_LIST=${1}
     local GIT_REPO_PATH
@@ -135,10 +146,12 @@ function print_changed_files_for_repo_list() {
     done
 }
 
+
 function main {
     local GIT_REPO_PATH_LIST="${1}"
     print_changed_files_for_repo_list "${GIT_REPO_PATH_LIST}"
 }
+
 
 GL_PRINT_PROCESSED_REPOS=0
 

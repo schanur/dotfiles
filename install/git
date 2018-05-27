@@ -12,6 +12,7 @@ source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
 
 # function config_contains_dotfiles_installer_comment
 
+
 function main {
     local LINK_FILENAME_RELATIVE_TO_HOME=".gitconfig"
     local DOTFILES_FILENAME="${SCRIPT_PATH}/../git/gitconfig"
@@ -19,5 +20,6 @@ function main {
     # backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
 
 }
+
 
 main

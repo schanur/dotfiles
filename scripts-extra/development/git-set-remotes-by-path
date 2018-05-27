@@ -21,6 +21,7 @@ source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 
 set_config_path "${DOTFILES_PATH}/config"
 
+
 # Return the first path after the dev base path.
 # Example: "/local/dev/private/work/git-repo" -> "private"
 function storage_policy_by_path {
@@ -32,6 +33,7 @@ function storage_policy_by_path {
         | sed -e 's|/.*$||g'
 }
 
+
 function remove_all_remotes {
     local REMOTE
     for REMOTE in $(git remote); do
@@ -40,11 +42,13 @@ function remove_all_remotes {
     done
 }
 
+
 function remove_remote_by_name {
     local REMOTE_NAME=${1}
 
     run_or_simulate "git remote remove ${REMOTE_NAME}"
 }
+
 
 function add_remote {
     local REMOTE_NAME=${1}
@@ -52,6 +56,7 @@ function add_remote {
 
     run_or_simulate "git remote add ${REMOTE_NAME} ${REMOTE_URL}"
 }
+
 
 function repo_has_remote_name {
     local REMOTE_NAME=${1}
@@ -70,6 +75,7 @@ function repo_has_remote_name {
     esac
     echo ${REPO_HAS_REMOTE}
 }
+
 
 # Echo 1 if the repo remote with the name of the first parameter
 # already has the URL of the second parameter. 0 otherwise.
@@ -90,6 +96,7 @@ function repo_remote_name_has_url {
     echo ${HAS_URL}
 }
 
+
 function parse_arguments {
     # ALL_ARGS_BACKUP="${*}"
     while [ ${#} -ge 1 ]; do
@@ -105,6 +112,7 @@ function parse_arguments {
         shift
     done
 }
+
 
 CMD_FLAG__DELETE_OTHERS="0"
 CMD_FLAG__INIT_REMOTE

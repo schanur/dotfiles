@@ -13,6 +13,7 @@ DOTFILES_PATH="${SCRIPT_PATH}/.."
 
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
+
 # Copyright: http://unix.stackexchange.com/questions/2884/toggle-between-dvorak-and-qwerty
 
 if [ -n "$DISPLAY" ]; then

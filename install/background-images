@@ -21,9 +21,11 @@ function download_pluto_picture {
 
 }
 
+
 # function pluto_picture_is_installed {
 
 # }
+
 
 function download_hubble_top_100 {
     require_executable "wget"
@@ -50,6 +52,7 @@ function download_hubble_top_100 {
     fi
 }
 
+
 # Returns true if image cache path contins at least 100 JPEG images
 function hubble_top_100_is_installed {
     local IS_INSTALLED=0
@@ -62,6 +65,7 @@ function hubble_top_100_is_installed {
     echo ${IS_INSTALLED}
 }
 
+
 function main() {
     if [ $(is_installed) -eq 0 ]; then
         download_hubble_top_100
@@ -69,5 +73,6 @@ function main() {
 }
 
 exit 0
+
 
 main

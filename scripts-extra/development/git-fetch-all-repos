@@ -23,6 +23,7 @@ function git_fetch_repo_cmd {
     echo "(cd ${GIT_REPO_PATH} && git remote update)"
 }
 
+
 function git_fetch_all_repos {
     local GIT_REPO_PATH_LIST=${1}
     local GIT_REPO_PATH
@@ -37,11 +38,13 @@ function git_fetch_all_repos {
     echo "${GIT_FETCH_CMD_LIST}" |parallel_exec
 }
 
+
 function main {
     local GIT_REPO_PATH_LIST="${1}"
     set_parallel_jobs 8
     git_fetch_all_repos "${GIT_REPO_PATH_LIST}"
 }
+
 
 GL_GIT_REPO_PATH_LIST=" $(git-list)"
 

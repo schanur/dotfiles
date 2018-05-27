@@ -56,6 +56,7 @@ function pre_requirements {
     apt-get install ${PACKAGE_LIST_EARLY_2}
 }
 
+
 # Gets called by all commands that require at least one package group
 # as additional parameter.
 function require_package_group {
@@ -77,6 +78,7 @@ function group_filename {
     echo "${PACKAGE_GROUP_FILENAME}"
 }
 
+
 # List all packages in a package group.
 function list_group_items {
     local PACKAGE_GROUP=${1}
@@ -88,6 +90,7 @@ function list_group_items {
     filter_active_bash_lines ${PACKAGE_GROUP_FILENAME}
 }
 
+
 # Prints the number of packages in a package group.
 function package_group_package_list_size {
     local PACKAGE_GROUP="${1}"
@@ -95,9 +98,11 @@ function package_group_package_list_size {
     list_group_items | wc -l
 }
 
+
 function list_package_groups {
     find "${DEBIAN_PACKAGE_GROUP_PATH}" ! -type d | sed -e "s|.*/||g" | sort | uniq
 }
+
 
 # Prints "1" if package exists in distributions repository. "0"
 # otherwise.
@@ -109,6 +114,7 @@ function package_exists {
 
     echo ${PACKAGE_EXISTS}
 }
+
 
 # Add all packages of a package group to the global variable
 # SELECTED_PACKAGE_LIST, which contains selected packages. This is
@@ -128,6 +134,7 @@ function add_package_group_to_selected_package_list {
     done
 }
 
+
 # Add all packages of all package groups given as parameter to a
 # global variable SELECTED_PACKAGE_LIST. TODO: Do not use global
 # variable.
@@ -143,11 +150,13 @@ function parse_all_package_groups {
     done
 }
 
+
 # Install all packages stored on the global variable
 # SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function install_packages {
     apt-get install ${SELECTED_PACKAGE_LIST}
 }
+
 
 # Remove all packages stored on the global variable
 # SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
@@ -155,11 +164,13 @@ function remove_packages {
     apt-get remove ${SELECTED_PACKAGE_LIST}
 }
 
+
 # Remove all packages and its configuration files stored on the global
 # variable SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function purge_packages {
     apt-get remove --purge ${SELECTED_PACKAGE_LIST}
 }
+
 
 function global_statistics {
     local PACKAGE_GROUP
@@ -170,6 +181,7 @@ function global_statistics {
         package_group_statistics "${PACKAGE_GROUP}"
     done
 }
+
 
 # Returns a list with packages in a package group that are mot
 # installed on the system.
@@ -209,6 +221,7 @@ function package_group_statistics {
     echo -n "$(fill_tail             5                       ' ' "$(fraction_to_percentage ${INSTALLED_COUNT} ${PACKAGE_COUNT})%") "
     echo    "$(fill_ellipsis_tail  180                       ' ' "${NOT_INSTALLED_LIST}")"
 }
+
 
 function main {
     if [ "${#}" -ge "1" ]; then
@@ -266,5 +279,5 @@ function main {
 
 }
 
-main "${@}"
 
+main "${@}"

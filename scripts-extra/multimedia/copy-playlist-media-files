@@ -34,6 +34,7 @@ function copy_playlist {
     done
 }
 
+
 function main {
     local TARGET_PATH
     local PLAYLIST_FILE
@@ -63,5 +64,6 @@ function main {
 
     copy_playlist "${PLAYLIST_FILE}" "${TARGET_PATH}"
 }
+
 
 main "${@}"

@@ -23,4 +23,5 @@ function main() {
     backup_user_config_and_create_dotfiles_link ${SKINS_DOTFILES_FILENAME}  ${SKINS_LINK_FILENAME_RELATIVE_TO_HOME}
 }
 
+
 main
