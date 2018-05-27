@@ -88,9 +88,9 @@ bindsym             $mod+Return                   exec "~/local/dev/public/dotfi
 bindsym             $mod+Shift+q                  kill
 
 # Rofi application/file launcher
-bindsym             $mod+k                        exec "rofi -show combi -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
-bindsym             $mod+l                        exec "rofi -show run"
-bindsym             $mod+Tab                      exec "rofi -show window"
+bindsym             $mod+k                        exec "rofi -show combi  -show-icons -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
+bindsym             $mod+l                        exec "rofi -show run    -show-icons"
+bindsym             $mod+Tab                      exec "rofi -show window -show-icons"
 
 # Keep dmenu for users that do not want to use rofi
 bindsym             $mod+d                        exec dmenu_run
