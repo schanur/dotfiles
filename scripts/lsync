@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Backup the home directory to a external storage.
+
+# We use the following rsync options:
+# -a,     --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
+# -X,     --xattrs                preserve extended attributes
+# -E,     --executability         preserve executability
+# -S,     --sparse                handle sparse files efficiently
+# -x,     --one-file-system       don't cross filesystem boundaries
+# -v,     --verbose               increase verbosity
+#         --partial               keep partially transferred files
+#
+# The following options may be inappropriate for your use cases:
+#
+# The "-x" option is a good way to backup a system even if removable
+# drives, network filesystems, etc. are mounted in the directory you
+# want to backup.
+#
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/shell/rsync.sh"
+
+
+function main {
+    if [ "${#}" -ge "2" ]; then
+        SOURCE="${1}"
+        TARGET="${2}"
+        shift
+        shift
+        bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) $* "${SOURCE}" "${TARGET}"
+        EXIT_STATUS=$?
+        exit ${EXIT_STATUS}
+    else
+        invalid_parameter_exit
+    fi
+}
+
+
+SOURCE="${HOME}/"
+TARGET="/media/lsync_target/lsync_backup/$(whoami)/"
+
+echo "Source: ${SOURCE}"
+echo "Target: ${TARGET}"
+
+if [ ! -d "${TARGET}" ]; then
+    mkdir -p "${TARGET}"
+fi
+
+
+main "${SOURCE}" "${TARGET}" "${@}"
