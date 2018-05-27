@@ -30,15 +30,15 @@ function main () {
     local INSTALL_SCRIPT
     local FIRST_FILE=1;
 
-    for INSTALL_SCRIPT in $(find ${SCRIPT_PATH}/install ! -type d); do
+    for INSTALL_SCRIPT in $(find "${SCRIPT_PATH}/install" ! -type d); do
         if [ ${FIRST_FILE} = "1" ]; then
             FIRST_FILE=0
         else
             echo
         fi
 
-        if [ -x ${INSTALL_SCRIPT} ]; then
-           install_component ${INSTALL_SCRIPT}
+        if [ -x "${INSTALL_SCRIPT}" ]; then
+           install_component "${INSTALL_SCRIPT}"
         fi
     done
 }

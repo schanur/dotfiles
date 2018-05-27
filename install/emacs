@@ -22,7 +22,7 @@ function main() {
         exit 0
     fi
 
-    backup_user_config_and_create_dotfiles_link ${EMACS_PATH} ${LINK_FILENAME_RELATIVE_TO_HOME}
+    backup_user_config_and_create_dotfiles_link "${EMACS_PATH}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 }
 
 

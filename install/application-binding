@@ -24,18 +24,18 @@ function main() {
 
     LINK_FILENAME_RELATIVE_TO_HOME="${APPLICATIONS_TARGET_BASE_PATH}/defaults.list"
     DOTFILES_FILENAME="${APPLICATIONS_SOURCE_BASE_PATH}/defaults.list"
-    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 
     LINK_FILENAME_RELATIVE_TO_HOME="${APPLICATIONS_TARGET_BASE_PATH}/mimeinfo.cache"
     DOTFILES_FILENAME="${APPLICATIONS_SOURCE_BASE_PATH}/mimeinfo.cache"
-    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 
     # Create a link for each .desktop file
     for DESKTOP_FILE in $(find "${APPLICATIONS_SOURCE_BASE_PATH}" -name "*.desktop"); do
         DESKTOP_BASE_FILENAME="$(basename ${DESKTOP_FILE})"
         LINK_FILENAME_RELATIVE_TO_HOME="${APPLICATIONS_TARGET_BASE_PATH}/${DESKTOP_BASE_FILENAME}"
         DOTFILES_FILENAME="${APPLICATIONS_SOURCE_BASE_PATH}/${DESKTOP_BASE_FILENAME}"
-        backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+        backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
     done
 }
 

@@ -20,8 +20,7 @@ function main() {
 
     LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/config"
     DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/config"
-    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
-
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 }
 
 
