@@ -20,6 +20,8 @@ source "${DOTFILES_PATH}/lib/bivalvia/debug.sh"
 
 
 XRANDR_OUTPUT=""
+DRY_RUN=0
+
 
 function cache_xrandr_output {
     XRANDR_OUTPUT="$(xrandr)"
@@ -69,7 +71,8 @@ function connected_screens() {
 
 
 function active_screens() {
-    echo "${XRANDR_OUTPUT}" | egrep -c "^   .*\*"
+    # echo "${XRANDR_OUTPUT}" | egrep -c "^   .*\*"
+    echo "${XRANDR_OUTPUT}" | egrep -c "^.*connected\ .*[0-9]+x[0-9]+\+[0-9]+\+[0-9]"
 }
 
 
@@ -83,7 +86,9 @@ xrandr --output  ${SCREEN_NAME}
        --left-of $(primary_screen_name)
 "
     echo ${CMD}
-    ${CMD}
+    if [ ${DRY_RUN} -eq 0 ]; then
+        ${CMD}
+    fi
 }
 
 
@@ -138,6 +143,9 @@ function main {
         case "${1}" in
             '-v'|'--verbose')
                 debug
+                ;;
+            '-d'|'--dry-run')
+                DRY_RUN=1
                 ;;
             *)
                 echo "Invalid parameter: ${1}"
