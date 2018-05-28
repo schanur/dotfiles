@@ -13,7 +13,8 @@ function install_component() {
     local INSTALL_SCRIPT_EXIT_CODE
 
     if [ -x "${INSTALL_SCRIPT}" ]; then
-        echo "Run dotfiles install script: ${INSTALL_SCRIPT}"
+        # echo "Run dotfiles install script: ${INSTALL_SCRIPT}"
+        echo -n "$(basename "${INSTALL_SCRIPT}"): "
         ${INSTALL_SCRIPT}
         INSTALL_SCRIPT_EXIT_CODE=${?}
         if [ "${INSTALL_SCRIPT_EXIT_CODE}" != "0" ]; then
@@ -41,6 +42,7 @@ function main () {
            install_component "${INSTALL_SCRIPT}"
         fi
     done
+    echo
 }
 
 
