@@ -4,13 +4,13 @@
 
 # Usage:
 #
-# install          $$PACKAGE_GROUPS  Install package group.
-# remove           $$PACKAGE_GROUPS  Remove package group.
-# remove-purge     $$PACKAGE_GROUPS  Remove package group and purge all config files.
-# list-group-items $$PACKAGE_GROUPS  List all packages of a package group.
-# list-groups                        List all package groups.
-# stats                              Show statistics how many percent of a package group is installed.
-# group-stats                        Show statistics how many percent of a package group is installed.
+# install          [${CMD_LINE_PARAM__NO_FSYNC}] $$PACKAGE_GROUPS  Install package group.
+# remove                $$PACKAGE_GROUPS  Remove package group.
+# remove-purge          $$PACKAGE_GROUPS  Remove package group and purge all config files.
+# list-group-items      $$PACKAGE_GROUPS  List all packages of a package group.
+# list-groups                             List all package groups.
+# stats                                   Show statistics how many percent of a package group is installed.
+# group-stats                             Show statistics how many percent of a package group is installed.
 
 
 set -o errexit -o nounset -o pipefail
@@ -31,10 +31,15 @@ source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 INSTALLED_PACKAGE_LIST=""
 SELECTED_PACKAGE_LIST=""
 
+NO_FSYNC_CMD=""
+
 DEBIAN_PACKAGE_GROUP_PATH="${DOTFILES_PATH}/data/debian-package-groups/generic"
 
 
 CMD_LINE_PARAMS="${@}"
+
+
+CMD_LINE_PARAM__NO_FSYNC="-s"
 
 
 function pre_requirements {
@@ -154,7 +159,7 @@ function parse_all_package_groups {
 # Install all packages stored on the global variable
 # SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function install_packages {
-    apt-get install ${SELECTED_PACKAGE_LIST}
+    ${NO_FSYNC_CMD} apt-get install ${SELECTED_PACKAGE_LIST}
 }
 
 
@@ -233,6 +238,11 @@ function main {
         case ${OPERATION} in
             install)
                 run_as_root              "${CMD_LINE_PARAMS}"
+                if [ "${1}" = "${CMD_LINE_PARAM__NO_FSYNC}" ]; then
+                    NO_FSYNC_CMD="eatmydata"
+                    require_executable "${NO_FSYNC_CMD}"
+                    shift
+                fi
                 PACKAGE_GROUPS="${*}"
                 pre_requirements
                 parse_all_package_groups "${PACKAGE_GROUPS}"
