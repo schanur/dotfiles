@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# Install and run a Debian 7 LXC environment.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+
+
+function populate_lxc_rootfs {
+    local ROOTFS_PATH="${1}"
+
+    cd "${ROOTFS_PATH}"
+
+    mkdir bin
+    mkdir home
+    mkdir lib
+    mkdir lib64
+    mkdir opt
+    mkdir proc
+    mkdir root
+    mkdir sbin
+    mkdir sys
+    mkdir tmp
+    mkdir usr
+    mkdir var
+
+    cp -a /etc . || true
+    cp -a /dev . || true
+    rm -fr dev/pts
+    mkdir dev/pts
+    rm -fr dev/shm
+    mkdir dev/shm
+
+    cd -
+}
+
+
+function create_lxc_config_file {
+    local LXC_CONFIG_FILENAME="${1}"
+    local APPLICATION_CONTAINER_NAME="${2}"
+
+    echo "\
+lxc.utsname                   = ${APPLICATION_CONTAINER_NAME}
+lxc.rootfs                    = rootfs
+lxc.aa_allow_incomplete       = 1
+
+lxc.mount.entry=/lib lib none ro,bind 0 0
+lxc.mount.entry=/bin bin none ro,bind 0 0
+lxc.mount.entry=/usr usr none ro,bind 0 0
+lxc.mount.entry=/sbin sbin none ro,bind 0 0
+lxc.mount.entry=/lib64 lib64 none ro,bind 0 0
+lxc.mount.entry=proc /proc proc nodev,noexec,nosuid 0 0
+lxc.mount.entry=tmpfs /dev/shm tmpfs  defaults 0 0
+lxc.pts=1024
+
+" > "$LXC_CONFIG_FILENAME"
+}
+
+
+function create_start_script {
+    local LXC_START_SCRIPT_FILENAME="${1}"
+    local APPLICATION_CONTAINER_NAME="${2}"
+
+    echo "\
+#!/bin/bash
+lxc-execute -n ${APPLICATION_CONTAINER_NAME} -f lxc.conf -- /bin/bash
+" > "${LXC_START_SCRIPT_FILENAME}"
+    chmod +x "${LXC_START_SCRIPT_FILENAME}"
+}
+
+
+function main {
+    local APPLICATION_CONTAINER_BASE_PATH="".
+    local APPLICATION_CONTAINER_NAME="test"
+    local LXC_ROOTFS_PATH="${APPLICATION_CONTAINER_BASE_PATH}/rootfs"
+    local LXC_CONFIG_FILENAME="${APPLICATION_CONTAINER_BASE_PATH}/lxc.conf"
+    local LXC_START_SCRIPT_FILENAME="${APPLICATION_CONTAINER_BASE_PATH}/start_app_container"
+
+    mkdir -p               "${LXC_ROOTFS_PATH}"
+    populate_lxc_rootfs    "${LXC_ROOTFS_PATH}"
+    create_lxc_config_file "${LXC_CONFIG_FILENAME}"       "${APPLICATION_CONTAINER_NAME}"
+    create_start_script    "${LXC_START_SCRIPT_FILENAME}" "${APPLICATION_CONTAINER_NAME}"
+}
+
+
+main
