@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copy all media files referenced by the playlist file to a single directory
+# Copy all media files referenced by the playlist file to a single directory.
 
 
 set -o errexit -o nounset -o pipefail
@@ -60,6 +60,7 @@ function main {
         *)
             echo "Invalid parameters. Abort!"
             exit 1
+            ;;
     esac
 
     copy_playlist "${PLAYLIST_FILE}" "${TARGET_PATH}"
