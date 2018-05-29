@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Backup the home directory to a remote server per rsync/SSH.
+# Backup the home directory to a remote server over SSH.
 
 # Usage
 
@@ -55,7 +55,7 @@ function parse_cmd_line_parameter {
             #     GL_REMOTE_USERNAME=1
             #     ;;
             *)
-                echo "Invalid command line parameter: ${1}"xs
+                echo "Invalid command line parameter: ${1}"
                 exit 1
                 ;;
         esac
@@ -159,23 +159,26 @@ function update_required {
     echo ${UPDATE_REQUIRED}
 }
 
-echo "parse_cmd_line_parameter"
-parse_cmd_line_parameter "$@"
-load_config
 
-LOG_FILE="/dev/stderr"
-if [ ${DRY_RUN} -eq 1 ]; then
+function parse_cmd_line_parameter {
+    echo "parse_cmd_line_parameter"
+    parse_cmd_line_parameter "$@"
+    load_config
+
     LOG_FILE="/dev/stderr"
-fi
-
-if [ "$(update_required)" -ne 1 ]; then
-    if [ ${FORCE_RUN} -eq 1 ]; then
-        echo "No update required but \"force\" was set."
-    else
-        echo "No update required. Quit."
-        exit 0
+    if [ ${DRY_RUN} -eq 1 ]; then
+        LOG_FILE="/dev/stderr"
     fi
-fi
+
+    if [ "$(update_required)" -ne 1 ]; then
+        if [ ${FORCE_RUN} -eq 1 ]; then
+            echo "No update required but \"force\" was set."
+        else
+            echo "No update required. Quit."
+            exit 0
+        fi
+    fi
+}
 
 echo "########################################################################" >> ${LOG_FILE}
 echo "########################################################################" >> ${LOG_FILE}
