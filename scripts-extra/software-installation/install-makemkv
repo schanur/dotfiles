@@ -1,0 +1,163 @@
+#!/bin/bash
+
+# Install MakeMKV or update it if the installed version is more than 59 days old
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/date.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/package_management_deb.sh"
+
+
+SCRIPT_START_TIMESTAMP="$(timestamp)"
+SCRIPT_START_EPOCH="$(sec_since_epoch)"
+
+MAKEMKV_BASE_PATH="${HOME}/local/bin/makemkv"
+MAKEMKV_CURRENT_PATH="${MAKEMKV_BASE_PATH}/current"
+MAKEMKV_BACKUP_PATH="${MAKEMKV_BASE_PATH}/backup_${SCRIPT_START_TIMESTAMP}"
+
+EPOCH_BASE_FILENAME="epoch_timestamp"
+CURRENT_EPOCH_FILENAME="${MAKEMKV_CURRENT_PATH}/${EPOCH_BASE_FILENAME}"
+
+REQUIRED_DEB_PACKAGE_LIST="build-essential pkg-config libc6-dev libssl-dev libexpat1-dev libavcodec-dev libgl1-mesa-dev libqt4-dev zlib1g-dev"
+    
+
+function makemkv_is_installed {
+    local IS_INSTALLED=0
+
+    if [ -d "${MAKEMKV_CURRENT_PATH}" ]; then
+	if [ -f ${CURRENT_EPOCH_FILENAME} ]; then
+	    IS_INSTALLED=1
+	else
+	    echo "Warning: Install path exists but has not epoch timestamp file. Last install attempt failed." >&2
+	    echo "Remove all files from previous install attempt." >&2
+	    echo "" >&2
+	    rm -rf "${MAKEMKV_CURRENT_PATH}"
+	fi
+    fi
+
+    echo ${IS_INSTALLED}
+}
+
+
+# Do not check for new version on the internet by default. Just check
+# if installation is older than 59 days. 60 days is the default demo
+# licensing duration.
+function makemkv_is_up_to_date {
+    local IS_UP_TO_DATE=1
+    local CURRENT_INSTALLED_EPOCH="$(cat ${CURRENT_EPOCH_FILENAME})"
+    local MAX_ALLOWED_PROGRAM_AGE_SECONDS
+    local PROGRAM_AGE_SECONDS
+    
+    (( PROGRAM_AGE_SECONDS = SCRIPT_START_EPOCH - CURRENT_INSTALLED_EPOCH ))
+    (( MAX_ALLOWED_PROGRAM_AGE_SECONDS = 60 * 60 * 24 * 59 ))
+    
+    if [ ${PROGRAM_AGE_SECONDS} -gt ${MAX_ALLOWED_PROGRAM_AGE_SECONDS} ]; then
+	IS_UP_TO_DATE=0
+    fi
+
+    echo ${IS_UP_TO_DATE}
+}
+
+
+# Currently it does not get removed but moved to a backup directory
+function remove_old_makemkv_version {
+    mv "${MAKEMKV_CURRENT_PATH}" "${MAKEMKV_BACKUP_PATH}"
+}
+
+
+function install_makemkv {
+    local NEWEST_MAKEMKV_VERSION="1.12.2"
+    local BIN_ARCHIVE_FILENAME="${MAKEMKV_CURRENT_PATH}/makemkv-bin-${NEWEST_MAKEMKV_VERSION}.tar.gz"
+    local OSS_ARCHIVE_FILENAME="${MAKEMKV_CURRENT_PATH}/makemkv-oss-${NEWEST_MAKEMKV_VERSION}.tar.gz"
+
+    local BIN_PATH="${MAKEMKV_CURRENT_PATH}/makemkv-oss-${NEWEST_MAKEMKV_VERSION}"
+    local OSS_PATH="${MAKEMKV_CURRENT_PATH}/makemkv-oss-${NEWEST_MAKEMKV_VERSION}"
+    
+    
+    echo "Create \"current\" directory."
+    mkdir -p "${MAKEMKV_CURRENT_PATH}"
+
+    echo "Download bin archive."
+    wget -O "${BIN_ARCHIVE_FILENAME}" "http://www.makemkv.com/download/makemkv-bin-${NEWEST_MAKEMKV_VERSION}.tar.gz"
+    
+    echo "Download oss archive."
+    wget -O "${OSS_ARCHIVE_FILENAME}" "http://www.makemkv.com/download/makemkv-oss-${NEWEST_MAKEMKV_VERSION}.tar.gz"
+
+    echo "Extract bin archive."
+    (cd "${MAKEMKV_CURRENT_PATH}" && tar xvf "${BIN_ARCHIVE_FILENAME}")
+
+    echo "Extract oss archive."
+    (cd "${MAKEMKV_CURRENT_PATH}" && tar xvf "${OSS_ARCHIVE_FILENAME}")
+
+    for PACKAGE in ${REQUIRED_DEB_PACKAGE_LIST}; do
+	echo "Check if package is installed: ${PACKAGE}"
+	if [ $(deb_package_is_installed ${PACKAGE}) -eq 0 ]; then
+	    echo "${PACKAGE} is missing. Install as root:"
+	    run_as_root "${SCRIPT_FILENAME}" install_packages
+	fi
+    done
+
+    echo "Build oss archive."
+    (cd "${OSS_PATH}" && ./configure --prefix=/usr/local && make)
+
+    echo "Build bin archive."
+    (cd "${BIN_PATH}" && ./configure --prefix=/usr/local && make)
+
+    run_as_root "${SCRIPT_FILENAME}" install_oss_and_bin "${OSS_PATH}" "${BIN_PATH}"
+
+    sync
+    echo "Mark current installation as successful."
+    echo "${SCRIPT_START_EPOCH}" > "${CURRENT_EPOCH_FILENAME}"
+}
+
+
+# function run_makemkv {
+#     makemkv
+#     # true
+# }
+
+
+function main_root {
+    case ${2} in
+	install_packages)
+	    apt-get install ${REQUIRED_DEB_PACKAGE_LIST}
+	    ;;
+	install_oss_and_bin)
+	    OSS_PATH="${3}"
+	    BIN_PATH="${4}"
+	    echo "Run make install in \"${OSS_PATH}\"."
+	    (cd "${OSS_PATH}" && make install)
+	    echo "Run make install in \"${BIN_PATH}\"."
+	    (cd "${BIN_PATH}" && make install)
+	    ;;
+	*)
+	    echo "Invalid command: ${1}" >&2
+	    ;;
+    esac
+}
+
+
+function main {
+    if [ $(makemkv_is_installed) -eq 1 ]; then
+	if [ $(makemkv_is_up_to_date) -eq 0 ]; then
+	    remove_old_makemkv_version
+    	    install_makemkv
+	else
+	    echo "MakeMKV is up to date."
+	fi
+    else
+    	install_makemkv
+    fi
+}
+
+if [ ${#} -ne 0 ]; then    
+    main_root "${@}"
+else
+    main
+fi
