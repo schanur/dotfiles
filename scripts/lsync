@@ -25,6 +25,8 @@ SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}/.."
 
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/block_dev.sh"
+
 source "${DOTFILES_PATH}/lib/shell/rsync.sh"
 
 
@@ -34,7 +36,7 @@ function main {
         TARGET="${2}"
         shift
         shift
-        bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) $* "${SOURCE}" "${TARGET}"
+        bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) ${*} "${SOURCE}" "${TARGET}"
         EXIT_STATUS=$?
         exit ${EXIT_STATUS}
     else
@@ -46,8 +48,13 @@ function main {
 SOURCE="${HOME}/"
 TARGET="/media/lsync_target/lsync_backup/$(whoami)/"
 
-echo "Source: ${SOURCE}"
-echo "Target: ${TARGET}"
+SOURCE_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device ${SOURCE})"
+TARGET_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device ${TARGET})"
+
+if [ "${SOURCE_FILESYSTEM_BLOCK_DEV}" = "${TARGET_FILESYSTEM_BLOCK_DEV}" ]; then
+    echo "Source and target disk are the same. This is no backup to a separate storage. Abort!" >&2
+    exit 1
+fi
 
 if [ ! -d "${TARGET}" ]; then
     mkdir -p "${TARGET}"
