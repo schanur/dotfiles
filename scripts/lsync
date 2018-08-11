@@ -46,10 +46,16 @@ function main {
 
 
 SOURCE="${HOME}/"
-TARGET="/media/lsync_target/lsync_backup/$(whoami)/"
+TARGET="/media/lsync_target/lsync_backup/$(whoami)/$(hostname)"
 
-SOURCE_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device ${SOURCE})"
-TARGET_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device ${TARGET})"
+if [ ! -d "${TARGET}" ]; then
+    mkdir -p "${TARGET}"
+fi
+
+SOURCE_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device "${SOURCE}")"
+TARGET_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device "${TARGET}")"
+
+
 
 if [ "${SOURCE_FILESYSTEM_BLOCK_DEV}" = "${TARGET_FILESYSTEM_BLOCK_DEV}" ]; then
     echo "Source and target disk are the same. This is no backup to a separate storage. Abort!" >&2
