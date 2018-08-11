@@ -11,6 +11,7 @@ doxygen-gui
 enscript
 extra-cmake-modules                                               # Zeal
 flex
+fonts-ubuntu                                                      # Default font in Emacs
 gcc
 gdb
 gitg
