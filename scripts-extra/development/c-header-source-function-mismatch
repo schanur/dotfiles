@@ -1,0 +1,183 @@
+#!/bin/bash
+
+# UNUSED
+
+
+# set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/list.sh"
+
+
+function function_decl_list
+{
+    HEADER_FILENAME="${1}"
+
+    cat "${HEADER_FILENAME}"                            \
+        | grep -v -E "^(static|#include|__attribute__|COMPILER_NORETURN)" \
+        | gcc -E -x c -                                 \
+        | tr -s " "                                     \
+        | grep -v -E '^[#\ \t/{}*)]'                    \
+        | grep       "("                                \
+        | grep -v -E "^$"                               \
+        | cut -f 1 -d '('                               \
+        | grep -v -E '{'                                \
+        | sed -e 's/[[:space:]]*$//'
+}
+# | cut -f 2 -d ' '          \
+
+
+function function_impl_list
+{
+    SOURCE_FILENAME="${1}"
+
+    cat "${SOURCE_FILENAME}"                            \
+        | grep -v -E "^(static|#include|__attribute__|COMPILER_NORETURN)" \
+        | gcc -E -x c -                                 \
+        | tr -s " "                                     \
+        | grep -v -E '^[#\ \t/{}*)]'                    \
+        | grep       "("                                \
+        | grep -v -E "^$"                               \
+        | cut -f 1 -d '('                               \
+        | grep -v -E '{'                                \
+        | sed -e 's/[[:space:]]*$//'
+
+}
+
+
+function escaped_filename {
+    local FILENAME="${1}"
+
+    echo "${FILENAME}" | sed -e 's/[.\/\ ]/_/g'
+}
+
+
+function check_header_source_pair
+{
+    local HEADER_FILENAME="${1}"
+    local SOURCE_FILENAME="${2}"
+    local HEADER_FUNCTION_DECL_LIST
+    local SOURCE_FUNCTION_IMPL_LIST
+    local HEADER_DECL_TMP_FILENAME
+    local SOURCE_IMPL_TMP_FILENAME
+
+    HEADER_FUNCTION_DECL_LIST=$(function_decl_list "${HEADER_FILENAME}")
+    SOURCE_FUNCTION_IMPL_LIST=$(function_impl_list "${SOURCE_FILENAME}")
+
+    if [ "${HEADER_FUNCTION_DECL_LIST}" != "${SOURCE_FUNCTION_IMPL_LIST}" ]; then
+        echo "-------------------------------- Start ---------------------------------"
+        echo "Header file and source file declares/implements different functions"
+        echo
+        echo "Header: ${HEADER_FILENAME}"
+        echo "${HEADER_FUNCTION_DECL_LIST}"
+        echo
+        echo "Source: ${SOURCE_FILENAME}"
+        echo "${SOURCE_FUNCTION_IMPL_LIST}"
+        echo "--------------------------------- End ----------------------------------"
+
+        HEADER_DECL_TMP_FILENAME="/tmp/header_decl__$(escaped_filename "${HEADER_FILENAME}")"
+        SOURCE_IMPL_TMP_FILENAME="/tmp/source_impl__$(escaped_filename "${SOURCE_FILENAME}")"
+        echo "${HEADER_FUNCTION_DECL_LIST}" > "${HEADER_DECL_TMP_FILENAME}"
+        echo "${SOURCE_FUNCTION_IMPL_LIST}" > "${SOURCE_IMPL_TMP_FILENAME}"
+        meld "${HEADER_DECL_TMP_FILENAME}" "${SOURCE_IMPL_TMP_FILENAME}"
+    fi
+}
+
+
+function check_header_source_pairs_in_path_recursive_global_matching
+{
+    true
+}
+
+
+function check_header_source_pairs_in_path
+{
+    local SEARCH_PATH="${1}"
+    local MODULE_LIST
+    local MODULE_BASENAME_WITH_PATH
+
+    MODULE_LIST=$(list_new)
+
+    for HEADER_FILENAME in $(find "${SEARCH_PATH}" -mindepth 1 -maxdepth 1 -name "*.h"); do
+        MODULE_BASENAME_WITH_PATH="${HEADER_FILENAME::-2}"
+        if [ -f "${MODULE_BASENAME_WITH_PATH}.c" ]; then
+            MODULE_LIST="$(list_add "${MODULE_LIST}" "${MODULE_BASENAME_WITH_PATH}")"
+        else
+            echo "${HEADER_FILENAME} has no corresponding source file. Skip."
+        fi
+    done
+
+    for SOURCE_FILENAME in $(find "${SEARCH_PATH}" -mindepth 1 -maxdepth 1 -name "*.c"); do
+        MODULE_BASENAME_WITH_PATH="${SOURCE_FILENAME::-2}"
+        if [ -f "${MODULE_BASENAME_WITH_PATH}.h" ]; then
+            if [ $(list_contains "${MODULE_LIST}" "${MODULE_BASENAME_WITH_PATH}") ]; then
+                MODULE_LIST="$(list_add "${MODULE_LIST}" "${MODULE_BASENAME_WITH_PATH}")"
+            else
+                echo "Already in list: ${MODULE_BASENAME_WITH_PATH}"
+            fi
+        else
+            echo "${SOURCE_FILENAME} has no corresponding header file. Skip."
+        fi
+    done
+
+    for MODULE_BASENAME_WITH_PATH in ${MODULE_LIST}; do
+        echo "${MODULE_BASENAME_WITH_PATH}"
+        check_header_source_pair "${MODULE_BASENAME_WITH_PATH}.h" "${MODULE_BASENAME_WITH_PATH}.c"
+    done
+}
+
+
+function check_header_source_pairs_in_path_recursive
+{
+    local SEARCH_BASE_PATH="${1}"
+    local SEARCH_PATH
+
+    for SEARCH_PATH in $(find "${SEARCH_BASE_PATH}" -type d); do
+        echo "Check header source pairs in path: ${SEARCH_PATH}"
+        check_header_source_pairs_in_path "${SEARCH_PATH}"
+    done
+}
+
+
+function main
+{
+    local OPERATION_TYPE
+
+    if [ ${#} -lt 1 ]; then
+        echo "Too few arguments."
+        exit 1
+    fi
+
+    OPERATION_TYPE="${1}"
+    shift
+
+    case "${OPERATION_TYPE}" in
+        -p|--pair)
+            local HEADER_FILENAME="${1}"
+            local SOURCE_FILENAME="${2}"
+            check_header_source_pair "${HEADER_FILENAME}" "${SOURCE_FILENAME}"
+            ;;
+        -d|--directory)
+            if [ ${#} -ne 1 ]; then
+                echo "Wrong number of arguments."
+                exit 1
+            fi
+            local SEARCH_PATH="${1}"
+            check_header_source_pairs_in_path "${SEARCH_PATH}"
+            ;;
+        -r|--recursive-directory)
+            if [ ${#} -ne 1 ]; then
+                echo "Wrong number of arguments."
+                exit 1
+            fi
+            local SEARCH_PATH="${1}"
+            check_header_source_pairs_in_path_recursive "${SEARCH_PATH}"
+            ;;
+    esac
+}
+
+
+main "${@}"
