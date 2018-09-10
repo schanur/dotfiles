@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Try to save Disable network
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+CMD_LINE_PARAMS="${@}"
+
+
+run_as_root "${CMD_LINE_PARAMS}"
+
+
+function network_interface_list
+{
+    ip addr | grep -e "^[0-9][0-9]*:" | cut -f 2 -d " " | cut -f 1 -d ":"
+}
+
+
+function ethernet_network_interface_list
+{
+    network_interface_list | grep -v "lo" | grep -e "^enp"
+}
+
+
+function wifi_network_interface_list
+{
+    network_interface_list | grep -v "lo" | grep -e "^wlp"
+}
+
+
+function disable_interface_error_resilent
+{
+    ifdown "${INTERFACE}" || true
+}
+
+function disable_ethernet_interface
+{
+    INTERFACE="${1}"
+}
+
+
+function disable_wifi_interface
+{
+    INTERFACE="${1}"
+}
+
+
+function disable_all_network_manager_devices
+{
+    nmcli radio all off
+}
+
+
+function disable_all_network_interfaces
+{
+    for ETHERNET_DEV in $(ethernet_network_interface_list); do
+        echo "disable_ethernet_interface ${ETHERNET_DEV}"
+        disable_ethernet_interface "${ETHERNET_DEV}"
+    done
+
+    for WIFI_DEV in $(wifi_network_interface_list); do
+        echo "disable_wifi_interface ${WIFI_DEV}"
+        disable_wifi_interface "${WIFI_DEV}"
+    done
+
+    disable_all_network_manager_devices
+}
+
+
+disable_all_network_interfaces
