@@ -4,12 +4,12 @@
 [submodule "vendor/oh-my-zsh"]
 	path = vendor/oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "vendor/shell-status-prompt"]
-	path = vendor/shell-status-prompt
-	url = https://github.com/schanur/shell-status-prompt.git
 [submodule "vendor/emacs.d"]
 	path = vendor/emacs.d
 	url = https://github.com/schanur/emacs.d.git
 [submodule "vendor/rsync-homedir-excludes"]
 	path = vendor/rsync-homedir-excludes
 	url = https://github.com/rubo77/rsync-homedir-excludes
+[submodule "vendor/aftermath"]
+	path = vendor/aftermath
+	url = https://github.com/schanur/aftermath.git
