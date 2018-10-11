@@ -1,17 +1,17 @@
-audacity
-brasero
-gimp
-gmusicbrowser
-gpodder
-grilo-plugins-0.3
-imagemagick
-knowthelist
-kodi
+audacity                                                          # Nice audio manipulation functionality with OKish GUI
+brasero                                                           # CD/DVD burning GUI
+gimp                                                              # Better photoshop
+gmusicbrowser                                                     # Graphical jukebox
+gpodder                                                           # Podcast client
+grilo-plugins-0.3                                                 # TODO: why is this on the list
+imagemagick                                                       # Image manipulation scripting
+knowthelist                                                       # Music player focused on playlists
+kodi                                                              # Home Theatre
 libc++-dev                                                        # Required by Discord
-mpv
-musique
-rhythmbox
-sxiv
-vlc
-xloadimage
-youtube-dl
+mpv                                                               # Multimedia player with minimalistic GUI
+musique                                                           # Graphical music player
+rhythmbox                                                         # Graphical jukebox
+sxiv                                                              # Image viewer without UI
+vlc                                                               # Multimedia player
+xloadimage                                                        # Set X11 background image
+youtube-dl                                                        # CLI video downloader

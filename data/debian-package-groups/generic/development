@@ -1,29 +1,29 @@
-bear
-bison
+bear                                                              # Create compilation database without help of the build system
+bison                                                             # YACC-compatible parser generator
 bundler
 check
-clang
+clang                                                             # Compiler for C/C++/ObjC...
 closure-linter                                                    # Javascript linter
-cmake
-ddd
+cmake                                                             # CMake build system
+ddd                                                               # GUI debugger
 doxygen
 doxygen-gui
 enscript
 extra-cmake-modules                                               # Zeal
 flex
 fonts-ubuntu                                                      # Default font in Emacs
-gcc
-gdb
-gitg
+gcc                                                               # C compiler
+gdb                                                               # GNU Debugger
+gitg                                                              # Git commit history GUI
 gitk
 git-cola
 git-extras
-git-ftp
-global
-graphviz
-grip
-g++
-highlight
+git-ftp                                                           # Push git commits over FTP
+global                                                            # Source code browser
+graphviz                                                          # Graph drawing tools
+grip                                                              # GitHub Markdown local previewer
+g++                                                               # C++ compiler
+highlight                                                         # CLI source code syntax highlighting
 imediff2
 lftp                                                              # Required by git-ftp pull
 libarchive-dev                                                    # Zeal
@@ -41,7 +41,7 @@ libtinyxml-dev
 libxcb-keysyms1-dev                                               # Zeal
 lldb
 lua5.3
-make
+make                                                              # Old build system
 markdown
 meld
 nemiver                                                           # Graphical C/C++ debugger
@@ -50,13 +50,13 @@ pry
 python3
 python3-pip
 qt5-default
-rake
+rake                                                              # Build system based on ruby
 ruby-method-source
-shellcheck
-silversearcher-ag
+shellcheck                                                        # Shell script linter
+silversearcher-ag                                                 # Fast source code search tool
 swig
-twine
+twine                                                             # Interact with PyPI online package archive
 upx-ucl
-valgrind
+valgrind                                                          # Application VM to debug without language support
 wordnet
 xorg-dev

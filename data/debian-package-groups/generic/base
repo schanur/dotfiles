@@ -1,73 +1,73 @@
-alsa-utils
-aoetools
+alsa-utils                                                        # Sound utils
+aoetools                                                          # ATA over ethernet tools
 apparmor
 apparmor-notify
 apparmor-profiles
 apparmor-profiles-extra
 apparmor-utils
 apt-file
-aptitude
-arj
-autojump
+aptitude                                                          # ncurses package manager
+arj                                                               # ARJ compressor and decompressor
+autojump                                                          # Switch between frequently used directories
 avahi-daemon
 avahi-discover
 avahi-dnsconfd
 avahi-utils
-beep
+beep                                                              # CLI PC speaker tool
 cifs-utils
-colortest
+colortest                                                         # Check terminal color capabilities
 conntrack
-dvorak7min
-exfat-utils
+dvorak7min                                                        # Learn Dvorak keyboard layout
+exfat-utils                                                       # Create exFAT volumes
 expect
 figlet
-fish
-gddrescue
-gt5
+fish                                                              # Modern shell
+gddrescue                                                         # Block device rescue tool
+gt5                                                               # CLI disk usage browser
 hexedit
-htop
+htop                                                              # top with nicer interface
 hunspell
 hunspell-de-de-frami
 hunspell-tools
-jq
-kwalify
-lhasa
+jq                                                                # Shell JSON query tool
+kwalify                                                           # YAML and JSON tools
+lhasa                                                             # Support for LHA (.lza) archive support
 libcrack2
-lm-sensors
+lm-sensors                                                        # Read conputer sensor values
 lockfile-progs
-lynx
+lynx                                                              # CLI browser
 lrzip
 lzip
-mc
+mc                                                                # 2 pane CLI file browser
 moreutils
-mosh
+mosh                                                              # SSH equivalent with reconnect and prediction
 mtr
-ncompress
+ncompress                                                         # Original Lempel-Ziv
 nfs-common
-nmap
-openssh-server
-peco
-powertop
-procmail
-pv
-rsync
-rzip
+nmap                                                              # Network scanner
+openssh-server                                                    # SSH server
+peco                                                              # Interactive filtering tool
+powertop                                                          # Reduce computer power usage
+procmail                                                          # Email processor
+pv                                                                # Get stats of data going through Unix pipes
+rsync                                                             # Efficient folder syncronization
+rzip                                                              # Compressor for large files
 safecopy
-samba
-sl
-slurm
-smbnetfs
+samba                                                             # SMB network protocol client/server
+sl                                                                # Print ASCII locomotive
+slurm                                                             # Network interface ASCII graph
+smbnetfs                                                          #
 snapd
-sshuttle
+sshuttle                                                          # Minimalistic network tunneling over SSH
 sysstat
-unace
-unalz
-smartmontools
+unace                                                             # ACE decompressor
+unalz                                                             # ALZ decompressor
+smartmontools                                                     # Get storage health information
 smbclient
-sshfs
+sshfs                                                             # Mount filesystem as FUSE over SSH
 thin-provisioning-tools
-tmux
-vim
-xjobs
-xz-utils
-zsh
+tmux                                                              # Shell multiplexer
+vim                                                               #
+xjobs                                                             # Parallel job execution
+xz-utils                                                          # XZ compressor and decompressor with high compression ratio
+zsh                                                               # One of a few shells worth using

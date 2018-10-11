@@ -1,29 +1,29 @@
 adwaita-icon-theme
 adwaita-qt
 adwaita-qt4
-dunst
-evince
+dunst                                                             # Notification daemon
+evince                                                            # Postscript and PDF viewer
 feh                                                               # Required by set-background script
-filezilla
-file-roller
+filezilla                                                         # FTP client
+file-roller                                                       # Archive manager
 gedit
 gedit-plugins
-gksu
+gksu                                                              # Graphical su
 gmtp
-gnome-commander
+gnome-commander                                                   # Filemanager
 gnome-themes-standard
-gparted
-gtk-chtheme
+gparted                                                           # Partition manager
+gtk-chtheme                                                       # Another graphical theme changer
 i3
 i3lock
 i3status
 icedove
-liferea
-lxappearance
-lxrandr
-mesa-utils
+liferea                                                           # RSS Reader
+lxappearance                                                      # Theme selector GUI
+lxrandr                                                           # TODO: Replace by arandr
+mesa-utils                                                        # Check OpenGL performance
 mesa-utils-extra
-mirage
+mirage                                                            # Image viewer
 mupdf
 mupdf-tools
 network-manager-gnome
@@ -32,20 +32,20 @@ network-manager-openvpn-gnome
 network-manager-vpnc-gnome
 network-manager-pptp-gnome
 pdfsam
-qt4-qtconfig
+qt4-qtconfig                                                      # TODO: Search replacements for all QT4 applications
 qt5-style-plugins                                                 # Dark theme support for QT5 apps
-qtcurve
-redshift
+qtcurve                                                           # Required for dark themes in GTK+ and Qt
+redshift                                                          # Reduce blue display color at night
 rofi                                                              # dmenu replacement and window switcher
-ruby-notify
-rxvt-unicode-256color
-scrot
+ruby-notify                                                       # Contains notify-send
+rxvt-unicode-256color                                             # Great terminal
+scrot                                                             # command line screenshot application
 system-config-printer
 unclutter                                                         # Hide mousecursor on mouse inactivity
 wdm
 wireshark
-xdotool
-xfonts-terminus
+xdotool                                                           # Simulate X11 events
+xfonts-terminus                                                   # Fixed width font for small screens
 xserver-xorg
 xterm
-xtrlock
+xtrlock                                                           # Minimal lockscreen which keeps screen content

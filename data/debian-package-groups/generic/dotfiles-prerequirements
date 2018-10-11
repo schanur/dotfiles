@@ -1,5 +1,5 @@
 curl
 eatmydata
 git
-unzip
+unzip                                                             # For downloading NASA image archive as background image lib
 wget
