@@ -23,12 +23,24 @@ wallet.tar*
 
 # 'local' filesystem structure
 /local/autogen/emacs_backup/
+/local/backup/
 /local/cache/
 /local/data/bitcoin_chain_data/
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
 /local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
 /local/vm/
 /local/media/
+/local/temp/
+/local/work_home/
+
+build*/
+build_meson/
+
+backup_restore/
+
+# Virtualbox appliances
+*.ova
+*.ova.*
 
 # LXC
 /.local/share/lxc/
@@ -65,3 +77,6 @@ dwhelper/
 
 # Zeal
 .local/share/Zeal
+
+# Try to match as many thumbnails as possible
+Thumbnails
