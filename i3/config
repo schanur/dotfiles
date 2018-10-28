@@ -11,8 +11,8 @@ new_window          1pixel
 
 
 set                 $ws0                          "0:test0"
-set                 $ws1                          "1:scratch"
-set                 $ws2                          "2:dev"
+set                 $ws1                          "1:editor"
+set                 $ws2                          "2:dev_console"
 set                 $ws3                          "3:ssh"
 set                 $ws4                          "4:var1"
 set                 $ws5                          "5:var2"
@@ -50,7 +50,7 @@ assign              [class="Kodi"]                $ws6
 assign              [class="Gajim"]               $ws8
 assign              [class="Thunderbird"]         $ws9
 assign              [class="Firefox"]             $ws10
-
+§
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -174,10 +174,11 @@ bindsym             $mod+Shift+dead_acute         move container to workspace $w
 
 # Mode workspaces to different outputs (aka monitors)
 # TODO: Make this work generic: xrandr names can be different.
-bindsym             $mod+Ctrl+1                   move workspace to output DP-2
-bindsym             $mod+Ctrl+2                   move workspace to output eDP-1
+bindsym             $mod+Ctrl+1                   move workspace to output eDP-1
+bindsym             $mod+Ctrl+2                   move workspace to output HDMI-1
+bindsym             $mod+Ctrl+3                   move workspace to output DP2
 
-# reload the configuration file
+# reload the configuration fileD
 bindsym             $mod+Shift+c                  reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym             $mod+Shift+r                  restart
