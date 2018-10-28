@@ -29,6 +29,7 @@ htop                                                              # top with nic
 hunspell
 hunspell-de-de-frami
 hunspell-tools
+inotify-tools                                                     # Contains inotifywait
 jq                                                                # Shell JSON query tool
 kwalify                                                           # YAML and JSON tools
 lhasa                                                             # Support for LHA (.lza) archive support
