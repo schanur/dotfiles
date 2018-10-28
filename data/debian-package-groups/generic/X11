@@ -19,6 +19,8 @@ i3lock
 i3status
 icedove
 liferea                                                           # RSS Reader
+lightdm                                                           # Display manager
+lightdm-gtk-greeter-settings                                      # Configu lightdm
 lxappearance                                                      # Theme selector GUI
 lxrandr                                                           # TODO: Replace by arandr
 mesa-utils                                                        # Check OpenGL performance
@@ -42,7 +44,6 @@ rxvt-unicode-256color                                             # Great termin
 scrot                                                             # command line screenshot application
 system-config-printer
 unclutter                                                         # Hide mousecursor on mouse inactivity
-wdm
 wireshark
 xdotool                                                           # Simulate X11 events
 xfonts-terminus                                                   # Fixed width font for small screens
