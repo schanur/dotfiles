@@ -21,7 +21,8 @@
       textconv = hexdump -v -C
 
 [alias]
-        undo = reset --soft HEAD^
+        undo   = reset --soft HEAD^
+        append = commit --amend --no-edit
 
 #[commit]
 #        pgpSign = true
