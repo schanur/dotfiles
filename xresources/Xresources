@@ -15,3 +15,6 @@ URxvt.boldItalicFont:                             xft:Terminus:bold:italic:pixel
 URxvt.foreground:                                 grey
 URxvt.background:                                 black
 
+
+DisplayManager.wdmBg:                             .config/dotfiles/basepath/background_image/algo_generated/ulam_spiral_480x270.png
+
