@@ -18,3 +18,9 @@ URxvt.background:                                 black
 
 DisplayManager.wdmBg:                             .config/dotfiles/basepath/background_image/algo_generated/ulam_spiral_480x270.png
 
+
+! Only used as colors on Emacs startup. They get replaces when theme
+! is loaded
+emacs.foreground:                                 white
+emacs.background:                                 black
+
