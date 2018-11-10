@@ -23,20 +23,20 @@ STEAM_INSTALL_PATH="${STEAM_BASE_PATH}/installation"
 SUCC_FILENAME="${STEAM_BASE_PATH}/succ"
 
 REQUIRED_DEB_PACKAGE_LIST="build-essential pkg-config libc6-dev libssl-dev libexpat1-dev libavcodec-dev libgl1-mesa-dev libqt4-dev zlib1g-dev"
-    
+
 
 function steam_is_installed {
     local IS_INSTALLED=0
 
     if [ -d "${STEAM_BASE_PATH}" ]; then
-	if [ -f "${SUCC_FILENAME}" ]; then
-	    IS_INSTALLED=1
-	else
-	    echo "Warning: Install path exists but has no success file. Last install attempt failed." >&2
-	    echo "Remove all files from previous install attempt." >&2
-	    echo "" >&2
-	    # rm -rf "${STEAM_BASE_PATH}"
-	fi
+        if [ -f "${SUCC_FILENAME}" ]; then
+            IS_INSTALLED=1
+        else
+            echo "Warning: Install path exists but has no success file. Last install attempt failed." >&2
+            echo "Remove all files from previous install attempt." >&2
+            echo "" >&2
+            # rm -rf "${STEAM_BASE_PATH}"
+        fi
     fi
 
     echo ${IS_INSTALLED}
@@ -46,7 +46,7 @@ function steam_is_installed {
 function install_steam {
     local STEAM_DOWNLOAD_LINK="https://steamcdn-a.akamaihd.net/client/installer/steam.deb"
     local STEAM_DEB_FILENAME="${STEAM_TEMP_PATH}/steam.deb"
-    
+
     echo "Create temporary directory."
     mkdir -p "${STEAM_TEMP_PATH}"
 
@@ -55,17 +55,17 @@ function install_steam {
 
     echo "Download Steam DEB archive."
     # wget -O "${STEAM_DEB_FILENAME}" "${STEAM_DOWNLOAD_LINK}"
-    
+
     echo "Install Steam to ${STEAM_INSTALL_PATH}."
     dpkg -i "${STEAM_DEB_FILENAME}"
     # "${STEAM_INSTALL_PATH}"
 
     for PACKAGE in ${REQUIRED_DEB_PACKAGE_LIST}; do
-	echo "Check if package is installed: ${PACKAGE}"
-	if [ $(deb_package_is_installed ${PACKAGE}) -eq 0 ]; then
-	    echo "${PACKAGE} is missing. Install as root:"
-	    run_as_root "${SCRIPT_FILENAME}" install_packages
-	fi
+        echo "Check if package is installed: ${PACKAGE}"
+        if [ $(deb_package_is_installed ${PACKAGE}) -eq 0 ]; then
+            echo "${PACKAGE} is missing. Install as root:"
+            run_as_root "${SCRIPT_FILENAME}" install_packages
+        fi
     done
 
     echo "Mark current installation as successful."
@@ -75,9 +75,9 @@ function install_steam {
 
 function main {
     if [ $(steam_is_installed) -eq 0 ]; then
-    	install_steam
+        install_steam
     else
-	echo "Steam is already installed. To reinstall delete folder \"${STEAM_BASE_PATH}\" first."
+        echo "Steam is already installed. To reinstall delete folder \"${STEAM_BASE_PATH}\" first."
     fi
 }
 
