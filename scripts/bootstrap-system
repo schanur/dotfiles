@@ -26,7 +26,7 @@ if [ ! -d "local/dev/all2" ]; then
     mkdir -p local/dev
     (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/avr-3-phase-high-voltage-driver.git)
     (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/bad-code-i-wrote-as-a-kid.git)
-    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/bash-status-prompt.git)
+    (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/aftermath.git)
     (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/blimp.git)
     (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/dotfiles.git)
     (cd local/dev && git clone --recursive ${GITHUB_USER_BASE_DOMAIN}/emacs.d.git)
