@@ -24,3 +24,7 @@ DisplayManager.wdmBg:                             .config/dotfiles/basepath/back
 emacs.foreground:                                 white
 emacs.background:                                 black
 
+
+! Make Rofi use more space on the screen
+rofi.lines:                                       20
+rofi.width:                                       80 ! 80% of screen width.
