@@ -6,19 +6,21 @@ SCRIPT_FILENAME="$(readlink -f "${0}")"
 SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
 DOTFILES_PATH="${SCRIPT_PATH}/.."
 
+# shellcheck   source=../lib/bivalvia/help.sh
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# shellcheck   source=../lib/bivalvia/link.sh
 source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
 
+source "${DOTFILES_PATH}/lib/shell/install.sh"
 
-# function config_contains_dotfiles_installer_comment
 
+function main() {
+    local LINK_FILENAME_RELATIVE_TO_HOME
+    local DOTFILES_FILENAME
 
-function main {
-    local LINK_FILENAME_RELATIVE_TO_HOME=".gitconfig"
-    local DOTFILES_FILENAME="${SCRIPT_PATH}/../git/gitconfig"
-
-    # backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
-
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/git/config"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../git/gitconfig"
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 }
 
 
