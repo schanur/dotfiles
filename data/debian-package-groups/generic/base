@@ -23,6 +23,7 @@ expect
 figlet
 fish                                                              # Modern shell
 gddrescue                                                         # Block device rescue tool
+gnupg
 gt5                                                               # CLI disk usage browser
 hexedit
 htop                                                              # top with nicer interface
