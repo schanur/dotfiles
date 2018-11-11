@@ -1,0 +1,1 @@
+../../event_scripts/keyboard_setup.sh
