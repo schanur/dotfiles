@@ -36,6 +36,7 @@ function main {
         TARGET="${2}"
         shift
         shift
+        # echo "bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) ${*} ${SOURCE} ${TARGET}"
         bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) ${*} "${SOURCE}" "${TARGET}"
         EXIT_STATUS=$?
         exit ${EXIT_STATUS}
@@ -44,10 +45,11 @@ function main {
     fi
 }
 
-
 SOURCE="${HOME}/"
-TARGET="/media/lsync_target/lsync_backup/$(whoami)/$(hostname)"
+# TARGET="/media/lsync_target/lsync_backup/$(whoami)/$(hostname)"
+TARGET="/media/sync_target/rsync/$(whoami)/$(hostname)/home__ze/"
 
+echo "${TARGET}"
 if [ ! -d "${TARGET}" ]; then
     mkdir -p "${TARGET}"
 fi
