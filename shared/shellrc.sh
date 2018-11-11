@@ -12,7 +12,7 @@ echo "Set PATH:"
 echo "Load man page settings"
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
 echo "Load GUI toolkit colors"
-source ${DOTFILES_PATH}/shared/gui_toolkit_colors.sh
+source ${DOTFILES_PATH}/x11/gui_toolkit_colors.sh
 echo -n "Load alias files"
 source ${DOTFILES_PATH}/alias/all.sh
 echo
@@ -85,7 +85,6 @@ echo
 echo "Final CDPATH:"
 echo ${CDPATH}
 
-source ${DOTFILES_PATH}/vendor/shell-status-prompt/shell-status-prompt.sh
 
 export NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
 export MAKEFLAGS="-j $(( NUMCPUS * 2 ))"
@@ -147,6 +146,10 @@ echo
 
 echo -n "Alias of the day: "
 alias-of-the-day
+
+
+source ${DOTFILES_PATH}/vendor/aftermath/aftermath.sh
+
 
 # We do not want to pollute the namespace of each shell. Delete all
 # functions defined in this module.

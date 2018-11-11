@@ -14,8 +14,8 @@ source "${DOTFILES_PATH}/lib/shell/install.sh"
 
 
 function main() {
-    local LINK_FILENAME_RELATIVE_TO_HOME=".Xresources"
-    local DOTFILES_FILENAME="${SCRIPT_PATH}/../x11/Xresources"
+    local LINK_FILENAME_RELATIVE_TO_HOME=".xprofile"
+    local DOTFILES_FILENAME="${SCRIPT_PATH}/../x11/xprofile"
 
     backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 }
