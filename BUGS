@@ -1,0 +1,4 @@
+- background image install script requires "unzip" tool but do not force to install it
+- Make background image script load a smaller set of images
+- emacs: only initalize ruby mode if irb and pry are installed
+- sysctl.conf does not a root install script
