@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Set screen temperature in degrees kelvin.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+if [ ${#} -ne 1 ]; then
+    echo "Wrong number of arguments" >&2
+    exit 1
+fi
+
+SCREEN_TEMP="${1}"
+
+redshift -P -O "${SCREEN_TEMP}"
