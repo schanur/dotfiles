@@ -2,7 +2,7 @@ avahi-ui-utils
 cups
 gajim
 gajim-omemo
-gvfs-backend
+gvfs-backends
 gvfs-bin
 gvfs-fuse
 network-manager
