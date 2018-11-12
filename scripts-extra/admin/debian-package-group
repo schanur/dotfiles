@@ -25,6 +25,7 @@ source "${DOTFILES_PATH}/lib/bivalvia/package_management_deb.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/parse.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/string.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/terminal.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 
 
@@ -159,6 +160,7 @@ function parse_all_package_groups {
 # Install all packages stored on the global variable
 # SELECTED_PACKAGE_LIST. TODO: Do not use global variable.
 function install_packages {
+    echo "${NO_FSYNC_CMD} apt-get install ${SELECTED_PACKAGE_LIST}"
     ${NO_FSYNC_CMD} apt-get install ${SELECTED_PACKAGE_LIST}
 }
 
@@ -181,14 +183,13 @@ function global_statistics {
     local PACKAGE_GROUP
     local PACKAGE
 
-
     for PACKAGE_GROUP in $(list_package_groups | sort); do
         package_group_statistics "${PACKAGE_GROUP}"
     done
 }
 
 
-# Returns a list with packages in a package group that are mot
+# Returns a list with packages in a package group that are not
 # installed on the system.
 function package_group_statistics {
     local PACKAGE_GROUP="${1}"
@@ -200,6 +201,9 @@ function package_group_statistics {
     local INSTALLED_PACKAGE_LIST
     local LONGEST_PACKAGE_GROUP_STR_LENGTH
     local STATS_HORIZONTAL_ALIGN
+    local NOT_INSTALLED_HORIZONTAL_ALIGN
+
+    local TERMINAL_COLUMNS=$(terminal_width)
 
     INSTALLED_PACKAGE_LIST="$(installed_deb_packages_without_arch | sort)"
 
@@ -208,7 +212,8 @@ function package_group_statistics {
     NOT_INSTALLED_LIST=""
 
     LONGEST_PACKAGE_GROUP_STR_LENGTH=$(longest_string_length $(list_package_groups))
-    (( STATS_HORIZONTAL_ALIGN = LONGEST_PACKAGE_GROUP_STR_LENGTH + 2 ))
+    (( STATS_HORIZONTAL_ALIGN         = LONGEST_PACKAGE_GROUP_STR_LENGTH + 2 ))
+    (( NOT_INSTALLED_HORIZONTAL_ALIGN = TERMINAL_COLUMNS - (STATS_HORIZONTAL_ALIGN + 16) ))
     for PACKAGE in $(list_group_items ${PACKAGE_GROUP}); do
         PACKAGE_IS_INSTALLED=$(echo "${INSTALLED_PACKAGE_LIST}" | (grep -cFxe "${PACKAGE}" || true))
         if [ ${PACKAGE_IS_INSTALLED} -eq 1 ]; then
@@ -221,10 +226,10 @@ function package_group_statistics {
     done
     (( PACKAGE_COUNT = INSTALLED_COUNT + NOT_INSTALLED_COUNT ))
 
-    echo -n "$(fill_tail           ${STATS_HORIZONTAL_ALIGN} ' ' "${PACKAGE_GROUP}") "
-    echo -n "$(fill_tail             5                       ' ' "${INSTALLED_COUNT}":"${NOT_INSTALLED_COUNT}"): "
-    echo -n "$(fill_tail             5                       ' ' "$(fraction_to_percentage ${INSTALLED_COUNT} ${PACKAGE_COUNT})%") "
-    echo    "$(fill_ellipsis_tail  180                       ' ' "${NOT_INSTALLED_LIST}")"
+    echo -n "$(fill_tail           ${STATS_HORIZONTAL_ALIGN}         ' ' "${PACKAGE_GROUP}") "
+    echo -n "$(fill_tail           5                                 ' ' "${INSTALLED_COUNT}":"${NOT_INSTALLED_COUNT}"): "
+    echo -n "$(fill_tail           5                                 ' ' "$(fraction_to_percentage ${INSTALLED_COUNT} ${PACKAGE_COUNT})%") "
+    echo    "$(fill_ellipsis_tail  ${NOT_INSTALLED_HORIZONTAL_ALIGN} ' ' "${NOT_INSTALLED_LIST}")"
 }
 
 
