@@ -31,6 +31,7 @@ libclang-dev
 libcrypto++-dev
 libglib2.0-doc
 libgraphviz-dev
+libgtk-3-dev                                                      # Required by Cargo for rs-gtk
 liblz4-dev
 libpcap-dev
 libqt5webkit5-dev                                                 # Zeal
