@@ -15,8 +15,8 @@ find /usr/bin -name "emacs??" |sort -V
 
 LATEST_AVAILABLE_EMACS_VERSION=$(find /usr/bin -name "emacs??" |sort -V |tail -n 1)
 if [ "${LATEST_AVAILABLE_EMACS_VERSION}" = "" ]; then
-    echo "No emacs version found. Abort!"
-    exit 1
+    # Newer versions of debian skips version numbers in /usr/bin.
+    LATEST_AVAILABLE_EMACS_VERSION="emacs"
 fi
 
 export TERM=xterm-256color
