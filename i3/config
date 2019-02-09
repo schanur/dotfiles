@@ -177,6 +177,9 @@ bindsym             $mod+Shift+dead_acute         move container to workspace $w
 bindsym             $mod+Ctrl+1                   move workspace to output eDP-1
 bindsym             $mod+Ctrl+2                   move workspace to output HDMI-1
 bindsym             $mod+Ctrl+3                   move workspace to output DP2
+# Move relative to current position.
+bindsym             $mod+Ctrl+8                   move workspace to output left
+bindsym             $mod+Ctrl+9                   move workspace to output right
 
 # reload the configuration fileD
 bindsym             $mod+Shift+c                  reload
