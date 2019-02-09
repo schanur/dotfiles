@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Run a command after a file has been altered and saving has finished.
+
+# Usage:
+#   run-after-save WATCH_PATH ACTION
+
+
+# set -o errexit -o nounset -o pipefail # Allow periodic command to fail without aborting this script.
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+if [ "${#}" -lt "2" ]; then
+    invalid_parameter_exit
+fi
+
+WATCH_PATH="${1}"
+shift
+ACTION="${@}"
+
+while inotifywait -e close_write "${WATCH_PATH}"/*; do
+    clear
+    (${ACTION});
+done
