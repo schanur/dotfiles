@@ -1,1 +1,11 @@
+cargo-bloat
+cargo-bom
+cargo-config
+cargo-count
+# cargo-extras              # Does not compile 2019-02-03
+cargo-info
+cargo-modules
+cargo-outdated
+cargo-tree
 racer
+ripgrep
