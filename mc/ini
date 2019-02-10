@@ -84,6 +84,8 @@ skin=modarin256root-thin
 
 editor_state_full_filename=true
 
+safe_overwrite=false
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -118,6 +120,10 @@ color_terminals=
 rxvt-unicode-256color=
 
 screen=
+
+linux=
+
+xterm=
 
 [Panels]
 show_mini_info=true
