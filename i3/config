@@ -172,11 +172,6 @@ bindsym             $mod+Shift+0                  move container to workspace $w
 bindsym             $mod+Shift+ssharp             move container to workspace $ws11
 bindsym             $mod+Shift+dead_acute         move container to workspace $ws12
 
-# Mode workspaces to different outputs (aka monitors)
-# TODO: Make this work generic: xrandr names can be different.
-bindsym             $mod+Ctrl+1                   move workspace to output eDP-1
-bindsym             $mod+Ctrl+2                   move workspace to output HDMI-1
-bindsym             $mod+Ctrl+3                   move workspace to output DP2
 # Move relative to current position.
 bindsym             $mod+Ctrl+8                   move workspace to output left
 bindsym             $mod+Ctrl+9                   move workspace to output right
