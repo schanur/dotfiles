@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Start out of distro repo version of Firefox with memory limits applied.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+# Limit memory usage to 4.5 GB.
+ulimit -d 4718592
+
+# If we run out of memory, kill Firefox first.  The score is inherited
+# on fork. So setting the score for this script is fine. Firefox gets
+# started with the same score.
+echo 1000 > /proc/${$}/oom_score_adj
+
+"${HOME}/local/bin/firefox/firefox/firefox"

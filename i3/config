@@ -65,7 +65,7 @@ assign              [class="Firefox"]             $ws10
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier   $mod
 
-bindsym             $mod+Ctrl+f                   exec "~/local/bin/firefox/firefox/firefox"
+bindsym             $mod+Ctrl+f                   exec "~/local/dev/public/dotfiles/scripts-extra/desktop/start-firefox"
 bindsym             $mod+Ctrl+g                   exec gpodder
 bindsym             $mod+Ctrl+i                   exec icedove
 bindsym             $mod+Ctrl+v                   exec vlc
