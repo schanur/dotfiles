@@ -193,21 +193,21 @@
 #
 
 # Theme = black_theme
-Theme = darkdot_theme
+# Theme = darkdot_theme
 # Theme = example_theme
 # Theme = green_theme
 # Theme = moca_theme
 # Theme = nightly_theme
 # Theme = red_theme
 # Theme = transparent-background
-# Theme = yellow_red_theme
+Theme = yellow_red_theme
 
 
 # The theme used when running on an xterm.
 #
 # Example:    XTermTheme = transparent-background
 #
-#XTermTheme = yellow_red_theme
+# XTermTheme = yellow_red_theme
 
 # Should MOC try to autoload the default lyrics file for an audio?  (The
 # default lyrics file is a text file with the same file name as the audio
