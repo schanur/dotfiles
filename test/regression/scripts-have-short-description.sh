@@ -11,7 +11,7 @@ source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
 source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
 
 
-dotfiles \
+"${DOTFILES_PATH}/scripts/dotfiles" \
     | sed -e 's/\ \ \ \ \ \ \ \ /\ /g' \
     | sed -e 's/\ \ \ \ /\ /g'         \
     | sed -e 's/\ \ /\ /g'             \
@@ -19,12 +19,14 @@ dotfiles \
     |                                  \
     while read DOTFILES_CMD_DESC; do   \
         echo ${DOTFILES_CMD_DESC}
-        SCRIPT_NAME=$(      echo ${DOTFILES_CMD_DESC} |cut -f 1 -d " " )
-        SHORT_DESCRIPTION=$(echo ${DOTFILES_CMD_DESC} |cut -f 2 -d " " )
-        echo "### ${SCRIPT_NAME} ${SHORT_DESCRIPTION}"
-        echo "--------------------------"
-        # if [ "${DOTFILES_CMD_DESC}" = "" ]; then
-        # fi
+        SCRIPT_NAME=$(      echo ${DOTFILES_CMD_DESC} | cut -f 1 -d " " )
+        SHORT_DESCRIPTION=$(echo ${DOTFILES_CMD_DESC} | cut -f 2 -d " " )
+        echo "### ${SCRIPT_NAME} - ${SHORT_DESCRIPTION} ###"
+        # echo "--------------------------"
+        if [ "${DOTFILES_CMD_DESC}" = "" ]; then
+            echo "${SCRIPT_NAME}"
+            exit 0
+        fi
     done
 
 #    | sed -e 's/^[^\ ]*\ //g'          \
