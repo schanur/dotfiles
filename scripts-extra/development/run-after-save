@@ -6,6 +6,7 @@
 #   run-after-save WATCH_PATH ACTION
 
 
+true
 # set -o errexit -o nounset -o pipefail # Allow periodic command to fail without aborting this script.
 SCRIPT_FILENAME="$(readlink -f "${0}")"
 SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
