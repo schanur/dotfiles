@@ -1,0 +1,12 @@
+libenchant-dev                                                    # Paperwork build
+libleptonica-de0v                                                  # JBIG2 image encode build dep
+libpng-dev                                                        # FLIF image encoder/decoder build dep
+libsdl2-dev                                                       # FLIF image viewer build dep
+python3-dev                                                       # Paperwork build
+python3-pip                                                       # Paperwork build
+python3-pil                                                       # Paperwork build
+python3-setuptools                                                # Paperwork build
+python3-whoosh                                                    # Paperwork build
+gnome-icon-theme-symbolic                                         # Paperwork
+sane-utils                                                        # Contains scanimage
+tesseract-ocr                                                     # OCR software
