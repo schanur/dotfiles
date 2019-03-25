@@ -7,3 +7,4 @@ lpc21isp
 libnewlib-arm-none-eabi
 gkrellm-hdplop
 wmhdplop
+yotta                                                         # Calliope mini
