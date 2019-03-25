@@ -1,0 +1,16 @@
+chessx                                                        # chess database
+crafty                                                        # chess engine
+crafty-books-medium                                           # Opening books
+eboard                                                        # GKT+ chessboard
+fruit
+gnuchess
+gnuchess-book
+gtkboard
+jerry
+knights                                                       # KDE chess
+scid
+scid-rating-data
+# scid-spell-data
+stockfish
+tagua
+xboard
