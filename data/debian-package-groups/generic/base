@@ -73,3 +73,4 @@ vim                                                               #
 xjobs                                                             # Parallel job execution
 xz-utils                                                          # XZ compressor and decompressor with high compression ratio
 zsh                                                               # One of a few shells worth using
+zram-tools                                                        # Run "systemctl enable zramswap" for autostart
