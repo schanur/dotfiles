@@ -33,6 +33,7 @@ network-manager-openconnect-gnome
 network-manager-openvpn-gnome
 network-manager-vpnc-gnome
 network-manager-pptp-gnome
+okular                                                            # Document viewer
 pdfsam
 qt4-qtconfig                                                      # TODO: Search replacements for all QT4 applications
 qt5-style-plugins                                                 # Dark theme support for QT5 apps
