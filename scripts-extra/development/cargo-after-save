@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Run "cargo check" after a src file was altered.
+
+# Usage:
+#   cargo-check-after-save
+
+
+true
+# set -o errexit -o nounset -o pipefail # Allow periodic command to fail without aborting this script.
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+if [ "${#}" -lt "1" ]; then
+    invalid_parameter_exit
+fi
+
+while [ 1 ]; do
+    inotifywait -r -e close_write --exclude target * 2>&1 > /dev/null
+    clear
+    echo "(cargo $1 --color always 2>&1 | head -n 10);"
+    (cargo $1 --color always 2>&1 | head -n 10);
+done
