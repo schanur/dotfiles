@@ -64,6 +64,7 @@ dwhelper/
 #.mozilla/firefox/*/weave/changes/
 #.mozilla/firefox/*/storage
 .mozilla/
+/.cache/mozilla
 
 # Thunderbird
 .icedove/*/Cache/
