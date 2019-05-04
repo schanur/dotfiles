@@ -10,10 +10,6 @@ wallet.tar*
 # Browser Downloads
 /Downloads/
 
-# Cargo crate cache
-/.cargo/registry
-/.cargo/bin
-
 # Chrome
 /.config/google-chrome/
 
@@ -51,8 +47,16 @@ dwhelper/
 # Mount points
 /net
 
-# Rust suite update files
+# Rust development
 /.rustup
+# Cargo crate cache
+/.cargo/registry
+/.cargo/bin
+# Cargo build system artefacts
+target/release
+target/debug
+target/rls
+target/.rustc_info.json
 
 # Shell history
 /.bash_history
