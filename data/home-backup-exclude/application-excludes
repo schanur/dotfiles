@@ -106,3 +106,11 @@ target/.rustc_info.json
 
 # Try to match as many thumbnails as possible
 Thumbnails
+
+# Large files
+/Videos
+/Downloads/*.iso
+
+# Files not wanted for transfer. Independent of application.
+/local/temp/
+/local/sort/
