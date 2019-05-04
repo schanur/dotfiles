@@ -5,7 +5,7 @@
 
 # Usage:
 #
-# mount            $$IMG_FILE $$PARTITION_NUMBER $$MOUNT_POINT Mont the specified partition from the image file onto the mount point.
+# mount            $$IMG_FILE $$PARTITION_NUMBER $$MOUNT_POINT Mount the specified partition from the image file onto the mount point.
 # unmount          $$MOUNT_POINT                               Unmount the partition and also destroy the created loopback device.
 # list_partitions  $$IMG_FILE                                  Show the partition table of the image file
 
