@@ -15,8 +15,16 @@ DOTFILES_PATH="${SCRIPT_PATH}/../.."
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
 
+# if [ "${#}" -lt "1" ]; then
+#     invalid_parameter_exit
+# fi
+
 while [ 1 ]; do
-    inotifywait -r -e close_write --exclude target *
+    inotifywait -r -e close_write --exclude target * 2>&1 > /dev/null
     clear
-    (cargo check --color always 2>&1 | head -n 8);
+    CHECK_FAILED=0
+    # cargo check || CHECK_FAILED=1
+    # if [ ${CHECK_FAILED} -eq 0 ]; then
+        cargo run $*
+    # fi
 done
