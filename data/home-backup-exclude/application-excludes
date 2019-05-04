@@ -76,6 +76,9 @@ dwhelper/
 # Gimp
 /.gimp*/*swap*
 
+# X11
+/.xsession-errors*
+
 # Zeal
 .local/share/Zeal
 
