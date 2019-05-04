@@ -76,6 +76,9 @@ dwhelper/
 # Gimp
 /.gimp*/*swap*
 
+# Matrix Client Revolt
+/.local/share/revolt/org.perezdecastro.Revolt/databases/
+
 # Signal
 /.config/Signal/logs/log.log*
 /.config/Signal/GPUCache/*
