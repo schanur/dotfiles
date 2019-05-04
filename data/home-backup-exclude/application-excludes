@@ -59,16 +59,27 @@ dwhelper/
 /.zsh_history
 
 # Firfox
-#.mozilla/firefox/*/saved-telemetry-pings/
-#.mozilla/firefox/*/sessionstore-backups/
-#.mozilla/firefox/*/weave/changes/
-#.mozilla/firefox/*/storage
-.mozilla/
+#/.mozilla/
+/.mozilla/firefox/*/saved-telemetry-pings/
 /.cache/mozilla
+/.mozilla/firefox/*/datareporting/aborted-session-ping
+/.mozilla/firefox/*/cookies.sqlite*
+/.mozilla/firefox/*/favicons.sqlite*
+/.mozilla/firefox/*/webappsstore.sqlite*
+/.mozilla/firefox/*/sessionstore-backups/
+/.mozilla/firefox/*/datareporting/
+/.mozilla/firefox/*/storage/default/moz-extension+++*/
+/.mozilla/firefox/*/storage/default/https+++*/
+#./mozilla/firefox/*/storage/default/ # ???
+/.mozilla/firefox/*/weave/changes/ # ???
+# HSTS supercookies (certificate pinning)
+/.mozilla/firefox/*/SiteSecurityServiceState.txt
+/.mozilla/firefox/*/weave/
 
 # Thunderbird
-.icedove/*/Cache/
-.icedove/wspne1tl.default/datareporting/aborted-session-ping/
+/.icedove/*/Cache/
+/.icedove/*/datareporting/aborted-session-ping
+/.icedove/*/Mail/*/popstate.dat
 
 # Downloaded content that gets reloaded
 /.local/share/xmoto/Levels/downloaded/
