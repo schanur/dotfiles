@@ -76,6 +76,10 @@ dwhelper/
 # Gimp
 /.gimp*/*swap*
 
+# Signal
+/.config/Signal/logs/log.log*
+/.config/Signal/GPUCache/*
+
 # X11
 /.xsession-errors*
 
