@@ -1,11 +1,16 @@
 cargo-bloat
 cargo-bom
+cargo-call-stack                                              # Static, whole program stack analysis
 cargo-config
 cargo-count
-# cargo-extras              # Does not compile 2019-02-03
+# cargo-extras                                                  # Does not compile 2019-02-03
+cargo-flamegraph                                              # Generate flamegraphs with perf/dtrace
 cargo-info
+cargo-license                                                 # A cargo subcommand to see license of dependencies
 cargo-modules
 cargo-outdated
+cargo-testify                                                 # Run tests after file modification and notify about result
 cargo-tree
-racer
-ripgrep
+racer                                                         # Rust IDE completion backend
+ripgrep                                                       # Fast userfriendly grep
+twiggy                                                        # Analyse binary bloat
