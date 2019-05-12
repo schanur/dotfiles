@@ -19,25 +19,27 @@ DOTFILES_USER_LOCAL_PATH="/home/ze/.local/share"
 
 function main() {
     local ARCH="$(arch)"
-    local VERSION="v1.5.0"
-    local DOWNLOAD_URL="https://github.com/SrKomodo/shadowfox-updater/releases/download/${VERSION}/shadowfox_linux_amd64"
+    local VERSION="v1.7.20"
+    local DOWNLOAD_URL="https://github.com/SrKomodo/shadowfox-updater/releases/download/${VERSION}/shadowfox_linux_x64"
     local SHADOWFOX_DOWNLOAD_PATH="${DOTFILES_USER_LOCAL_PATH}/shadowfox/${VERSION}"
     local SHADOWFOX_FILE="${SHADOWFOX_DOWNLOAD_PATH}/installer"
-    
+
+    echo "Download to ${SHADOWFOX_FILE}"
+
     if [ "${ARCH}" != "x86_64" ]; then
-	echo "${ARCH} is no supported platform." >&2
-	exit 1
+        echo "${ARCH} is no supported platform." >&2
+        exit 1
     fi
 
     if [ ! -d "${SHADOWFOX_DOWNLOAD_PATH}" ]; then
         echo "Create ShadowFox download path"
-	mkdir -p "${SHADOWFOX_DOWNLOAD_PATH}"
+        mkdir -p "${SHADOWFOX_DOWNLOAD_PATH}"
     fi
 
-    if [ ! -f "${SHADOWFOX_FILE}" ]; then
-	echo "Download ShadowFox installer: ${DOWNLOAD_URL}"
-	wget "${DOWNLOAD_URL}" -O "${SHADOWFOX_FILE}"
-	chmod +x "${SHADOWFOX_FILE}"
+    if [ ! -s "${SHADOWFOX_FILE}" ]; then
+        echo "Download ShadowFox installer: ${DOWNLOAD_URL}"
+        wget "${DOWNLOAD_URL}" -O "${SHADOWFOX_FILE}"
+        chmod +x "${SHADOWFOX_FILE}"
     fi
 
     echo "Run installer"
