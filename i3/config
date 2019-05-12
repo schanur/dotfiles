@@ -24,6 +24,7 @@ set                 $ws10                         "10:web"
 set                 $ws11                         "11:test1"
 set                 $ws12                         "12:test2"
 
+# To get application class, run xprop and click application.
 
 # border / titlebar
 new_window          normal
@@ -43,11 +44,19 @@ for_window          [class="Kodi"]                fullscreen
 
 # application rules
 # assign              [class="URxvt"]               $ws1
+assign              [class="Emacs"]               $ws1
+assign              [class="Gnome-commander"]     $ws5
+assign              [class="Filezilla"]           $ws5
+assign              [class="Thunar"]              $ws5
 assign              [class="Vlc"]                 $ws6
 assign              [class="Gpodder"]             $ws6
 assign              [class="Steam"]               $ws6
 assign              [class="Kodi"]                $ws6
+assign              [class="Virt-manager"]        $ws7
+assign              [class="Virt-manager"]        $ws7
 assign              [class="Gajim"]               $ws8
+assign              [class="Signal"]              $ws8
+assign              [class="quaternion"]          $ws8
 assign              [class="Thunderbird"]         $ws9
 assign              [class="Firefox"]             $ws10
 
