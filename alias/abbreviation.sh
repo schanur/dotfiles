@@ -1,4 +1,7 @@
 
+# Modern ls replacement.
+alias e='exa -lagb -@ --git --color=always'
+
 # Software management.
 alias sma='su  -c "apt update && apt upgrade"'
 alias smud='su -c "apt update"'

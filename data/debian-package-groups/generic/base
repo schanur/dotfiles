@@ -18,6 +18,7 @@ cifs-utils
 colortest                                                         # Check terminal color capabilities
 conntrack
 dvorak7min                                                        # Learn Dvorak keyboard layout
+exa                                                               # Modern ls replacement
 exfat-utils                                                       # Create exFAT volumes
 expect
 figlet
