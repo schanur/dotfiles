@@ -11,6 +11,8 @@
 # -S,     --sparse                handle sparse files efficiently
 # -x,     --one-file-system       don't cross filesystem boundaries
 #         --partial               keep partially transferred files
+#         --inplace               required for using network efficient
+#                                 delta algorithm
 #
 # If you want to use the script for machine local rsync operations,
 # remove the "-e ssh" option.
@@ -41,7 +43,7 @@ function rsync_cmd_ssh {
     local PARAMS=${*}
 
     rsync -aXESxze "ssh -T -o Compression=yes -p ${SSH_PORT}" --partial ${PARAMS}
-    # rsync -aXESxze "ssh -T" --partial ${PARAMS}
+    # rsync -aXESxze "ssh -T" --partial --in-place ${PARAMS}
     exit $?
 }
 
@@ -49,7 +51,7 @@ function rsync_cmd_ssh {
 function rsync_cmd_local {
     local PARAMS=${*}
 
-    rsync -aXESx --partial ${PARAMS}
+    rsync -aXESx --partial --inplace ${PARAMS}
     exit $?
 }
 
