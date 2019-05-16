@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Resolve which Debian package contains the binary that opens a TCP port.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+if [ "${#}" -ne 1 ]; then
+    invalid_parameter_exit
+fi
+
+TCP_PORT="${1}"
+
+require_numeric_value ${TCP_PORT}
+
+BINARY="$(lsof -i :"${TCP_PORT}" | tail -n 1 | cut -f 1 -d ' ')"
+ABS_BINARY_FILENAME=$(which "${BINARY}")
+DEB_PACKAGE="$(apt-file search "${ABS_BINARY_FILENAME}")"
+
+echo "Binary:  ${BINARY}"
+echo "Package: ${DEB_PACKAGE}"
