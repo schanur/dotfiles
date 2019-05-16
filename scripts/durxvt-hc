@@ -12,7 +12,9 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
 
 # FONT_NAME="/usr/share/fonts/X11/misc/ter-u12b_unicode.pcf.gz"
-FONT_NAME="-*-terminus-bold-*-*-*-16-*-*-*-*-*-*-*"
+# FONT_NAME="-*-terminus-*-*-*-16-*-*-*-*-*-*-*"
+# FONT_NAME="-*-terminus-*-*-*-20-*-*-*-*-*-*-*"
+FONT_NAME="-*-terminus-*-*-*-24-*-*-*-*-*-*-*"
 
 rxvt-unicode -bg black -fg white -cr red                                          `# Colors`                      \
              -fn ${FONT_NAME} -fb ${FONT_NAME} -fi ${FONT_NAME} -fbi ${FONT_NAME} `# Fonts`                       \
