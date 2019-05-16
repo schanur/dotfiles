@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Run a command on all git repositories returned by git-list.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+PARAMS="${*}"
+
+if [ "${PARAMS}" = "" ]; then
+    echo "Error: No arguments."
+    exit 1
+fi
+
+for GIT_REPO_PATH in $(git-list); do
+    echo ${GIT_REPO_PATH}
+    # (cd ${GIT_REPO_PATH} && (git ${PARAMS} || (echo "Failed!" && exit 1)))
+    (cd ${GIT_REPO_PATH} && (${PARAMS} || (echo "Failed!" && exit 1)))
+done

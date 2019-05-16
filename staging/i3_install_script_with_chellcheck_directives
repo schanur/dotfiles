@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+
+# shellcheck   source=../lib/bivalvia/help.sh
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# shellcheck   source=../lib/bivalvia/link.sh
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+
+function main() {
+    local LINK_FILENAME_RELATIVE_TO_HOME
+    local DOTFILES_FILENAME
+
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/config"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/config"
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/i3status.conf"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/i3status.conf"
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/custom_i3status"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/custom_i3status"
+    backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}
+}
+
+main

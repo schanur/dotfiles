@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Remove files/directories from the complete history of a repository.
+
+# Usage: $EXECUTABLE_NAME file
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+alias
+
+function main {
+    local FILTER_FUNCTION="change_credentials"
+
+    if [ "${#}" -ne "1" ]; then
+        invalid_parameter_exit
+    fi
+
+    local FILTER_ITEM="${1}"
+
+    git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch ${FILTER_ITEM}" --prune-empty --tag-name-filter cat -- --all
+}
+
+main "${@}"

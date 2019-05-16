@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Update a git subtree from a GitHub repository.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/.sh"
+
+
+GITHUB_USERNAME="schanur"
+
+case ${#} in
+     1)
+         LOCAL_REPOSITORY_PATH="${1}"
+         if [ ! -d "${LOCAL_REPOSITORY_PATH}" ]; then
+             echo "git subtree directory does not exist."
+             exit 1
+         fi
+         REPOSITORY_NAME="${LOCAL_REPOSITORY_PATH}"
+         ;;
+     0)
+         echo "Too few arguments."
+         exit 1
+         ;;
+     *)
+         echo "Too many arguments."
+         exit 1
+         ;;
+esac
+
+
+git subtree pull --prefix=vendor/libbivalvia "https://github.com/${GITHUB_USERNAME}/${REPOSITORY_NAME}.git" master --squash
