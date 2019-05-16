@@ -1,0 +1,9 @@
+cargo
+clippy-preview
+llvm-tools-preview
+rls
+rustc
+rustfmt
+rust-analysis
+rust-docs
+rust-src
