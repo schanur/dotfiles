@@ -1,0 +1,48 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+# shellcheck   source=../lib/bivalvia/help.sh
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# shellcheck   source=../lib/bivalvia/link.sh
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
+
+function install_rustup {
+    local RUSTUP_BINARY_AVAILABLE=0
+    which rustup > /dev/null && RUSTUP_BINARY_AVAILABLE=1
+
+    if [ ${RUSTUP_BINARY_AVAILABLE} -eq 0 ]; then
+        local TEMP_RUSTUP_INSTALL_SCRIPT_FILENAME="/tmp/rustup_$(whoami)"
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > "${TEMP_RUSTUP_INSTALL_SCRIPT_FILENAME}"
+        chmod +x "${TEMP_RUSTUP_INSTALL_SCRIPT_FILENAME}"
+        "${TEMP_RUSTUP_INSTALL_SCRIPT_FILENAME}" -y --no-modify-path
+    fi
+}
+
+
+function install_rustup_toolchains {
+    rustup install stable beta nightly
+}
+
+
+function install_rustup_components {
+    COMPONENT_FILENAME="${DOTFILES_PATH}/data/rustup/components"
+    rustup component add $(cat "${COMPONENT_FILENAME}")
+}
+
+
+function main() {
+    install_rustup
+    install_rustup_toolchains
+    install_rustup_components
+}
+
+
+main
