@@ -1,0 +1,7 @@
+broot
+cargo-watch                                                   # like cargo-run-after-save
+checkpwn                                                      # Check if password is public
+dutree
+fwatcher
+hunter
+procs                                                         # ps alternative
