@@ -10,7 +10,12 @@ DOTFILES_PATH="${SCRIPT_PATH}/../.."
 
 source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 # source "${DOTFILES_PATH}/lib/bivalvia/path.sh"
-# source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+function check_dependencies {
+    require_executable xmlstarlet
+}
 
 
 function copy_playlist {
@@ -38,6 +43,9 @@ function copy_playlist {
 function main {
     local TARGET_PATH
     local PLAYLIST_FILE
+
+    check_dependencies
+
     case $# in
         # 0)
             # echo "No target path given. Expecting current path."
