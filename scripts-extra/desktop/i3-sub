@@ -13,7 +13,10 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
 APPLICATION="${*}"
 
-Xephyr -ac -resizeable -br -reset -terminate 2> /dev/null :1 &
+Xephyr -ac -resizeable -br -reset -terminate -screen 640x360 2> /dev/null :1 &
 sleep 2s
-DISPLAY=:1.0 && ~/local/bin/firefox/firefox/firefox
+DISPLAY=:1.0
+
+~/local/bin/firefox/firefox/firefox -new-instance -P "overlay"
+
 # DISPLAY=:1.0 && ${APPLICATION}

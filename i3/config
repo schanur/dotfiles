@@ -41,6 +41,9 @@ for_window          [class="Pcmanfm"]             border pixel 0
 for_window          [class="Firefox"]             border pixel 0
 for_window          [class="Feh"]                 border pixel 0
 for_window          [class="Kodi"]                fullscreen
+for_window          [class="Xephyr"]              floating enable
+for_window          [class="Xephyr"]              sticky enable
+for_window          [class="Xephyr"]              move absolute position 1260 px 640 px
 
 # application rules
 # assign              [class="URxvt"]               $ws1
