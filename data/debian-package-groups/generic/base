@@ -72,6 +72,7 @@ thin-provisioning-tools
 tmux                                                              # Shell multiplexer
 vim                                                               #
 xjobs                                                             # Parallel job execution
+xmlstarlet                                                        # XML tools required by "copy-playlist-media-files" script
 xz-utils                                                          # XZ compressor and decompressor with high compression ratio
 zsh                                                               # One of a few shells worth using
 zram-tools                                                        # Run "systemctl enable zramswap" for autostart
