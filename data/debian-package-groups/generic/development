@@ -25,6 +25,7 @@ grip                                                              # GitHub Markd
 g++                                                               # C++ compiler
 highlight                                                         # CLI source code syntax highlighting
 imediff2
+kdbg                                                              # Graphical debugger
 lftp                                                              # Required by git-ftp pull
 libarchive-dev                                                    # Zeal
 libclang-dev
