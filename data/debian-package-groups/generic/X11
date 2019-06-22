@@ -6,6 +6,7 @@ evince                                                            # Postscript a
 feh                                                               # Required by set-background script
 filezilla                                                         # FTP client
 file-roller                                                       # Archive manager
+fonts-atarismall                                                  # Very small 4x8 pixel font
 gedit
 gedit-plugins
 gksu                                                              # Graphical su
