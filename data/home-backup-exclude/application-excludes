@@ -24,6 +24,7 @@ wallet.tar*
 /local/data/bitcoin_chain_data/
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
 /local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
+/local/dev/all/linux
 /local/vm/
 /local/media/
 /local/temp/
