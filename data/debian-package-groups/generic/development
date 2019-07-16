@@ -14,6 +14,7 @@ flex
 fonts-ubuntu                                                      # Default font in Emacs
 gcc                                                               # C compiler
 gdb                                                               # GNU Debugger
+gcovr
 gitg                                                              # Git commit history GUI
 gitk
 git-cola
