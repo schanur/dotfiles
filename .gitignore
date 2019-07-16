@@ -3,3 +3,7 @@ config/global
 config/profile
 
 bin/repo
+
+# Emacs temp files
+.\#*
+\#*\#
