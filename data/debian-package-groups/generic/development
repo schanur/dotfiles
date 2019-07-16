@@ -9,12 +9,13 @@ ddd                                                               # GUI debugger
 doxygen
 doxygen-gui
 enscript
-extra-cmake-modules                                               # Zeal
+extra-cmake-modules                                               # Required by Zeal and KDAB hotspot
 flex
 fonts-ubuntu                                                      # Default font in Emacs
 gcc                                                               # C compiler
 gdb                                                               # GNU Debugger
 gcovr
+gettext                                                           # Required by KDAB hotspot
 gitg                                                              # Git commit history GUI
 gitk
 git-cola
@@ -31,10 +32,21 @@ lftp                                                              # Required by 
 libarchive-dev                                                    # Zeal
 libclang-dev
 libcrypto++-dev
+libdw-dev                                                         # Required by KDAB hotspot
+libelf-dev                                                        # Required by KDAB hotspot
 libglib2.0-doc
 libgraphviz-dev
 libgtk-3-dev                                                      # Required by Cargo for rs-gtk
 liblz4-dev
+libkf5threadweaver-dev                                            # Required by KDAB hotspot
+libkf5i18n-dev                                                    # Required by KDAB hotspot
+libkf5configwidgets-dev                                           # Required by KDAB hotspot
+libkf5coreaddons-dev                                              # Required by KDAB hotspot
+libkf5itemviews-dev                                               # Required by KDAB hotspot
+libkf5itemmodels-dev                                              # Required by KDAB hotspot
+libkf5kio-dev                                                     # Required by KDAB hotspot
+libkf5solid-dev                                                   # Required by KDAB hotspot
+libkf5windowsystem-dev                                            # Required by KDAB hotspot
 libpcap-dev
 libqt5webkit5-dev                                                 # Zeal
 libqt5x11extras5-dev                                              # Zeal
