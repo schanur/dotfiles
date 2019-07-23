@@ -662,3 +662,5 @@ SavePlaylist = yes
 # players usually behave.  (Note that this option previously took the
 # values 1 and 0; these are now deprecated in favour of 'yes' and 'no'.)
 #QueueNextSongReturn = yes
+
+ExecCommand8 = "rm %f"
