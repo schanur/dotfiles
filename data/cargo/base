@@ -1,7 +1,10 @@
+bat                                                           # cat alternate
 broot
 cargo-watch                                                   # like cargo-run-after-save
 checkpwn                                                      # Check if password is public
 dutree
+ffsend                                                        # Mozilla send server to share files in LAN
 fwatcher
 hunter
+oxipng                                                        # PNG size optimization
 procs                                                         # ps alternative
