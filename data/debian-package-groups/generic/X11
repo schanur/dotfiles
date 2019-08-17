@@ -1,6 +1,5 @@
 adwaita-icon-theme
 adwaita-qt
-adwaita-qt4
 dunst                                                             # Notification daemon
 evince                                                            # Postscript and PDF viewer
 feh                                                               # Required by set-background script
