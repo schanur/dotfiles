@@ -1,5 +1,5 @@
 libenchant-dev                                                    # Paperwork build
-libleptonica-de0v                                                  # JBIG2 image encode build dep
+libleptonica-dev                                                  # JBIG2 image encode build dep
 libpng-dev                                                        # FLIF image encoder/decoder build dep
 libsdl2-dev                                                       # FLIF image viewer build dep
 python3-dev                                                       # Paperwork build
