@@ -11,7 +11,6 @@ doxygen-gui
 enscript
 extra-cmake-modules                                               # Required by Zeal and KDAB hotspot
 flex
-fonts-ubuntu                                                      # Default font in Emacs
 gcc                                                               # C compiler
 gdb                                                               # GNU Debugger
 gcovr
