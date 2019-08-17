@@ -60,3 +60,8 @@ URxvt*color14: #54FFFF
 ! white
 URxvt*color7:  #B2B2B2
 URxvt*color15: #FFFFFF
+
+
+! Xterm
+xterm*foreground: white
+xterm*background: black
