@@ -68,6 +68,7 @@ rake                                                              # Build system
 ruby-method-source
 shellcheck                                                        # Shell script linter
 silversearcher-ag                                                 # Fast source code search tool
+source-highlight                                                  # convert source code to syntax highlighted document
 swig
 twine                                                             # Interact with PyPI online package archive
 upx-ucl

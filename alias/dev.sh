@@ -6,3 +6,5 @@ fi
 
 # Print backtrace of a crashing application.
 alias bt='gdb -batch -ex "run" -ex "bt" -ex "quit"'
+
+alias lessh='LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s" less -M '
