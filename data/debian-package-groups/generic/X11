@@ -10,7 +10,7 @@ gedit
 gedit-plugins
 gksu                                                              # Graphical su
 gmtp
-gnome-commander                                                   # Filemanager
+doublecmd-qt                                                      # 2 pane file manager
 gnome-themes-standard
 gparted                                                           # Partition manager
 gtk-chtheme                                                       # Another graphical theme changer
