@@ -70,6 +70,10 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+# We use the Debian package zsh-autosuggestions. Adding it to the plugins list does not find the actual zsh-autosuggestions.zsh file.
+# plugins=(git zsh-autosuggestions)
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # User configuration
 
   export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
