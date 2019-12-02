@@ -1,6 +1,8 @@
 audacity                                                          # Nice audio manipulation functionality with OKish GUI
 brasero                                                           # CD/DVD burning GUI
 gimp                                                              # Better photoshop
+gimp-help-en                                                      # GIMP offline help english
+gimp-help-de                                                      # GIMP offline help german
 gmusicbrowser                                                     # Graphical jukebox
 gpodder                                                           # Podcast client
 grilo-plugins-0.3                                                 # TODO: why is this on the list
