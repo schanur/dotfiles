@@ -21,6 +21,7 @@ dvorak7min                                                        # Learn Dvorak
 exa                                                               # Modern ls replacement
 exfat-utils                                                       # Create exFAT volumes
 expect
+fd-find                                                           # find alternative
 figlet
 fish                                                              # Modern shell
 gddrescue                                                         # Block device rescue tool
