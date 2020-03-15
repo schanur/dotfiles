@@ -20,4 +20,6 @@ rxvt-unicode -bg black -fg white -cr red                                        
              -fn ${FONT_NAME} -fb ${FONT_NAME} -fi ${FONT_NAME} -fbi ${FONT_NAME} `# Fonts`                       \
              +vb                                                                  `# No Visual bell`              \
              -bc                                                                  `# Blinking cursor`             \
-             +sb                                                                  `# Turn off scroll bar`
+             +sb                                                                  `# Turn off scroll bar`         \
+             ${*}
+
