@@ -25,6 +25,7 @@ wallet.tar*
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
 /local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
 /local/dev/all/linux
+/local/download
 /local/vm/
 /local/media/
 /local/temp/
@@ -115,3 +116,4 @@ Thumbnails
 # Files not wanted for transfer. Independent of application.
 /local/temp/
 /local/sort/
+/tmp/
