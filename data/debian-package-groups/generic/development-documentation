@@ -3,6 +3,7 @@ cppman
 debian-handbook
 doxygen-doc
 erlang-manpages
+ffmpeg-doc
 giggle
 giggle-personal-details-plugin
 giggle-terminal-view-plugin
@@ -10,9 +11,13 @@ git-doc
 git-man
 glibc-doc
 graphviz-doc
+libsdl2-doc
+libssl-doc
 libvirt-doc
 manpages
 manpages-dev
+manpages-posix
+manpages-posix-dev
 mplayer-doc
 ncurses-doc
 opencl-1.2-man-doc
