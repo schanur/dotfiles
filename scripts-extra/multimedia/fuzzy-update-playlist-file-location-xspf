@@ -1,0 +1,98 @@
+#!/bin/bash
+
+#
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+function fuzzy_search_in_file_db
+{
+    local OLD_FILE_LOCATION="${1}"
+    local NEW_FILE_LOCATION="${OLD_FILE_LOCATION}"
+    local OLD_FILE_LOCATION_LEN=${#OLD_FILE_LOCATION}
+    # local ORIG_OLD_FILE_LOCATION_LEN=${OLD_FILE_LOCATION_LEN}
+    local SKIP_CNT=0
+    local MATCH_CNT
+    local VALID_MATCH_FOUND=0
+    local SUB_STR
+
+    # echo "LEN: ${OLD_FILE_LOCATION_LEN}"
+    # echo "${NEW_FILE_LOCATION}"
+
+    SKIP_CNT=0
+    MATCH_FOUND=0
+    while [ ${SKIP_CNT} -le ${OLD_FILE_LOCATION_LEN} ]; do
+        SUB_STR="${OLD_FILE_LOCATION:SKIP_CNT}"
+        (( SKIP_CNT = SKIP_CNT + 1 ))
+        if [ "${SUB_STR:0:1}" != "/" ]; then
+            continue
+        fi
+        MATCH_FOUND=$(cat "${FILE_DB}" | grep -c "${SUB_STR}" || true)
+        case ${MATCH_FOUND} in
+            0)
+                true
+                ;;
+            1)
+                VALID_MATCH_FOUND=1
+                NEW_FILE_LOCATION="$(cat "${FILE_DB}" | grep "${SUB_STR}")"
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+
+    echo "${NEW_FILE_LOCATION}"
+}
+
+
+function convert_location_line
+{
+    true
+}
+
+
+function rewrite_playlist
+{
+    local OLD_FILE_LOCATION
+
+    cat "${INPUT_PLAYLIST}" | while read -r PLAYLIST_LINE; do
+        if [[ "${PLAYLIST_LINE}" =~ '<location>' ]]; then
+            OLD_FILE_LOCATION="${PLAYLIST_LINE:10:-11}"
+            NEW_FILE_LOCATION="$(fuzzy_search_in_file_db "${OLD_FILE_LOCATION}")"
+            # echo "      ${PLAYLIST_LINE}"
+            # echo "old: ${OLD_FILE_LOCATION}"
+            # echo "new: ${NEW_FILE_LOCATION}"
+            echo "      <location>/home/ze/net/${NEW_FILE_LOCATION}</location>" >> "${OUTPUT_PLAYLIST}"
+        else
+            # true
+            echo "${PLAYLIST_LINE}"
+            echo "${PLAYLIST_LINE}" >> "${OUTPUT_PLAYLIST}"
+        fi
+    done
+}
+
+INPUT_PLAYLIST="${1}"
+FILE_DB="${2}"
+OUTPUT_PLAYLIST="${3}"
+
+
+echo "INPUT_PLAYLIST:  ${INPUT_PLAYLIST}"
+echo "FILE_DB:         ${FILE_DB}"
+echo "OUTPUT_PLAYLIST: ${OUTPUT_PLAYLIST}"
+echo
+
+if [ -f "${OUTPUT_PLAYLIST}" ]; then
+    rm "${OUTPUT_PLAYLIST}"
+fi
+
+rewrite_playlist
+
+# fuzzy_search_in_file_db "/media/music_sd/rock/ACDC/1990 - The Razors Edge/ACDC - The Razors Edge - 01 - Thunderstruck.mp3"
+
