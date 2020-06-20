@@ -15,44 +15,46 @@ dict-gcide
 dict-jargon
 dict-moby-thesaurus                                               # Large english thesaurus
 dict-vera                                                         # Acronyms
-dict-wn
+dict-wn                                                           # electronic lexical database of English language for dict
 dictconv
 dictd
 dictfmt
 diction                                                           # English and german rules + 'styles' and 'diction' tools
+ding                                                              # Graphical dictionary lookup program for Unix (Tk)
 miscfiles                                                         # Dictionaries and other interesting files
+trans-de-en                                                       # German-English translation dictionary
 wamerican
 wamerican-huge
 wamerican-insane
 wamerican-large
 wamerican-small
-wbrazilian 							  # Brazilian Portuguese wordlist
-wbritish 							  # British English dictionary words for /usr/share/dict
-wbritish-huge 							  # British English dictionary words for /usr/share/dict
-wbritish-insane 						  # British English dictionary words for /usr/share/dict
-wbritish-large 							  # British English dictionary words for /usr/share/dict
-wbritish-small 							  # British English dictionary words for /usr/share/dict
-wbulgarian 							  # Bulgarian dictionary words for /usr/share/dict
-wcanadian 							  # Canadian English dictionary words for /usr/share/dict
-wcanadian-huge 							  # Canadian English dictionary words for /usr/share/dict
-wcanadian-insane 						  # Canadian English dictionary words for /usr/share/dict
-wcanadian-large 						  # Canadian English dictionary words for /usr/share/dict
-wcanadian-small 						  # Canadian English dictionary words for /usr/share/dict
-wcatalan 							  # Catalan dictionary words for /usr/share/dict
-wdanish 							  # The Comprehensive Danish Dictionary (DSDO) - wordlist
-wdutch 								  # list of Dutch words
-wesperanto 							  # Esperanto dictionary words for /usr/share/dict
-wfaroese 							  # Faroese dictionary / wordlist
-wfrench 							  # French dictionary words for /usr/share/dict
-wgalician-minimos 						  # Wordlist for Galician (minimos)
-wgerman-medical 						  # German medical dictionary words for /usr/share/dict
-witalian 							  # Italian dictionary words for /usr/share/dict/
-wngerman 							  # New German orthography wordlist
-wnorwegian 							  # Norwegian word list
-wogerman 							  # Traditional German wordlist
-wpolish 							  # Polish dictionary words for /usr/share/dict
-wportuguese 							  # European Portuguese wordlist
-wspanish 							  # Spanish dictionary words for /usr/share/dict
-wswedish 							  # Swedish dictionary words for /usr/share/dict
-wswiss 								  # Swiss (German) orthography wordlist
-wukrainian 							  # Ukrainian dictionary words for /usr/share/dict
+wbrazilian                                                        # Brazilian Portuguese wordlist
+wbritish                                                          # British English dictionary words for /usr/share/dict
+wbritish-huge                                                     # British English dictionary words for /usr/share/dict
+wbritish-insane                                                   # British English dictionary words for /usr/share/dict
+wbritish-large                                                    # British English dictionary words for /usr/share/dict
+wbritish-small                                                    # British English dictionary words for /usr/share/dict
+wbulgarian                                                        # Bulgarian dictionary words for /usr/share/dict
+wcanadian                                                         # Canadian English dictionary words for /usr/share/dict
+wcanadian-huge                                                    # Canadian English dictionary words for /usr/share/dict
+wcanadian-insane                                                  # Canadian English dictionary words for /usr/share/dict
+wcanadian-large                                                   # Canadian English dictionary words for /usr/share/dict
+wcanadian-small                                                   # Canadian English dictionary words for /usr/share/dict
+wcatalan                                                          # Catalan dictionary words for /usr/share/dict
+wdanish                                                           # The Comprehensive Danish Dictionary (DSDO) - wordlist
+wdutch                                                            # list of Dutch words
+wesperanto                                                        # Esperanto dictionary words for /usr/share/dict
+wfaroese                                                          # Faroese dictionary / wordlist
+wfrench                                                           # French dictionary words for /usr/share/dict
+wgalician-minimos                                                 # Wordlist for Galician (minimos)
+wgerman-medical                                                   # German medical dictionary words for /usr/share/dict
+witalian                                                          # Italian dictionary words for /usr/share/dict/
+wngerman                                                          # New German orthography wordlist
+wnorwegian                                                        # Norwegian word list
+wogerman                                                          # Traditional German wordlist
+wpolish                                                           # Polish dictionary words for /usr/share/dict
+wportuguese                                                       # European Portuguese wordlist
+wspanish                                                          # Spanish dictionary words for /usr/share/dict
+wswedish                                                          # Swedish dictionary words for /usr/share/dict
+wswiss                                                            # Swiss (German) orthography wordlist
+wukrainian                                                        # Ukrainian dictionary words for /usr/share/dict
