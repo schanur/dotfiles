@@ -1,21 +1,21 @@
 echo "------------------------------------------------------------------------"
 echo "sharedrc:"
-echo
+# echo
 
-echo "SHELL_NAME: ${SHELL_NAME}"
+# echo "SHELL_NAME: ${SHELL_NAME}"
 
 BIVALVIA_PATH="${DOTFILES_PATH}/lib/bivalvia"
 
-echo
-echo "Set PATH:"
+# echo
+# echo "Set PATH:"
 
-echo "Load man page settings"
+# echo "Load man page settings"
 source ${DOTFILES_PATH}/shared/colorized_man_pages.sh
-echo "Load GUI toolkit colors"
+# echo "Load GUI toolkit colors"
 source ${DOTFILES_PATH}/x11/gui_toolkit_colors.sh
-echo -n "Load alias files"
+# echo -n "Load alias files"
 source ${DOTFILES_PATH}/alias/all.sh
-echo
+# echo
 
 CD_PATH_LIST=".:${HOME}:${HOME}/.local/bin:${HOME}/local:${HOME}/local/dev:${HOME}/local/dev/all:${HOME}/.cargo/bin:${HOME}/node_modules/.bin"
 PATH_LIST=":${HOME}/.local/bin:${HOME}/.cargo/bin:${HOME}/node_modules/.bin"
@@ -27,7 +27,7 @@ if [ -r ${EXTRA_CD_PATH_FILE} ]; then
         CD_PATH_LIST="${CD_PATH_LIST}:${EXTRA_CD_PATH}"
     done
 fi
-echo "CD_PATH_LIST: ${CD_PATH_LIST}"
+# echo "CD_PATH_LIST: ${CD_PATH_LIST}"
 
 # Add all paths in a file to the PATH variable. Prints a warning if a
 # path is tried to get added a second time.
@@ -51,8 +51,8 @@ function load_exectuable_path_file {
 
 export PATH="${PATH}:${PATH_LIST}"
 # export PATH="${PATH}:${HOME}/.cargo/bin:${HOME}/.local/bin/"
-echo ".executable_path files: "
-for REPO_PATH in $("${DOTFILES_PATH}/scripts-extra/development/git-list"); do
+# echo ".executable_path files: "
+for REPO_PATH in $("${DOTFILES_PATH}/scripts-extra/development/git-list"; find "${HOME}/local/bin" -maxdepth 1 -mindepth 1 -type d); do
     # echo $REPO_PATH
     if [              "${REPO_PATH}" = ""         ]; then echo "  Ignore empty list entry.";          continue; fi # Can happen if "git-list" returned empty list.
     if [ $(basename "${REPO_PATH}")  = "dotfiles" ]; then echo "  Skip (be the last to load): ${REPO_PATH}"; continue; fi
@@ -82,7 +82,7 @@ case ${SHELL_NAME} in
         ;;
 esac
 echo
-echo "Final CDPATH:"
+echo -n "CDPATH: "
 echo ${CDPATH}
 
 
@@ -108,8 +108,8 @@ LS_COLORS=$LS_COLORS:'di=0;96:' ; export LS_COLORS
 
 echo "------------------------------------------------------------------------"
 
-echo -ne "date:\n  "
-date
+# echo -ne "date:\n  "
+# date
 
 #echo -e "\ngroups:"
 #for ITEM in `id |awk '{print $3}' |sed -e 's/groups=//g' |sed -e 's/,/ /g'`; do
@@ -117,22 +117,22 @@ date
 #done
 
 # TODO: Sort by date before selecting the top 5.
-echo -e "\nlast logins:"
-local LOGIN_LINE=""
-while read LOGIN_LINE; do
-    echo "  $LOGIN_LINE"
-done <<< "`lastlog | grep -v --color=never "**Never logged in**" | head -n 5`"
+# echo -e "\nlast logins:"
+# local LOGIN_LINE=""
+# while read LOGIN_LINE; do
+#     echo "  $LOGIN_LINE"
+# done <<< "`lastlog | grep -v --color=never "**Never logged in**" | head -n 5`"
 
-echo -ne "\nmachine:\n  "
-hostname
+# echo -ne "\nmachine:\n  "
+# hostname
 
-echo -ne "\nnetwork devices:\n "
-local NETWORK_DEVICE=""
-for NETWORK_DEVICE in `cat /proc/net/dev |grep : |sed -e 's/:.*//g' |sed -e 's/\ *//g'`; do
-    echo -n " $NETWORK_DEVICE"
-done
-echo
-echo
+# echo -ne "\nnetwork devices:\n "
+# local NETWORK_DEVICE=""
+# for NETWORK_DEVICE in `cat /proc/net/dev |grep : |sed -e 's/:.*//g' |sed -e 's/\ *//g'`; do
+#     echo -n " $NETWORK_DEVICE"
+# done
+# echo
+# echo
 
 #echo -ne "\nopen connections:\n"
 #local CONNECTION=""
