@@ -1,0 +1,283 @@
+## i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+set                 $mod                          Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font                pango:monospace               0
+default_border      pixel 1
+
+
+#set                 $ws0                          "0:test0"
+set                 $ws1                          "1:editor"
+set                 $ws2                          "2:dev_console"
+set                 $ws3                          "3:ssh"
+set                 $ws4                          "4:var1"
+set                 $ws5                          "5:var2"
+set                 $ws6                          "6:mm"
+set                 $ws7                          "7:vm"
+set                 $ws8                          "8:comm"
+set                 $ws9                          "9:mail"
+set                 $ws10                         "10:web"
+#set                 $ws11                         "11:test1"
+#set                 $ws12                         "12:test2"
+
+# To get application class, run xprop and click application.
+
+# border / titlebar
+hide_edge_borders   vertical
+bindsym             Control+Shift+x [class="^.*"] border toggle
+for_window          [class="^.*"]                 border pixel 1
+#for_window          [class="URxvt"] border normal
+for_window          [class="Emacs"]               border pixel 0
+for_window          [class="URxvt"]               border pixel 0
+for_window          [class="Leafpad"]             border normal
+for_window          [class="Lxappearance"]        border normal
+for_window          [class="Vlc"]                 border pixel 0
+for_window          [class="mpv"]                 border pixel 0
+for_window          [class="Pcmanfm"]             border pixel 0
+for_window          [class="Firefox"]             border pixel 0
+for_window          [class="Feh"]                 border pixel 0
+for_window          [class="Kodi"]                fullscreen
+for_window          [class="Xephyr"]              floating enable
+for_window          [class="Xephyr"]              sticky enable
+for_window          [class="Xephyr"]              move absolute position 1260 px 640 px
+
+# application rules
+# assign              [class="URxvt"]               $ws1
+assign              [class="Emacs"]               $ws1
+assign              [class="Gnome-commander"]     $ws5
+assign              [class="Filezilla"]           $ws5
+assign              [class="Thunar"]              $ws5
+assign              [class="Vlc"]                 $ws6
+assign              [class="Gpodder"]             $ws6
+assign              [class="Steam"]               $ws6
+assign              [class="Kodi"]                $ws6
+assign              [class="Virt-manager"]        $ws7
+assign              [class="Virt-manager"]        $ws7
+assign              [class="Gajim"]               $ws8
+assign              [class="Signal"]              $ws8
+assign              [class="quaternion"]          $ws8
+assign              [class="Thunderbird"]         $ws9
+assign              [class="Firefox"]             $ws10
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier   $mod
+
+bindsym             $mod+Ctrl+f                   exec "~/local/dev/public/dotfiles/scripts-extra/desktop/start-firefox"
+# bindsym             $mod+Ctrl+g                   exec gpodder
+# bindsym             $mod+Ctrl+v                   exec vlc
+# Toggle between qwertz and dvorak keyboard layout. The "a" character
+# was choosen because it is at the same position at both layouts.
+bindsym             $mod+Ctrl+a                   exec "~/local/dev/public/dotfiles/scripts/toggle-keyboard-layout"
+
+# Make a screenshot
+bindsym             $mod+Ctrl+s                   exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
+bindsym             XF86Display                   exec "scrot --silent ~/Screenshot_%Y%m%d-%H%M%S.png"
+
+# Change background to a random one
+bindsym             $mod+Ctrl+b                   exec "/home/ze/local/dev/public/dotfiles/scripts-extra/desktop/set-random-hubble-background"
+
+# start a terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym             $mod+Return                   exec "~/local/dev/public/dotfiles/scripts/durxvt"
+
+# kill focused window
+bindsym             $mod+Shift+q                  kill
+
+# Rofi application/file launcher
+bindsym             $mod+j                        exec "rofi -show window -show-icons"
+bindsym             $mod+k                        exec "rofi -show combi  -show-icons -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
+bindsym             $mod+l                        exec "rofi -show run    -show-icons"
+
+# Keep dmenu for users that do not want to use rofi
+bindsym             $mod+d                        exec dmenu_run
+
+# alternatively, you can use the cursor keys:
+bindsym             $mod+Left                     focus left
+bindsym             $mod+Down                     focus down
+bindsym             $mod+Up                       focus up
+bindsym             $mod+Right                    focus right
+
+# move focused window
+bindsym             $mod+Shift+j                  move left
+bindsym             $mod+Shift+k                  move down
+bindsym             $mod+Shift+l                  move up
+bindsym             $mod+Shift+odiaeresis         move right
+
+# Show floating window on all workspaces
+bindsym             $mod+y                        sticky toggle
+
+# alternatively, you can use the cursor keys:
+bindsym             $mod+Shift+Left               move left
+bindsym             $mod+Shift+Down               move down
+bindsym             $mod+Shift+Up                 move up
+bindsym             $mod+Shift+Right              move right
+
+# split in horizontal orientation
+bindsym             $mod+h                        split h
+
+# split in vertical orientation
+bindsym             $mod+v                        split v
+
+# enter fullscreen mode for the focused container
+bindsym             $mod+f                        fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym             $mod+s                        layout stacking
+bindsym             $mod+w                        layout tabbed
+bindsym             $mod+e                        layout toggle split
+
+# toggle tiling / floating
+bindsym             $mod+Shift+space              floating toggle
+
+# change focus between tiling / floating windows
+bindsym             $mod+space                    focus mode_toggle
+
+# focus the parent container
+bindsym             $mod+a                        focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+# bindsym             $mod+dead_circumflex          workspace $ws0
+bindsym             $mod+1                        workspace $ws1
+bindsym             $mod+2                        workspace $ws2
+bindsym             $mod+3                        workspace $ws3
+bindsym             $mod+4                        workspace $ws4
+bindsym             $mod+5                        workspace $ws5
+bindsym             $mod+6                        workspace $ws6
+bindsym             $mod+7                        workspace $ws7
+bindsym             $mod+8                        workspace $ws8
+bindsym             $mod+9                        workspace $ws9
+bindsym             $mod+0                        workspace $ws10
+# bindsym             $mod+ssharp                   workspace $ws11
+# bindsym             $mod+dead_acute               workspace $ws12
+
+# move focused container to workspace
+# bindsym             $mod+Ctrl+dead_circumflex    move container to workspace $ws0
+bindsym             $mod+Ctrl+1                  move container to workspace $ws1
+bindsym             $mod+Ctrl+2                  move container to workspace $ws2
+bindsym             $mod+Ctrl+3                  move container to workspace $ws3
+bindsym             $mod+Ctrl+4                  move container to workspace $ws4
+bindsym             $mod+Ctrl+5                  move container to workspace $ws5
+bindsym             $mod+Ctrl+6                  move container to workspace $ws6
+bindsym             $mod+Ctrl+7                  move container to workspace $ws7
+bindsym             $mod+Ctrl+8                  move container to workspace $ws8
+bindsym             $mod+Ctrl+9                  move container to workspace $ws9
+bindsym             $mod+Ctrl+0                  move container to workspace $ws10
+# bindsym             $mod+Ctrl+ssharp             move container to workspace $ws11
+# bindsym             $mod+Ctrl+dead_acute         move container to workspace $ws12
+
+# Load different screen layouts
+bindsym             $mod+Ctrl+q                   exec "~/.config/dotfiles/screenlayout/1.sh && ~/.config/dotfiles/basepath/"
+bindsym             $mod+Ctrl+w                   exec "~/.config/dotfiles/screenlayout/2.sh && "
+bindsym             $mod+Ctrl+e                   exec "~/.config/dotfiles/screenlayout/3.sh && "
+
+# Move relative to current position.
+bindsym             $mod+Ctrl+i                   move workspace to output left
+bindsym             $mod+Ctrl+o                   move workspace to output right
+
+# reload the configuration fileD
+bindsym             $mod+Shift+c                  reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym             $mod+Shift+r                  restart
+# exit i3 (logs you out of your X session)
+bindsym             $mod+Shift+e                  exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+
+
+bindsym             XF86AudioRaiseVolume          exec ".config/i3/toolbox.sh AudioRaiseVolume"
+bindsym             XF86AudioLowerVolume          exec ".config/i3/toolbox.sh AudioLowerVolume"
+
+bindsym             XF86MonBrightnessUp           exec ".config/i3/toolbox.sh MonBrightnessUp"
+bindsym             XF86MonBrightnessDown         exec ".config/i3/toolbox.sh MonBrightnessDown"
+
+# bindsym             XF86TouchpadToggle            exec ".config/i3/toolbox.sh TouchpadToggle"
+bindsym             XF86Explorer                  exec ".config/i3/toolbox.sh TouchpadToggle"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym     j                             resize shrink width  10 px or 10 ppt
+        bindsym     k                             resize grow   height 10 px or 10 ppt
+        bindsym     l                             resize shrink height 10 px or 10 ppt
+        bindsym     odiaeresis                    resize grow   width  10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym     Left                          resize shrink width  10 px or 10 ppt
+        bindsym     Down                          resize grow   height 10 px or 10 ppt
+        bindsym     Up                            resize shrink height 10 px or 10 ppt
+        bindsym     Right                         resize grow   width  10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym     Return                        mode "default"
+        bindsym     Escape                        mode "default"
+}
+
+bindsym             $mod+r                        mode "resize"
+
+
+exec swayidle -w \
+         timeout 300  'swaylock -f -c 000000' \
+         timeout 600  'swaymsg "output * dpms off"' \
+         resume       'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        status_command                            i3status
+        mode                                      hide
+        position                                  top
+        # separator_symbol                          "="
+        font                                      pango:DejaVu Sans Mono 13
+        # font                                      terminus
+}
+
+# tztime local {
+#         format = "%A, %d.%m.%Y %H:%M:%S"
+# }
+
+# tztime local {
+#         format = "%Y-%m-%d %H:%M:%S"
+# }
+
+# tztime local {
+#         format = "%Y-%m-%d %H:%M:%S %Z (%p) - %a - epoch: %s - week: %V"
+#         # timezone = "Europe/Berlin"
+# }
+
+#input type:Keyboard {
+input * {
+    #input AT Translated Set 2 keyboard {           # or input <identifier>
+    xkb_layout  de
+#    xkb_variant nodeadkeys
+#    xkb_options grp:alt_shift_toggle
+}
+
+exec --no-startup-id i3-msg 'workspace 2:dev_console; exec ~/local/dev/public/dotfiles/scripts/durxvt'
+exec gnome-commander
+# exec gajim
+exec signal-desktop
+exec thunderbird
+exec ~/local/bin/firefox/firefox/firefox
