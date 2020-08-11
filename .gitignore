@@ -7,3 +7,9 @@ bin/repo
 # Emacs temp files
 .\#*
 \#*\#
+
+a.out
+
+# Do not index large external repositories in fdfind
+vendor/oh-my-zsh
+vendor/emacs.d/elpa
