@@ -275,6 +275,8 @@ input * {
 #    xkb_options grp:alt_shift_toggle
 }
 
+exec mako
+
 exec --no-startup-id i3-msg 'workspace 2:dev_console; exec ~/local/dev/public/dotfiles/scripts/durxvt'
 exec gnome-commander
 # exec gajim
