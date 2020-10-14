@@ -298,6 +298,8 @@ seat * hide_cursor 5000
 
 exec mako
 
+exec kanshi
+
 exec --no-startup-id i3-msg 'workspace 2:dev_console; exec ~/local/dev/public/dotfiles/scripts/durxvt'
 exec gnome-commander
 # exec gajim

@@ -1,0 +1,14 @@
+profile {
+        output "Chimei Innolux Corporation 0x1239 0x00000000"   mode 1920x1080 position 0,0
+}
+
+profile {
+        output "Chimei Innolux Corporation 0x1239 0x00000000"   mode 1920x1080 position 0,550
+        output "Acer Technologies Acer AL1916W ETL5209014   "   mode 1440x900  position 1920,350
+}
+
+profile {
+        output "Chimei Innolux Corporation 0x1239 0x00000000"   mode 1920x1080 position 0,550
+        output "Acer Technologies Acer AL1916W ETL5209014   "   mode 1440x900  position 1920,350
+        output "Samsung Electric Company SyncMaster 0x00000000" mode 1920x1200 position 3360,0
+}

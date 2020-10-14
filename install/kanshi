@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+# shellcheck   source=../lib/bivalvia/help.sh
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# shellcheck   source=../lib/bivalvia/link.sh
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+# source "${DOTFILES_PATH}/lib/shell/install.sh"
+
+
+function main() {
+    local LINK_FILENAME_RELATIVE_TO_HOME
+    local DOTFILES_FILENAME
+
+    CONFIG_INSTALL_PATH="${HOME}/.config/kanshi"
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/kanshi/config"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../kanshi/config"
+
+    if [ ! -d "${CONFIG_INSTALL_PATH}" ]; then
+        echo "Config install path does not exist. Create: ${CONFIG_INSTALL_PATH}"
+        mkdir -p "${CONFIG_INSTALL_PATH}"
+    fi
+
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
+}
+
+
+main
