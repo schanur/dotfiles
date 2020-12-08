@@ -1,0 +1,7 @@
+exiv2                                                         # MicMac Build dependency
+imagemagick                                                   # MicMac Build dependency
+libimage-exiftool-perl                                        # MicMac Build dependency
+make                                                          # MicMac Build dependency
+meshlab
+proj-bin                                                      # MicMac Build dependency
+qt5-default                                                   # MicMac Build dependency
