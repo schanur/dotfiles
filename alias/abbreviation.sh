@@ -1,6 +1,4 @@
 
-# Modern ls replacement.
-alias e='exa -lagb -@ --git --color=always'
 
 # Software management.
 alias sma='su  -c "apt update && apt upgrade"'
@@ -13,15 +11,9 @@ alias asn='apt-cache search --names-only'
 alias tb='tar-snapshot-to-backup-path'
 
 alias ll='ls -la'
-# Show hidden files only.
-alias l='ls -d .* --color=auto'
 
 alias du1='du --max-depth=1'
 alias du2='du --max-depth=2'
-
-# tmux
-alias t='tmux -2'
-alias ta='tmux attach'
 
 # fast travel.
 # alias ftg='fast-travel go'
