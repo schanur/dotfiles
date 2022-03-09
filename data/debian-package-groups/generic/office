@@ -3,8 +3,8 @@ libreoffice-help-en-gb
 libreoffice-librelogo
 libreoffice-math
 libreoffice-nlpsolver
-libreoffice-ogltrans
-libreoffice-pdfimport
+# libreoffice-ogltrans
+# libreoffice-pdfimport
 libreoffice-report-builder
 libreoffice-script-provider-bsh
 libreoffice-script-provider-js

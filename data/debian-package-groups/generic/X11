@@ -6,6 +6,7 @@ feh                                                               # Required by 
 filezilla                                                         # FTP client
 file-roller                                                       # Archive manager
 fonts-atarismall                                                  # Very small 4x8 pixel font
+fonts-terminus-otb                                                # Non PCF version of terminus font
 gedit
 gedit-plugins
 gksu                                                              # Graphical su
@@ -46,6 +47,7 @@ scrot                                                             # command line
 system-config-printer
 unclutter                                                         # Hide mousecursor on mouse inactivity
 wireshark
+xclip                                                             # Required by dict_lookup
 xdotool                                                           # Simulate X11 events
 xfonts-terminus                                                   # Fixed width font for small screens
 xserver-xorg

@@ -1,1 +1,5 @@
 clinfo
+libpocl-dev-dbgsym
+libpocl2-dbgsym
+python-psutil                                                 # GPUVerify dependency
+python3-psutil                                                # GPUVerify dependency

@@ -3,54 +3,69 @@ bison                                                             # YACC-compati
 bundler
 check
 clang                                                             # Compiler for C/C++/ObjC...
+clazy                                                             # Linter warnings for QT
 closure-linter                                                    # Javascript linter
 cmake                                                             # CMake build system
 ddd                                                               # GUI debugger
+deheader                                                          # Remove unused #includes from C/C++ source files
 doxygen
 doxygen-gui
 enscript
 extra-cmake-modules                                               # Required by Zeal and KDAB hotspot
+flawfinder                                                        # Find security related flaws in C/C++ code
 flex
-gcc                                                               # C compiler
-gdb                                                               # GNU Debugger
+freeglut3-dev                                                     # OpenGL Utility Toolkit development files
+g++                                                               # GNU C++ compiler
+gcc                                                               # GNU C compiler
 gcovr
+gdb                                                               # GNU Debugger
 gettext                                                           # Required by KDAB hotspot
-gitg                                                              # Git commit history GUI
-gitk
 git-cola
 git-extras
 git-ftp                                                           # Push git commits over FTP
+gitg                                                              # Git commit history GUI
+gitk
 global                                                            # Source code browser
+gnutls-bin                                                        # Required by Emacs custom build
 graphviz                                                          # Graph drawing tools
 grip                                                              # GitHub Markdown local previewer
-g++                                                               # C++ compiler
 highlight                                                         # CLI source code syntax highlighting
 imediff2
+iwyu                                                              # Analyze #includes in C and C++ source files
 kdbg                                                              # Graphical debugger
+lcov                                                              # Summarie GCOV informations
 lftp                                                              # Required by git-ftp pull
 libarchive-dev                                                    # Zeal
+libboost-all-dev
 libclang-dev
 libcrypto++-dev
 libdw-dev                                                         # Required by KDAB hotspot
 libelf-dev                                                        # Required by KDAB hotspot
+libgif-dev                                                        # Required by Emacs custom build
+libgl1-mesa-dev                                                   # free implementation of the OpenGL API
+libgles2-mesa-dev                                                 # free implementation of the OpenGL|ES 2.x API
+libglu1-mesa-dev                                                  # Mesa OpenGL utility library
 libglib2.0-doc
+libgnutls28-dev                                                   # Required by Emacs custom build
 libgraphviz-dev
 libgtk-3-dev                                                      # Required by Cargo for rs-gtk
-liblz4-dev
-libkf5threadweaver-dev                                            # Required by KDAB hotspot
-libkf5i18n-dev                                                    # Required by KDAB hotspot
+libjpeg-dev                                                       # Required by Emacs custom build
 libkf5configwidgets-dev                                           # Required by KDAB hotspot
 libkf5coreaddons-dev                                              # Required by KDAB hotspot
-libkf5itemviews-dev                                               # Required by KDAB hotspot
+libkf5i18n-dev                                                    # Required by KDAB hotspot
 libkf5itemmodels-dev                                              # Required by KDAB hotspot
+libkf5itemviews-dev                                               # Required by KDAB hotspot
 libkf5kio-dev                                                     # Required by KDAB hotspot
 libkf5solid-dev                                                   # Required by KDAB hotspot
+libkf5threadweaver-dev                                            # Required by KDAB hotspot
 libkf5windowsystem-dev                                            # Required by KDAB hotspot
+liblz4-dev
 libpcap-dev
 libqt5webkit5-dev                                                 # Zeal
 libqt5x11extras5-dev                                              # Zeal
 libsdl2-dev
 libsqlite3-dev
+libtiff-dev                                                       # Required by Emacs custom build
 libtinyxml-dev
 libxcb-keysyms1-dev                                               # Zeal
 lldb
@@ -58,7 +73,10 @@ lua5.3
 make                                                              # Old build system
 markdown
 meld
+mingw64
 nemiver                                                           # Graphical C/C++ debugger
+opencl-c-headers                                                  # OpenCL (Open Computing Language) C header files
+opencl-clhpp-headers                                              # C++ headers for OpenCL development
 pandoc
 pry
 python3
@@ -69,7 +87,10 @@ ruby-method-source
 shellcheck                                                        # Shell script linter
 silversearcher-ag                                                 # Fast source code search tool
 source-highlight                                                  # convert source code to syntax highlighted document
+subversion                                                        # Required by OCLint compilation
 swig
+texinfo                                                           # Required by Emacs custom build
+text2info                                                         # Required by Emacs custom build
 twine                                                             # Interact with PyPI online package archive
 upx-ucl
 valgrind                                                          # Application VM to debug without language support

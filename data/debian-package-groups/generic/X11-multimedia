@@ -10,8 +10,10 @@ imagemagick                                                       # Image manipu
 knowthelist                                                       # Music player focused on playlists
 kodi                                                              # Home Theatre
 libc++-dev                                                        # Required by Discord
+lollypop                                                          # Gnome music player
 mpv                                                               # Multimedia player with minimalistic GUI
 musique                                                           # Graphical music player
+quodlibet                                                         # Music player with regex support
 rhythmbox                                                         # Graphical jukebox
 sxiv                                                              # Image viewer without UI
 vlc                                                               # Multimedia player
