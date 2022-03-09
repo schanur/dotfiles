@@ -17,7 +17,8 @@ Currently contains:
    * software package group manager with similar functionality to Debians tasksel
    * i3 config
    * tmux config
-   * More than 40 scripts that makes your life easier.
+   * VLC config including automatic dark skin download
+   * More than 40 scripts that makes your life easier
 
 Multible subrepositories are used for additional features:
    * schanur/aftermath gives a nice terminal status line after each command
