@@ -5,7 +5,9 @@ else
 fi
 
 # Print backtrace of a crashing application.
-alias bt='gdb -batch -ex "break assert" -ex "break _ck_assert_failed" -ex "run" -ex "bt" -ex "quit"'
+alias bt='gdb  -batch -ex "break assert" -ex "break _ck_assert_failed" -ex "break set_err_break_pos" -ex "run" -ex "bt" -ex "quit"'
+# Start gdb and break on common errors.
+alias bti='gdb -batch -ex "break assert" -ex "break _ck_assert_failed" -ex "break set_err_break_pos" -ex "run" -ex "bt"'
 
 # less, but with syntax highlighting.
 alias lessh='LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s" less -M '
