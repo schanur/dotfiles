@@ -20,7 +20,7 @@ function main() {
     DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/config"
     backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 
-    LINK_FILENAME_RELATIVE_TO_HOME=".config/i3/i3status.conf"
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/i3status/config"
     DOTFILES_FILENAME="${SCRIPT_PATH}/../i3/i3status.conf"
     backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 
