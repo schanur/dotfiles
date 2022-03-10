@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Set a picture as background. It gets automatically scaled.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+# IMAGE_FILENAME=$1
+
+DISPLAY_RESOLUTIONS="$(xrandr | grep "*" | sed  's/\ \+/\ /g' | cut -f 2 -d ' ' |sort -n)"
+
+LOWEST_DISPLAY_RESOLUTION="$(echo ${DISPLAY_RESOLUTIONS} | head -n 1)"
+X_RES=$(echo ${LOWEST_DISPLAY_RESOLUTION} | cut -f 1 -d 'x')
+Y_RES=$(echo ${LOWEST_DISPLAY_RESOLUTION} | cut -f 1 -d 'x')
+
+
+FILENAME="${HOME}/.config/dotfiles/ulam_spiral_${LOWEST_DISPLAY_RESOLUTION}_color.png"
