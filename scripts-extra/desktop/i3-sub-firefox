@@ -13,7 +13,8 @@ source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
 
 APPLICATION="${*}"
 
-Xephyr -ac -resizeable -br -reset -terminate -screen 640x360 2> /dev/null :1 &
+# Xephyr -ac -resizeable -br -reset -terminate -screen 640x360 2> /dev/null :1 &
+Xephyr -ac -resizeable -br -reset -terminate -screen 900x460 2> /dev/null :1 &
 sleep 2s
 DISPLAY=:1.0
 

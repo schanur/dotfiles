@@ -17,6 +17,6 @@ Xephyr -ac -resizeable -br -reset -terminate -screen 640x360 2> /dev/null :1 &
 sleep 2s
 DISPLAY=:1.0
 
-~/local/bin/firefox/firefox/firefox -new-instance -P "overlay"
+"${DOTFILES_PATH}/scripts/durxvt-very-small" -geometry 80x35
 
 # DISPLAY=:1.0 && ${APPLICATION}
