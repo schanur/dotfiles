@@ -122,3 +122,5 @@ source "${DOTFILES_PATH}/shared/shellrc.sh"
 
 
 export CONF_FILE_LOADED__BASHRC=1
+
+source /home/ze/.config/broot/launcher/bash/br
