@@ -1,0 +1,4 @@
+! Dark gruvbox color scheme
+! include /usr/share/rofi/themes/gruvbox-dark.theme
+wofi.theme: /usr/share/wofi/themes/gruvbox-dark.rasi
+
