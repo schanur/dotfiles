@@ -7,13 +7,25 @@
 wallet.dat*
 wallet.tar*
 
+# Ruby bundle
+
 # Browser Downloads
 /Downloads/
 
 # Chrome
 /.config/google-chrome/
 
+# Debug
+.debug/
+
+# Flatpak
+.local/share/flatpak
+
+# GoldenDict
+.goldendict/index
+
 # gPodder
+/gPodder.backup/
 /gPodder/Download/
 /gPodder/Downloads/
 
@@ -22,9 +34,12 @@ wallet.tar*
 /local/backup/
 /local/cache/
 /local/data/bitcoin_chain_data/
+/local/data/chess
+/local/data/3d_models
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
 /local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
-/local/dev/all/linux
+/local/dev/no_sync/
+/local/dev/all/webhosting*/
 /local/download
 /local/vm/
 /local/media/
@@ -54,6 +69,7 @@ backup_restore/
 # Cargo crate cache
 /.cargo/registry
 /.cargo/bin
+/.cargo/git
 # Cargo build system artefacts
 target/release
 target/debug
@@ -63,6 +79,9 @@ target/.rustc_info.json
 # Shell history
 /.bash_history
 /.zsh_history
+
+# Steam applications
+.steam/debian-installation/
 
 # Firfox
 #/.mozilla/
@@ -82,6 +101,9 @@ target/.rustc_info.json
 /.mozilla/firefox/*/SiteSecurityServiceState.txt
 /.mozilla/firefox/*/weave/
 
+# Python / pip
+.local/lib/
+
 # Thunderbird
 /.icedove/*/Cache/
 /.icedove/*/datareporting/aborted-session-ping
@@ -96,9 +118,21 @@ target/.rustc_info.json
 # Matrix Client Revolt
 /.local/share/revolt/org.perezdecastro.Revolt/databases/
 
+# rr debugger recorded files
+/.local/share/rr/
+
 # Signal
 /.config/Signal/logs/log.log*
 /.config/Signal/GPUCache/*
+
+# TLDR database
+.tldr/
+
+# VirtualBox
+VirtualBox VMs/
+
+# Wine
+.wine
 
 # X11
 /.xsession-errors*
@@ -117,3 +151,12 @@ Thumbnails
 /local/temp/
 /local/sort/
 /tmp/
+
+# Python Virtuel Env
+/.local/share/virtualenv
+
+# Yotta
+/.yotta/cache/
+
+# All individually installed binaries that we do not want to sync on every update
+/local/bin/no_sync/
