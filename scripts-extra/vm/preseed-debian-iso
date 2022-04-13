@@ -1,0 +1,161 @@
+#!/bin/bash
+
+# Download Debian netinst iso
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+# CONTAINER_NAME="debian7"
+# #DEBIAN_RELEASE="sid"
+# DEBIAN_RELEASE="jessie"
+
+# # INSTALL_PATH="${HOME}/local/vm/lxc"
+# INSTALL_BASE_PATH="/home/ze/local/vm/lxc"
+# INSTALL_PATH="${INSTALL_BASE_PATH}/${CONTAINER_NAME}"
+# #INSTALL_PATH="/home/ze/local/vm/lxc/${CONTAINER_NAME}"
+# ROOTFS_PATH="${INSTALL_PATH}/${CONTAINER_NAME}/rootfs"
+# INSTALL_SUCC_FILE="${INSTALL_PATH}/${CONTAINER_NAME}/install.succ"
+# SUITE=jessie
+
+
+ARCH="$(uname -a | cut -f 3 -d ' ' | sed -e 's/.*-//g')"
+ISO_DOWNLOAD_MIRROR_BASE_URL="https://cdimage.debian.org/debian-cd/current/amd64/iso-cd"
+
+# SHM_BASE_PATH="/dev/shm/preseed-debian-iso"
+SHM_BASE_PATH="/home/ze/tmp/preseed"
+SHM_EXTRACT_PATH="${SHM_BASE_PATH}/extract"
+
+
+function fail {
+    local MSG=${*}
+
+    echo "${MSG}"
+    exit
+}
+
+
+function arch_to_install_path_postfix {
+    ARCH_STR="${1}"
+
+    case "${ARCH_STR}" in
+        'amd64')
+            echo "amd"
+            ;;
+        *)
+            echo "Unsupported architecture: ${ARCH_STR}"
+            exit 1
+            ;;
+    esac
+}
+
+
+function latest_iso_filename {
+    local SHA512SUMS_URL="${1}"
+    local HASH_LINE_CURRENT="$(curl -s ${SHA512SUMS_URL} | grep -e "debian-[0-9].*netinst.iso")"
+    ISO_HASH="$(    echo "${HASH_LINE_CURRENT}" | cut -f 1 -d ' ')"
+    ISO_FILENAME="$(echo "${HASH_LINE_CURRENT}" | cut -f 3 -d ' ')"
+    echo "ISO_HASH:     ${ISO_HASH}"
+    echo "ISO_FILENAME: ${ISO_FILENAME}"
+}
+
+
+function prepare_shm_folder {
+    mkdir -p          "${SHM_BASE_PATH}"
+    if [ -d "${SHM_EXTRACT_PATH}" ]; then
+        chmod -R 777  "${SHM_EXTRACT_PATH}"
+        rm -rfv       "${SHM_EXTRACT_PATH}"
+    fi
+    mkdir -p          "${SHM_EXTRACT_PATH}"
+
+    require_directory "${SHM_BASE_PATH}"
+    require_directory "${SHM_EXTRACT_PATH}"
+}
+
+
+function download_iso_if_not_already_local {
+    local ISO_DOWNLOAD_URL="${1}"
+    local LOCAL_UNMODIFIED_ISO_FILENAME="${2}"
+    if [ ! -f "${LOCAL_UNMODIFIED_ISO_FILENAME}" ]; then
+        echo "Download Debian Netinst ISO."
+        wget "${ISO_DOWNLOAD_URL}" -O "${LOCAL_UNMODIFIED_ISO_FILENAME}"
+    fi
+
+    require_file "${LOCAL_UNMODIFIED_ISO_FILENAME}"
+}
+
+
+function patch_initrd {
+    PRESSED_CONFIG_FILENAME="${1}"
+    local INITRD_PATH="${SHM_EXTRACT_PATH}/install.$(arch_to_install_path_postfix "${ARCH}")"
+    local INITRD_COMPRESSED_FILENAME="${INITRD_PATH}/initrd.gz"
+    local INITRD_UNCOMPRESSED_FILENAME="${INITRD_PATH}/initrd"
+    local CHECKSUM_FILENAME="${SHM_EXTRACT_PATH}/md5sum.txt"
+
+    require_file      "${CHECKSUM_FILENAME}"
+    require_file      "${INITRD_COMPRESSED_FILENAME}"
+    require_directory "${INITRD_PATH}"
+    chmod +w -R       "${INITRD_PATH}"
+    echo "  Uncompress initrd."
+    echo "gunzip -f         ${INITRD_COMPRESSED_FILENAME} > ${INITRD_UNCOMPRESSED_FILENAME}"
+    gunzip -f         "${INITRD_COMPRESSED_FILENAME}" > "${INITRD_UNCOMPRESSED_FILENAME}"
+    require_file      "${INITRD_UNCOMPRESSED_FILENAME}"
+    echo "  Patch initrd."
+    echo "${PRESSED_CONFIG_FILENAME}" | cpio -H newc -o -A -F "${INITRD_UNCOMPRESSED_FILENAME}"
+    echo "  Compress initrd."
+    echo "gzip -f           ${INITRD_UNCOMPRESSED_FILENAME} > ${INITRD_COMPRESSED_FILENAME}"
+    cp "${INITRD_UNCOMPRESSED_FILENAME}" "${INITRD_UNCOMPRESSED_FILENAME}.uncompressed2"
+    gzip -f           "${INITRD_UNCOMPRESSED_FILENAME}" > "${INITRD_COMPRESSED_FILENAME}"
+    chmod -w -R       "${INITRD_PATH}"
+    local OLD_CHECKSUM="$(cat "${CHECKSUM_FILENAME}" | grep './install.amd/initrd.gz' | cut -f 1 -d ' ')"
+    local NEW_CHECKSUM="$(md5sum "${INITRD_COMPRESSED_FILENAME}" | cut -f 1 -d ' ')"
+
+    echo "  Fix initrd checksum from ${OLD_CHECKSUM} to ${NEW_CHECKSUM}."
+    chmod +w -R       "${SHM_EXTRACT_PATH}"
+    sed -i "s/${OLD_CHECKSUM}/${NEW_CHECKSUM}/g" "${CHECKSUM_FILENAME}"
+    chmod -w -R       "${SHM_EXTRACT_PATH}"
+}
+
+
+function build_modified_iso {
+    local LOCAL_MODIFIED_ISO_FILENAME="${1}"
+    # local ISOLINUX_PATH="${SHM_EXTRACT_PATH}/isolinux"
+    # local ISOLINUX_BIN_FILENAME="${ISOLINUX_PATH}/isolinux.bin"
+    # local ISOLINUX_BOOT_CAT_FILENAME="${ISOLINUX_PATH}/boot.cat"
+    local ISOLINUX_PATH="isolinux"
+    local ISOLINUX_BIN_FILENAME="${ISOLINUX_PATH}/isolinux.bin"
+    local ISOLINUX_BOOT_CAT_FILENAME="${ISOLINUX_PATH}/boot.cat"
+
+    (cd ${SHM_EXTRACT_PATH} \
+         && chmod 777 "${ISOLINUX_BIN_FILENAME}" \
+         && genisoimage -r -J -b "${ISOLINUX_BIN_FILENAME}" -c "${ISOLINUX_BOOT_CAT_FILENAME}" \
+                        -no-emul-boot -boot-load-size 4 -boot-info-table \
+                        -o "${LOCAL_MODIFIED_ISO_FILENAME}" "${SHM_EXTRACT_PATH}")
+}
+
+
+function main {
+    SHA512SUMS_URL="${ISO_DOWNLOAD_MIRROR_BASE_URL}/SHA512SUMS"
+    latest_iso_filename "${SHA512SUMS_URL}"
+    ISO_DOWNLOAD_URL="${ISO_DOWNLOAD_MIRROR_BASE_URL}/${ISO_FILENAME}"
+    prepare_shm_folder
+    LOCAL_UNMODIFIED_ISO_FILENAME="${SHM_BASE_PATH}/${ISO_FILENAME}"
+    download_iso_if_not_already_local "${ISO_DOWNLOAD_URL}" "${LOCAL_UNMODIFIED_ISO_FILENAME}"
+    echo "Extract ISO."
+    bsdtar -C "${SHM_EXTRACT_PATH}" -xvf "${LOCAL_UNMODIFIED_ISO_FILENAME}"
+    cp "/home/ze/local/dev/all/dotfiles/data/debian-preseed/test_1.preseed_cfg" "/home/ze/tmp/preseed/preseed.cfg"
+    # patch_initrd "/home/ze/local/dev/all/dotfiles/data/debian-preseed/test_1.preseed_cfg"
+    patch_initrd "/home/ze/tmp/preseed/preseed.cfg"
+    local LOCAL_MODIFIED_ISO_FILENAME="${LOCAL_UNMODIFIED_ISO_FILENAME}.mod"
+    echo "Build modified ISO."
+    build_modified_iso "${LOCAL_MODIFIED_ISO_FILENAME}"
+}
+
+
+main "${@}"
