@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+# shellcheck   source=../lib/bivalvia/help.sh
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# shellcheck   source=../lib/bivalvia/link.sh
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
+
+function download_skins {
+    require_executable "wget"
+    require_executable "unzip"
+
+    wget "https://www.videolan.org/vlc/download-skins2-go.php?url=vlc-skins.zip"
+}
+
+function main {
+    local LINK_FILENAME_RELATIVE_TO_HOME
+    local DOTFILES_FILENAME
+
+    LINK_FILENAME_RELATIVE_TO_HOME=".config/vlc/vlcrc"
+    DOTFILES_FILENAME="${SCRIPT_PATH}/../vlc/vlcrc"
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
+}
+
+
+main
