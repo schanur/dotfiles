@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Fetch remote raw network data and show it in a local Wireshark session
+
+
+# Usage:
+#
+# remote-wireshark <host[:port]> <interface> [filters]
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+CMD_LINE_PARAMS="${@}"
+
+
+function main {
+    if [ $# -ne 3 ]; then
+       invalid_parameter_exit
+    fi
+
+    DEFAULT_REMOTE_SSH_PORT="22"
+    REMOTE_SSH_HOST=$(echo $1 | cut -f 1 -d ':')
+    REMOTE_SSH_PORT=$(echo $1 | cut -f 2 -d ':' -s)
+    if [ "${REMOTE_SSH_PORT}" = "" ]; then
+        REMOTE_SSH_PORT="${DEFAULT_REMOTE_SSH_PORT}"
+    fi
+    [[ -z "$2" ]] && tcpdump_interface="any" || tcpdump_interface="$2"
+    [[ ! -z "$3" ]] && tcpdump_filters="and \($3\)"
+    # fi
+
+}
+
+
+main "${@}"
