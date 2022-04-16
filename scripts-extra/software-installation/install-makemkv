@@ -24,7 +24,7 @@ MAKEMKV_BACKUP_PATH="${MAKEMKV_BASE_PATH}/backup_${SCRIPT_START_TIMESTAMP}"
 EPOCH_BASE_FILENAME="epoch_timestamp"
 CURRENT_EPOCH_FILENAME="${MAKEMKV_CURRENT_PATH}/${EPOCH_BASE_FILENAME}"
 
-REQUIRED_DEB_PACKAGE_LIST="build-essential pkg-config libc6-dev libssl-dev libexpat1-dev libavcodec-dev libgl1-mesa-dev libqt4-dev zlib1g-dev"
+REQUIRED_DEB_PACKAGE_LIST="build-essential pkg-config libc6-dev libssl-dev libexpat1-dev libavcodec-dev libgl1-mesa-dev zlib1g-dev"
 
 
 function makemkv_is_installed {
