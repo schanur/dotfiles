@@ -85,6 +85,9 @@ echo
 echo -n "CDPATH: "
 echo ${CDPATH}
 
+# export CC='ccache distcc gcc'
+export CC='ccache gcc'
+export DISTCC_HOSTS="pollux"
 
 export NUMCPUS=$(grep -c '^processor' /proc/cpuinfo)
 export MAKEFLAGS="-j $(( NUMCPUS * 2 ))"
@@ -148,7 +151,7 @@ echo -n "Alias of the day: "
 alias-of-the-day
 
 
-source ${DOTFILES_PATH}/vendor/aftermath/aftermath.sh
+# source ${DOTFILES_PATH}/vendor/aftermath/aftermath.sh
 
 
 # We do not want to pollute the namespace of each shell. Delete all
