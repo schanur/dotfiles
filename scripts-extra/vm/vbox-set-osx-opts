@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Set special VirtualBox setting for a VM required by Mac OS X guests.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+VM_NAME=${1}
+
+
+APPLE_DEVICE_KEY=$(curl -s https://twitter.com/md__5/status/542456085567635456\?lang\=en |grep "property=\"og:description" | cut -f 3 -d "=" | cut -f 1 -d "&" | cut -c 5-)
+
+echo "Apple device key: ${APPLE_DEVICE_KEY}"
+
+
+vboxmanage modifyvm     "${VM_NAME}" --cpuidset 00000001 000106e5 00100800 0098e3fd bfebfbff
+# vboxmanage modifyvm     "${VM_NAME}" --cpuidset 00000001 000306a9 04100800 0098e3fd bfebfbff
+
+vboxmanage setextradata "${VM_NAME}" "VBoxInternal/Devices/efi/0/Config/DmiSystemProduct"  "iMac11,3"
+vboxmanage setextradata "${VM_NAME}" "VBoxInternal/Devices/efi/0/Config/DmiSystemVersion"  "1.0"
+vboxmanage setextradata "${VM_NAME}" "VBoxInternal/Devices/efi/0/Config/DmiBoardProduct"   "Iloveapple"
+
+vboxmanage setextradata "${VM_NAME}" "VBoxInternal/Devices/smc/0/Config/DeviceKey"         "${APPLE_DEVICE_KEY}"
+vboxmanage setextradata "${VM_NAME}" "VBoxInternal/Devices/smc/0/Config/GetKeyFromRealSMC" 1
+
+# Fix Resolution
+# vboxmanage setextradata "${VM_NAME}" "VBoxInternal2/EfiGopMode"                            5
+vboxmanage setextradata "${VM_NAME}" "VBoxInternal2/EfiGraphicsResolution"                 1920x1080

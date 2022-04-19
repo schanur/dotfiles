@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Configure system for LXC container with network brisge and container working w/o root.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/script-su.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+function create_lxc_net_config_file
+{
+    echo 'USE_LXC_BRIDGE="true"'
+}
+
+
+function lxc_setup
+{
+
+}
+
+
+function main
+{
+        local CMD_LINE_PARAMS="${*}"
+
+        run_as_root              "${CMD_LINE_PARAMS}"
+
+	lxc_setup 
+}
+
+
+main "${@}"
