@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Add a license file to a repository.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+NUM_BERORE_CURR=0
+git log --oneline --decorate | while read -r COMMIT; do
+    # echo $COMMIT
+    HASH="$(echo $COMMIT | cut -f 1 -d ' ')"
+    MSG="$(echo $COMMIT | cut -f 2- -d ' ')"
+    # echo "$NUM_BERORE_CURR $HASH $MSG"
+    MSG_VALID=0
+    echo "${MSG}" \
+        | grep -v \
+               -e "^chore:\ " \
+               -e "^docs:\ " \
+               -e "^feat:\ " \
+               -e "^fix:\ " \
+               -e "^perf:\ " \
+               -e "^refactor:\ " \
+               -e "^style:\ " \
+               -e "^test:\ " \
+               -e "Initial commit" \
+               > /dev/null \
+    || MSG_VALID=1
+
+    if [ ${MSG_VALID} -ne 1 ]; then
+        echo "${NUM_BERORE_CURR}: ${HASH}: ${MSG}"
+    fi
+
+    ((NUM_BERORE_CURR += 1))
+done
+
+# | grep -v -e "^chore:\ "     \
+# | grep -v -e "^docs:\ "      \
+# | grep -v -e "^feat:\ "      \
+# | grep -v -e "^fix:\ "       \
+# | grep -v -e "^refactor:\ "  \
+# | grep -v -e "^style:\ "     \
+# | grep -v -e "^test:\ "      \
+# | grep -e "\.$"
