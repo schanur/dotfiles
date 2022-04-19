@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+set -o errexit -o nounset -o pipefail
+# SCRIPT_FILENAME="$(readlink -f "${0}")"
+# SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+# DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+# source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+SEARCH_PATH="$(pwd)"
+TARGET_PATH="${1}"
+
+SUFFIX_SEARCH_LIST=('flac', 'FLAC', 'Flac')
+
+
+function usage {
+    echo "copy_folders_with_filetype"
+}
+
+
+function cp_folder {
+    local SOURCE_PATHNAME=${1}
+    local TARGET_PATHNAME=${2}
+
+
+    cp -rv --reflink=auto "${SOURCE_PATHNAME}" "${TARGET_PATHNAME}"
+}
+
+
+function path_has_filetype {
+    local PATHNAME=${1}
+    local SUFFIX
+
+    for SUFFIX in ${SUFFIX_SEARCH_LIST[@]}; do
+        echo "${SUFFIX}"
+    done
+}
+
+
+function run_recursive {
+    find -type d
+}
+
+
+run_recursive

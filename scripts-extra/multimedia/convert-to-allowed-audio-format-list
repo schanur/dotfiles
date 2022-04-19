@@ -1,0 +1,123 @@
+#!/bin/bash
+
+# Convert all audio files to a set of allowed file formats.
+
+
+# Usage: convert-to-allowed-audio-format-list TARGET_FORMAT_SUFFIX [IGNORED_SUFFIX ...]
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/../.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+# source "${DOTFILES_PATH}/lib/bivalvia/path.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/require.sh"
+
+
+function is_audio_file {
+    local FILENAME="${1}"
+    local IS_AUDIO_FILE=0
+    local FILE_EXTENSION
+
+    FILE_EXTENSION="$(echo ${FILENAME##*.} | tr '[:upper:]' '[:lower:]')"
+
+    case "${FILE_EXTENSION}" in
+        aac|flac|mp3|ogg|oga|wav)
+            IS_AUDIO_FILE=1
+            ;;
+    esac
+
+    echo "${IS_AUDIO_FILE}"
+}
+
+
+function decode_to_wav {
+    ENC_FILENAME="${1}"
+    WAV_FILENAME="${2}"
+
+    ffmpeg -i "${ENC_FILENAME}" "${WAV_FILENAME}"
+}
+
+
+function encode_mp3 {
+    WAV_FILENAME="${1}"
+    MP3_FILENAME="${2}"
+
+    lame -m j --replaygain-accurate --clipdetect --add-id3v2 -q 0 -V 2 "${WAV_FILENAME}" "${MP3_FILENAME}"
+}
+
+function encode {
+    SOURCE_ENC_FILENAME="${1}"
+    TARGET_PATH="${2}"
+    TARGET_ENC_FILENAME="$(basename "${SOURCE_ENC_FILENAME}.mp3")"
+    TMP_WAV_FILENAME="$(basename "${SOURCE_ENC_FILENAME}").wav"
+    decode_to_wav "${SOURCE_ENC_FILENAME}" "${TMP_WAV_FILENAME}"
+
+    # case in
+
+    rm "${TMP_WAV_FILENAME}"
+}
+
+
+function convert_audio_file
+
+#function copy_playlist {
+    local PLAYLIST_FILE="${1}"
+    local TARGET_PATH="${2}"
+
+    cat "${PLAYLIST_FILE}" \
+        | grep location \
+        | sed -e 's/<location>//g' \
+        | sed -e 's|</location>||g' \
+        | sed -e 's|^\ *||g' \
+        | xmlstarlet unesc \
+        | while read SOURCE_FILE
+    do
+        if [ -r "${SOURCE_FILE}" ]; then
+            echo "Copy: ${SOURCE_FILE}"
+            cp "${SOURCE_FILE}" "${TARGET_PATH}/"
+            # cp "${SOURCE_FILE}" "${TARGET_PATH}/"
+        else
+            "File nor found or not readable: ${SOURCE_FILE}"
+        fi
+    done
+}
+
+
+function main {
+    local TARGET_PATH
+    local PLAYLIST_FILE
+
+    check_dependencies
+
+    case $# in
+        # 0)
+            # echo "No target path given. Expecting current path."
+            # TARGET_PATH="."
+            # ;;
+        2)
+            if [ -r "${1}" ]; then
+                PLAYLIST_FILE="${1}"
+            else
+                echo "Playlist file not found or is not readable. Abort!"
+                exit 1
+            fi
+            if [ -d "${2}" ]; then
+                TARGET_PATH="${2}"
+            else
+                echo "Target path does not exist. Abort!"
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Invalid parameters. Abort!"
+            exit 1
+            ;;
+    esac
+
+    copy_playlist "${PLAYLIST_FILE}" "${TARGET_PATH}"
+}
+
+
+main "${@}"
