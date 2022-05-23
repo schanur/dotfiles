@@ -42,7 +42,7 @@ SSH_PORT=22
 function rsync_cmd_ssh {
     local PARAMS=${*}
 
-    rsync -aXESxze "ssh -T -o Compression=yes -p ${SSH_PORT}" --partial ${PARAMS}
+    rsync -aXESxze "ssh -T -o Compression=yes -p ${SSH_PORT}" --partial --filter=":- .gitignore" ${PARAMS}
     # rsync -aXESxze "ssh -T" --partial --in-place ${PARAMS}
     exit $?
 }
@@ -51,7 +51,7 @@ function rsync_cmd_ssh {
 function rsync_cmd_local {
     local PARAMS=${*}
 
-    rsync -aXESx --partial --inplace ${PARAMS}
+    rsync -aXESx --partial --filter=":- .gitignore" --inplace ${PARAMS}
     exit $?
 }
 

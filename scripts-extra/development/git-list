@@ -16,7 +16,6 @@ REPO_PATH="${HOME}/local/dev/all"
 REPO_IGNORE_FILENAME="${REPO_PATH}/repo_ignore"
 
 
-
 # TODO: Use config file for local/dev
 
 if [ -r "${REPO_IGNORE_FILENAME}" ]; then

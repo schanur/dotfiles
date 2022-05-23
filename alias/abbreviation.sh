@@ -32,5 +32,3 @@ alias ta='tmux attach'
 # git
 alias gc='git-credentials'
 alias ggc='git-global-credentials'
-
-

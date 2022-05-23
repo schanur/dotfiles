@@ -21,6 +21,7 @@ function link_dotfiles_path_in_user_config {
     local LINK_FILENAME_RELATIVE_TO_HOME=".config/dotfiles/basepath"
     local DOTFILES_FILENAME="${DOTFILES_PATH}"
 
+    echo "backup_user_config_and_create_dotfiles_link ${DOTFILES_FILENAME} ${LINK_FILENAME_RELATIVE_TO_HOME}"
     backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
 }
 

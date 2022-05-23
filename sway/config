@@ -15,33 +15,33 @@ default_border      pixel 1
 
 
 #set                 $ws0                          "0:test0"
-set                 $ws1                          "1:editor"
-set                 $ws2                          "2:dev_console"
-set                 $ws3                          "3:ssh"
-set                 $ws4                          "4:var1"
-set                 $ws5                          "5:var2"
-set                 $ws6                          "6:mm"
-set                 $ws7                          "7:vm"
-set                 $ws8                          "8:comm"
-set                 $ws9                          "9:mail"
-set                 $ws10                         "10:web"
+set                 $ws1                          1:editor
+set                 $ws2                          2:dev_console
+set                 $ws3                          3:ssh
+set                 $ws4                          4:var1
+set                 $ws5                          5:var2
+set                 $ws6                          6:mm
+set                 $ws7                          7:vm
+set                 $ws8                          8:comm
+set                 $ws9                          9:mail
+set                 $ws10                         10:web
 #set                 $ws11                         "11:test1"
 #set                 $ws12                         "12:test2"
 
 
-workspace 0  output $output-middle
-workspace 1  output $output-right
-workspace 2  output $output-middle
-workspace 3  output $output-middle
-workspace 4  output $output-middle
-workspace 5  output $output-middle
-workspace 6  output $output-left
-workspace 7  output $output-middle
-workspace 8  output $output-right
-workspace 9  output $output-right
-workspace 10 output $output-right
-workspace 11 output $output-right
-workspace 12 output $output-right
+# workspace $ws0  output $output-middle
+workspace $ws1  output $output-right
+workspace $ws2  output $output-middle
+workspace $ws3  output $output-middle
+workspace $ws4  output $output-middle
+workspace $ws5  output $output-middle
+workspace $ws6  output $output-left
+workspace $ws7  output $output-middle
+workspace $ws8  output $output-right
+workspace $ws9  output $output-right
+workspace $ws10 output $output-right
+# workspace $ws11 output $output-right
+# workspace $ws12 output $output-right
 
 # To get application class, run xprop and click application.
 
@@ -75,11 +75,10 @@ assign              [class="Gpodder"]             $ws6
 assign              [class="Steam"]               $ws6
 assign              [class="Kodi"]                $ws6
 assign              [class="Virt-manager"]        $ws7
-assign              [class="Virt-manager"]        $ws7
 assign              [class="Gajim"]               $ws8
 assign              [class="Signal"]              $ws8
 assign              [class="quaternion"]          $ws8
-assign              [class="Thunderbird"]         $ws9
+assign              [class="thunderbird"]         $ws9
 assign              [class="Firefox"]             $ws10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -117,10 +116,10 @@ bindsym             $mod+Return                   exec "~/local/dev/public/dotfi
 # kill focused window
 bindsym             $mod+Shift+q                  kill
 
-# Rofi application/file launcher
-bindsym             $mod+j                        exec "rofi -show window -show-icons"
-bindsym             $mod+k                        exec "rofi -show combi  -show-icons -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
-bindsym             $mod+l                        exec "rofi -show run    -show-icons"
+# Wofi application/file launcher
+bindsym             $mod+j                        exec "wofi -show window -show-icons"
+bindsym             $mod+k                        exec "wofi -show combi  -show-icons -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
+bindsym             $mod+l                        exec "wofi -show run    -show-icons"
 
 # Keep dmenu for users that do not want to use rofi
 bindsym             $mod+d                        exec dmenu_run
@@ -216,7 +215,7 @@ bindsym             $mod+Shift+c                  reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym             $mod+Shift+r                  restart
 # exit i3 (logs you out of your X session)
-bindsym             $mod+Shift+e                  exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym             $mod+Shift+e                  exec "swaynag -t warning -m 'Exit sway?' -b 'Yes, exit sway'"
 
 
 bindsym             XF86AudioRaiseVolume          exec ".config/i3/toolbox.sh AudioRaiseVolume"
@@ -256,10 +255,10 @@ bindsym             $mod+r                        mode "resize"
 
 
 exec swayidle -w \
-         timeout 300  'swaylock -f -c 000000' \
-         timeout 600  'swaymsg "output * dpms off"' \
-         resume       'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000'
+         timeout 3000  'swaylock -f -c 000000' \
+         timeout 6000  'swaymsg "output * dpms off"' \
+         resume        'swaymsg "output * dpms on"' \
+         before-sleep  'swaylock -f -c 000000'
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status

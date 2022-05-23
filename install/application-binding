@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+# Set default applications for specific file formats.
+
+
 set -o errexit -o nounset -o pipefail
 SCRIPT_FILENAME="$(readlink -f "${0}")"
 SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"

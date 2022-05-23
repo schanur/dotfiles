@@ -15,7 +15,7 @@ function fuzzy_search_in_file_db
 {
     local OLD_FILE_LOCATION="${1}"
     local NEW_FILE_LOCATION="${OLD_FILE_LOCATION}"
-    local OLD_FILE_LOCATION_LEN=${#OLD_FILE_LOCATION}
+    local OLD_FILE_LOCATION_LEN="${#OLD_FILE_LOCATION}"
     # local ORIG_OLD_FILE_LOCATION_LEN=${OLD_FILE_LOCATION_LEN}
     local SKIP_CNT=0
     local MATCH_CNT
@@ -40,7 +40,7 @@ function fuzzy_search_in_file_db
                 ;;
             1)
                 VALID_MATCH_FOUND=1
-                NEW_FILE_LOCATION="$(cat "${FILE_DB}" | grep "${SUB_STR}")"
+                NEW_FILE_LOCATION="$(cat "${FILE_DB}" | grep "${SUB_STR}" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g')"
                 ;;
             *)
                 break
@@ -64,15 +64,16 @@ function rewrite_playlist
 
     cat "${INPUT_PLAYLIST}" | while read -r PLAYLIST_LINE; do
         if [[ "${PLAYLIST_LINE}" =~ '<location>' ]]; then
-            OLD_FILE_LOCATION="${PLAYLIST_LINE:10:-11}"
+            # Convert filename to new location.
+            OLD_FILE_LOCATION="$(echo ${PLAYLIST_LINE:10:-11} | sed 's/\&amp;/&/g; s/\&lt;/</g; s/\&gt;/>/g; s/\&quot;/"/g; s/\&#39;/'"'"'/g')"
             NEW_FILE_LOCATION="$(fuzzy_search_in_file_db "${OLD_FILE_LOCATION}")"
             # echo "      ${PLAYLIST_LINE}"
-            # echo "old: ${OLD_FILE_LOCATION}"
-            # echo "new: ${NEW_FILE_LOCATION}"
-            echo "      <location>/home/ze/net/${NEW_FILE_LOCATION}</location>" >> "${OUTPUT_PLAYLIST}"
+            echo "old: ${OLD_FILE_LOCATION}"
+            echo "new: ${NEW_FILE_LOCATION}"
+            echo "      <location>${NEW_FILE_LOCATION}</location>" >> "${OUTPUT_PLAYLIST}"
         else
-            # true
-            echo "${PLAYLIST_LINE}"
+            # Line does not contain a filename for convertion. Pass through.
+            # echo "${PLAYLIST_LINE}"
             echo "${PLAYLIST_LINE}" >> "${OUTPUT_PLAYLIST}"
         fi
     done
