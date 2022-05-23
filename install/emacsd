@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Install systemd user daemon that starts an Emacs daemon at login
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
+
+
+function main() {
+    local LINK_FILENAME_RELATIVE_TO_HOME=".config/systemd/user/emacsd.service"
+    local DOTFILES_FILENAME="${DOTFILES_PATH}/systemd/user/emacsd.service"
+
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
+
+    # Enable Emacs daemon on next startup.
+    # systemctl --user enable emacsd
+}
+
+
+main
