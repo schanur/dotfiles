@@ -9,7 +9,6 @@ fonts-atarismall                                                  # Very small 4
 fonts-terminus-otb                                                # Non PCF version of terminus font
 gedit
 gedit-plugins
-gksu                                                              # Graphical su
 gmtp
 doublecmd-qt                                                      # 2 pane file manager
 gnome-themes-standard
@@ -18,7 +17,6 @@ gtk-chtheme                                                       # Another grap
 i3
 i3lock
 i3status
-icedove
 liferea                                                           # RSS Reader
 lightdm                                                           # Display manager
 lightdm-gtk-greeter-settings                                      # Configu lightdm
@@ -36,7 +34,6 @@ network-manager-vpnc-gnome
 network-manager-pptp-gnome
 okular                                                            # Document viewer
 pdfsam
-qt4-qtconfig                                                      # TODO: Search replacements for all QT4 applications
 qt5-style-plugins                                                 # Dark theme support for QT5 apps
 qtcurve                                                           # Required for dark themes in GTK+ and Qt
 redshift                                                          # Reduce blue display color at night
@@ -45,6 +42,7 @@ ruby-notify                                                       # Contains not
 rxvt-unicode-256color                                             # Great terminal
 scrot                                                             # command line screenshot application
 system-config-printer
+thunderbird
 unclutter                                                         # Hide mousecursor on mouse inactivity
 wireshark
 xclip                                                             # Required by dict_lookup
