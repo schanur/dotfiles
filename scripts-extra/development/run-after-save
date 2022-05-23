@@ -23,7 +23,12 @@ WATCH_PATH="${1}"
 shift
 ACTION="${@}"
 
-while inotifywait -e close_write "${WATCH_PATH}"/*; do
+while inotifywait -q -r -e close_write "${WATCH_PATH}"/*; do
     clear
-    (${ACTION});
+    echo "------------------------------------------------------------------------"
+    # (${ACTION});
+    # (${ACTION}  | head -n 10);
+    # (${ACTION} 2>&1 | less -r);
+    # (socat - EXEC: "'${ACTION}'",pty,setsid,ctty | less -r);
+    (unbuffer ${ACTION} | head -n 25);
 done
