@@ -30,11 +30,21 @@ function copy_playlist {
         | xmlstarlet unesc \
         | while read SOURCE_FILE
     do
+        SOURCE_FILE=$(echo "${SOURCE_FILE}" \
+                          | sed -e 's|file://||g' \
+                          | sed -e 's|%20|\ |g' \
+                          | sed -e 's|%23|\#|g' \
+                          | sed -e 's|%C3%A4|ä|g' \
+                          | sed -e 's|%C3%B6|ö|g' \
+                          | sed -e 's|%C3%BC|ü|g' \
+                          | sed -e 's|%5B|\[|g' \
+                          | sed -e 's|%5D|\]|g')
+
         if [ -r "${SOURCE_FILE}" ]; then
             echo "Copy: ${SOURCE_FILE}"
-            cp "${SOURCE_FILE}" "${TARGET_PATH}/"
+            cp -n "${SOURCE_FILE}" "${TARGET_PATH}/"
         else
-            "File nor found or not readable: ${SOURCE_FILE}"
+            echo "File nor found or not readable: ${SOURCE_FILE}"
         fi
     done
 }
