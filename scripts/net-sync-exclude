@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# Backup with rsync exclude rules to a remote host over ssh
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/block_dev.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/config.sh"
+
+source "${DOTFILES_PATH}/lib/shell/rsync.sh"
+
+set_config_path "${DOTFILES_PATH}/config"
+
+CONFIG_FILE_BASENAME="rsync-home.conf"
+
+# Copied from script "backup-home"
+function load_config {
+    if [ "$(config_file_exists "${CONFIG_FILE_BASENAME}")" -eq 0 ]; then
+        echo "No config file found."
+        exit 1
+    fi
+    load_config_file "${CONFIG_FILE_BASENAME}"
+
+    require_variable RSYNC_HOME__REMOTE_HOST
+    require_variable RSYNC_HOME__REMOTE_PORT
+    require_variable RSYNC_HOME__REMOTE_BASE_PATH
+}
+
+
+load_config
+
+SUCC_SYNC_DATE_PATH="${HOME}/.cache/dotfiles/timestamp"
+SUCC_SYNC_DATE_FILENAME="${SUCC_SYNC_DATE_PATH}/last_succ_net_sync"
+
+
+bsync -s -p ${RSYNC_HOME__REMOTE_PORT} -v --delete-excluded --delete-during --progress $(rsync_exclude_file_parameter_list) ${HOME}/ $(whoami)@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}/user_$(whoami)/rsync/$(whoami)/$(hostname)/home__$(whoami)/
+
+
+
+if [ ! -d  "${SUCC_SYNC_DATE_PATH}" ]; then
+    mkdir -p "${SUCC_SYNC_DATE_PATH}"
+fi
+
+touch "${SUCC_SYNC_DATE_FILENAME}"
+
+# function main {
+#     if [ "${#}" -ge "2" ]; then
+#         SOURCE="${1}"
+#         TARGET="${2}"
+#         shift
+#         shift
+#         # echo "bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) ${*} ${SOURCE} ${TARGET}"
+#         bsync --delete-excluded --delete-before $(rsync_exclude_file_parameter_list) ${*} "${SOURCE}" "${TARGET}"
+#         EXIT_STATUS=$?
+#         exit ${EXIT_STATUS}
+#     else
+#         invalid_parameter_exit
+#     fi
+# }
+
+# SOURCE="${HOME}/"
+# # TARGET="/media/lsync_target/lsync_backup/$(whoami)/$(hostname)"
+# TARGET="/media/sync_target/rsync/$(whoami)/$(hostname)/home__ze/"
+
+# echo "${TARGET}"
+# if [ ! -d "${TARGET}" ]; then
+#     mkdir -p "${TARGET}"
+# fi
+
+# SOURCE_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device "${SOURCE}")"
+# TARGET_FILESYSTEM_BLOCK_DEV="$(filename_to_block_device "${TARGET}")"
+
+
+
+# if [ "${SOURCE_FILESYSTEM_BLOCK_DEV}" = "${TARGET_FILESYSTEM_BLOCK_DEV}" ]; then
+#     echo "Source and target disk are the same. This is no backup to a separate storage. Abort!" >&2
+#     exit 1
+# fi
+
+# if [ ! -d "${TARGET}" ]; then
+#     mkdir -p "${TARGET}"
+# fi
+
+
+# main "${SOURCE}" "${TARGET}" "${@}"
