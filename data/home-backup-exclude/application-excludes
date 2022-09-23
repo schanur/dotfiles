@@ -46,7 +46,9 @@ wallet.tar*
 /local/temp/
 /local/work_home/
 
-build*/
+build/
+build*debug/
+build*release/
 build_meson/
 
 backup_restore/
