@@ -260,12 +260,14 @@ bar {
 # }
 
 #input type:Keyboard {
-input * {
-    #input AT Translated Set 2 keyboard {           # or input <identifier>
-    xkb_layout  de
-#    xkb_variant nodeadkeys
-#    xkb_options grp:alt_shift_toggle
-}
+# input * {
+#     #input AT Translated Set 2 keyboard {           # or input <identifier>
+#     xkb_layout  de
+# #    xkb_variant nodeadkeys
+# #    xkb_options grp:alt_shift_toggle
+# }
+
+exec "setxkbmap -layout de"
 
 exec --no-startup-id i3-msg 'workspace 2:dev_console; exec ~/local/dev/public/dotfiles/scripts/durxvt'
 exec gnome-commander
