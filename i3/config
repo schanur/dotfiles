@@ -27,6 +27,7 @@ set                 $ws10                         "10:web"
 # To get application class, run xprop and click application.
 
 # border / titlebar
+new_window          normal
 hide_edge_borders   vertical
 bindsym             Control+Shift+x [class="^.*"] border toggle
 for_window          [class="^.*"]                 border pixel 1
@@ -102,6 +103,7 @@ bindsym             $mod+Shift+q                  kill
 bindsym             $mod+j                        exec "rofi -show window -show-icons"
 bindsym             $mod+k                        exec "rofi -show combi  -show-icons -combi-modi 'window,run,ssh' -modi combi -matching fuzzy -levenshtein-sort"
 bindsym             $mod+l                        exec "rofi -show run    -show-icons"
+bindsym             $mod+Tab                      exec "rofi -show window -show-icons"
 
 # Keep dmenu for users that do not want to use rofi
 bindsym             $mod+d                        exec dmenu_run
@@ -189,7 +191,7 @@ bindsym             $mod+Ctrl+w                   exec "~/.config/dotfiles/scree
 bindsym             $mod+Ctrl+e                   exec "~/.config/dotfiles/screenlayout/3.sh && "
 
 # Move relative to current position.
-bindsym             $mod+Ctrl+i                   move workspace to output left
+		bindsym             $mod+Ctrl+i                   move workspace to output left
 bindsym             $mod+Ctrl+o                   move workspace to output right
 
 # reload the configuration fileD
@@ -242,8 +244,7 @@ bar {
         mode                                      hide
         position                                  top
         # separator_symbol                          "="
-        font                                      pango:DejaVu Sans Mono 13
-        # font                                      terminus
+        font                                      pango:DejaVu Sans Mono 8
 }
 
 # tztime local {
@@ -254,20 +255,12 @@ bar {
 #         format = "%Y-%m-%d %H:%M:%S"
 # }
 
-# tztime local {
-#         format = "%Y-%m-%d %H:%M:%S %Z (%p) - %a - epoch: %s - week: %V"
-#         # timezone = "Europe/Berlin"
+# tztime berlin {
+#         format = "%Y-%m-%d %H:%M:%S %Z"
+#         timezone = "Europe/Berlin"
 # }
 
-#input type:Keyboard {
-# input * {
-#     #input AT Translated Set 2 keyboard {           # or input <identifier>
-#     xkb_layout  de
-# #    xkb_variant nodeadkeys
-# #    xkb_options grp:alt_shift_toggle
-# }
 
-exec "setxkbmap -layout de"
 
 exec --no-startup-id i3-msg 'workspace 2:dev_console; exec ~/local/dev/public/dotfiles/scripts/durxvt'
 exec gnome-commander
