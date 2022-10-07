@@ -25,7 +25,6 @@ set                 $ws10                         "10:web"
 #set                 $ws12                         "12:test2"
 
 # To get application class, run xprop and click application.
-
 # border / titlebar
 new_window          normal
 hide_edge_borders   vertical
@@ -39,7 +38,7 @@ for_window          [class="Lxappearance"]        border normal
 for_window          [class="Vlc"]                 border pixel 0
 for_window          [class="mpv"]                 border pixel 0
 for_window          [class="Pcmanfm"]             border pixel 0
-for_window          [class="Firefox"]             border pixel 0
+for_window          [class="firefox"]             border pixel 0
 for_window          [class="Feh"]                 border pixel 0
 for_window          [class="Kodi"]                fullscreen
 for_window          [class="Xephyr"]              floating enable
@@ -61,8 +60,8 @@ assign              [class="Virt-manager"]        $ws7
 assign              [class="Gajim"]               $ws8
 assign              [class="Signal"]              $ws8
 assign              [class="quaternion"]          $ws8
-assign              [class="Thunderbird"]         $ws9
-assign              [class="Firefox"]             $ws10
+assign              [class="thunderbird"]         $ws9
+assign              [class="firefox"]             $ws10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
