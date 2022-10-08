@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Link kitty config to provided kitty config file of this repository.
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+source "${DOTFILES_PATH}/lib/bivalvia/link.sh"
+
+source "${DOTFILES_PATH}/lib/shell/install.sh"
+
+
+function main() {
+    local LINK_FILENAME_RELATIVE_TO_HOME="/.config/kitty/kitty.conf"
+    local DOTFILES_FILENAME="${DOTFILES_PATH}/kitty/kitty.conf"
+
+    backup_user_config_and_create_dotfiles_link "${DOTFILES_FILENAME}" "${LINK_FILENAME_RELATIVE_TO_HOME}"
+}
+
+
+main
