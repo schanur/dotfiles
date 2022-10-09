@@ -10,6 +10,8 @@ bin/repo
 
 a.out
 
+background_image/algo_generated/ulam*
+
 # Do not index large external repositories in fdfind
 vendor/oh-my-zsh
 vendor/emacs.d/elpa
