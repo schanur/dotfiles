@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Start a rxvt-unicode-256color terminal emulator instance with bold terminus font and dark background.
+
+
+set -o errexit -o nounset -o pipefail
+SCRIPT_FILENAME="$(readlink -f "${0}")"
+SCRIPT_PATH="$(dirname "${SCRIPT_FILENAME}")"
+DOTFILES_PATH="${SCRIPT_PATH}/.."
+
+source "${DOTFILES_PATH}/lib/bivalvia/help.sh"
+
+
+# FONT_NAME="/usr/share/fonts/X11/misc/ter-u12b_unicode.pcf.gz"
+# FONT_NAME="-*-terminus-*-*-*-16-*-*-*-*-*-*-*"
+# FONT_NAME="-*-terminus-*-*-*-20-*-*-*-*-*-*-*"
+FONT_NAME="-*-terminus-*-*-*-34-*-*-*-*-*-*-*"
+
+rxvt-unicode -bg black -fg grey -cr red                                           `# Colors`                      \
+             -fn ${FONT_NAME} -fb ${FONT_NAME} -fi ${FONT_NAME} -fbi ${FONT_NAME} `# Fonts`                       \
+             +vb                                                                  `# No Visual bell`              \
+             -bc                                                                  `# Blinking cursor`             \
+             +sb                                                                  `# Turn off scroll bar`         \
+             ${*}
+
