@@ -1,1 +1,2 @@
 locate                                                        # Required by Emacs func helm-projectile-find-file
+fonts-ubuntu
