@@ -48,6 +48,7 @@ for_window          [class="Xephyr"]              move absolute position 1260 px
 # application rules
 # assign              [class="URxvt"]               $ws1
 assign              [class="Emacs"]               $ws1
+assign              [class="Ding"]                $ws4
 assign              [class="Gnome-commander"]     $ws5
 assign              [class="Filezilla"]           $ws5
 assign              [class="Thunar"]              $ws5
@@ -266,4 +267,5 @@ exec gnome-commander
 # exec gajim
 exec signal-desktop
 exec thunderbird
+exec ding
 exec ~/local/bin/firefox/firefox/firefox
