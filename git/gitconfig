@@ -9,7 +9,10 @@
         rmdir = true
 [diff]
         tool = meld
-[color]
+[difftool]
+        prompt = false
+[difftool "meld"]
+        cmd = meld "$LOCAL" "$REMOTE"[color]
         ui = auto
 #[core]
 #       gitProxy = git-proxy
@@ -29,7 +32,10 @@
 
 [merge]
         ff = only
-
+        tool = meld
+[mergetool "meld"]
+        # Choose one of these 2 lines (not both!) explained below.
+        cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+        cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 [push]
         default = simple
-
