@@ -191,10 +191,10 @@ bindsym             $mod+Ctrl+w                   exec "~/.config/dotfiles/scree
 bindsym             $mod+Ctrl+e                   exec "~/.config/dotfiles/screenlayout/3.sh && "
 
 # Move relative to current position.
-		bindsym             $mod+Ctrl+i                   move workspace to output left
+bindsym             $mod+Ctrl+i                   move workspace to output left
 bindsym             $mod+Ctrl+o                   move workspace to output right
 
-# reload the configuration fileD
+# reload the configuration file
 bindsym             $mod+Shift+c                  reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym             $mod+Shift+r                  restart
