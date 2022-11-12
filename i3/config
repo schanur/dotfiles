@@ -262,6 +262,7 @@ bar {
 
 
 
+exec ~/.config/dotfiles/basepath/x11/start_barrier_if_conf_available.sh
 exec --no-startup-id i3-msg 'workspace 2:dev_console; exec ~/local/dev/public/dotfiles/scripts/durxvt'
 exec gnome-commander
 # exec gajim
