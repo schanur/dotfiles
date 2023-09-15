@@ -1,6 +1,5 @@
 aqemu
 bridge-utils
-cgmanager
 cgroup-tools
 libguestfs-tools                                                # KVM Mac OS X guest
 libpam-cgroup
@@ -9,14 +8,9 @@ lxc
 lxcfs
 lxctl
 packer
-qemu
 schroot
 uml-utilities                                                   # KVM Mac OS X guest
 vde2
 virtinst
-virtualbricks
-virt-goodies
 virt-manager
-virt-top
-vmdebootstrap
 xmount

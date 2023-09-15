@@ -11,7 +11,6 @@ gedit
 gedit-plugins
 gmtp
 doublecmd-qt                                                      # 2 pane file manager
-gnome-themes-standard
 gparted                                                           # Partition manager
 gtk-chtheme                                                       # Another graphical theme changer
 i3
@@ -23,7 +22,6 @@ lightdm-gtk-greeter-settings                                      # Configu ligh
 lxappearance                                                      # Theme selector GUI
 lxrandr                                                           # TODO: Replace by arandr
 mesa-utils                                                        # Check OpenGL performance
-mesa-utils-extra
 mirage                                                            # Image viewer
 mupdf
 mupdf-tools
@@ -39,7 +37,6 @@ qtcurve                                                           # Required for
 redshift                                                          # Reduce blue display color at night
 rofi                                                              # dmenu replacement and window switcher
 ruby-notify                                                       # Contains notify-send
-rxvt-unicode-256color                                             # Great terminal
 scrot                                                             # command line screenshot application
 system-config-printer
 thunderbird

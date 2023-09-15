@@ -6,7 +6,6 @@ libglm-dev
 libjsoncpp-dev
 libmagic-dev
 libssl-dev
-libstdc++-10-dev
 llvm-dev
 nlohmann-json3-dev
 pkgconf

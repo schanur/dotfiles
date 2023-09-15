@@ -4,7 +4,6 @@ bundler
 check
 clang                                                             # Compiler for C/C++/ObjC...
 clazy                                                             # Linter warnings for QT
-closure-linter                                                    # Javascript linter
 cmake                                                             # CMake build system
 ddd                                                               # GUI debugger
 deheader                                                          # Remove unused #includes from C/C++ source files
@@ -28,11 +27,9 @@ gitk
 global                                                            # Source code browser
 gnutls-bin                                                        # Required by Emacs custom build
 graphviz                                                          # Graph drawing tools
-grip                                                              # GitHub Markdown local previewer
 highlight                                                         # CLI source code syntax highlighting
-imediff2
+imediff
 iwyu                                                              # Analyze #includes in C and C++ source files
-kdbg                                                              # Graphical debugger
 lcov                                                              # Summarie GCOV informations
 lftp                                                              # Required by git-ftp pull
 libarchive-dev                                                    # Zeal
@@ -73,15 +70,12 @@ lua5.3
 make                                                              # Old build system
 markdown
 meld
-mingw64
-nemiver                                                           # Graphical C/C++ debugger
 opencl-c-headers                                                  # OpenCL (Open Computing Language) C header files
 opencl-clhpp-headers                                              # C++ headers for OpenCL development
 pandoc
 pry
 python3
 python3-pip
-qt5-default
 rake                                                              # Build system based on ruby
 ruby-method-source
 shellcheck                                                        # Shell script linter
@@ -90,9 +84,7 @@ source-highlight                                                  # convert sour
 subversion                                                        # Required by OCLint compilation
 swig
 texinfo                                                           # Required by Emacs custom build
-text2info                                                         # Required by Emacs custom build
 twine                                                             # Interact with PyPI online package archive
-upx-ucl
 valgrind                                                          # Application VM to debug without language support
 wordnet
 xorg-dev

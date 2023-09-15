@@ -1,9 +1,0 @@
-cdpr                                                          # Cisco Discovery Protocol Reporter
-dynagen
-dynamips
-filtergen
-openconnect                                                   # open client for Cisco AnyConnect, Pulse, GlobalProtect VPN
-sendmail-doc
-sendmail
-rancid                                                        # Really Awesome New Cisco confIg Differ
-

@@ -11,8 +11,4 @@ flashrom
 gcc-avr
 gdb-avr
 s51dude
-simulavr
-skyeye
 uisp
-usbprog
-usbprog-gui

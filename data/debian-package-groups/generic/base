@@ -19,7 +19,7 @@ colortest                                                         # Check termin
 conntrack
 dvorak7min                                                        # Learn Dvorak keyboard layout
 exa                                                               # Modern ls replacement
-exfat-utils                                                       # Create exFAT volumes
+exfatprogs                                                        # Create exFAT volumes
 expect
 fd-find                                                           # find alternative
 figlet

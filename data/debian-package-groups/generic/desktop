@@ -2,13 +2,10 @@ avahi-ui-utils
 cups
 gajim
 gajim-omemo
-gnome-pomodoro                                                # Productivity tool which helps to focus on work
 gvfs-backends
-gvfs-bin
 gvfs-fuse
 network-manager
 pidgin
-pidgin-openpgp
 pidgin-otr
 pidgin-plugin-pack
 pidgin-privacy-please

@@ -4,4 +4,3 @@ libimage-exiftool-perl                                        # MicMac Build dep
 make                                                          # MicMac Build dependency
 meshlab
 proj-bin                                                      # MicMac Build dependency
-qt5-default                                                   # MicMac Build dependency

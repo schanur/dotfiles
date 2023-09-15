@@ -3,7 +3,6 @@ brasero                                                           # CD/DVD burni
 gimp                                                              # Better photoshop
 gimp-help-en                                                      # GIMP offline help english
 gimp-help-de                                                      # GIMP offline help german
-gmusicbrowser                                                     # Graphical jukebox
 gpodder                                                           # Podcast client
 grilo-plugins-0.3                                                 # TODO: why is this on the list
 imagemagick                                                       # Image manipulation scripting
@@ -12,7 +11,6 @@ kodi                                                              # Home Theatre
 libc++-dev                                                        # Required by Discord
 lollypop                                                          # Gnome music player
 mpv                                                               # Multimedia player with minimalistic GUI
-musique                                                           # Graphical music player
 quodlibet                                                         # Music player with regex support
 rhythmbox                                                         # Graphical jukebox
 sxiv                                                              # Image viewer without UI
