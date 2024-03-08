@@ -27,8 +27,8 @@ function start_server {
 
 function start_client {
     touch "/tmp/barrier_client.log"
-    # Even activating IPv6 avahi did not macke "[]:24800" autoconfig work.
-    barrierc --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_client.log --name client1 "[mizar.local]:24800"
+    # Even activating IPv6 avahi did not make "[]:24800" autoconfig work.
+    barrierc --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_client.log --name client1 "[alkaid.local]:24800"
 }
 
 
@@ -38,7 +38,7 @@ if [ $(barrier_is_running) -eq 1 ]; then
 fi
 
 
-if [ "$(cat /etc/machine-id | sha512sum | cut -f 1 -d ' ')" = "56314343caf6ab223f04b7261f6d8cc5732aaacffdf04a66d420069f9a77e4e6c3e231b45bea4338a190b477e552ffdc874e9b5b699d6c2258fb51848d3535f3" ]; then
+if [ "$(cat /etc/machine-id | sha512sum | cut -f 1 -d ' ')" = "d1b9443b8608ab188b6a1d21855b6805648bb26340561b79d31c9c5c9a11582131df067895c20cd136d8a7adfba2071af665c04d1ce8b70e35b70fdc6a0d89e6" ]; then
     echo "Start barrier server."
     start_server
 else
