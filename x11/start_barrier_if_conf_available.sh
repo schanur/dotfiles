@@ -21,14 +21,14 @@ function barrier_is_running {
 
 function start_server {
     touch "/tmp/barrier_server.log"
-    barriers --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_server.log --name server --address :: --config "${DOTFILES_PATH}/barrier/server.conf"
+    barriers --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_server.log --name "$(hostname)" --address :: --config "${DOTFILES_PATH}/barrier/server.conf"
 }
 
 
 function start_client {
     touch "/tmp/barrier_client.log"
     # Even activating IPv6 avahi did not make "[]:24800" autoconfig work.
-    barrierc --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_client.log --name client1 "[alkaid.local]:24800"
+    barrierc --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_client.log --name "$(hostname)" "[alkaid.local]:24800"
 }
 
 
