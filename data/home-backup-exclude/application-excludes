@@ -34,13 +34,14 @@ wallet.tar*
 /local/backup/
 /local/cache/
 /local/data/bitcoin_chain_data/
-/local/data/chess
-/local/data/3d_models
+/local/data/chess/
+/local/data/3d_models/
+/local/data/machine_learning/
 /local/dev/all/dotfiles/vendor/emacs.d/auto-save-list/
 /local/dev/all/dotfiles/vendor/emacs.d/semanticdb/
 /local/dev/no_sync/
 /local/dev/all/webhosting*/
-/local/download
+/local/download/
 /local/vm/
 /local/media/
 /local/temp/
