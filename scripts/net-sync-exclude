@@ -38,7 +38,7 @@ SUCC_SYNC_DATE_PATH="${HOME}/.cache/dotfiles/timestamp"
 SUCC_SYNC_DATE_FILENAME="${SUCC_SYNC_DATE_PATH}/last_succ_net_sync"
 
 
-echo "bsync -s -p ${RSYNC_HOME__REMOTE_PORT} -v --delete-excluded --delete-during --progress $(rsync_exclude_file_parameter_list) ${HOME}/ $(whoami)@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}u/gser/$(whoami)/rsync/$(whoami)/$(hostname)/home__$(whoami)/"
+echo "bsync -s -p ${RSYNC_HOME__REMOTE_PORT} -v --delete-excluded --delete-during --progress $(rsync_exclude_file_parameter_list) ${HOME}/ $(whoami)@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}/user/$(whoami)/rsync/$(whoami)/$(hostname)/home__$(whoami)/"
 
 # exit 1
 bsync -s -p ${RSYNC_HOME__REMOTE_PORT} -v --delete-excluded --delete-during --progress $(rsync_exclude_file_parameter_list) ${HOME}/ $(whoami)@${RSYNC_HOME__REMOTE_HOST}:${RSYNC_HOME__REMOTE_BASE_PATH}/user/$(whoami)/rsync/$(whoami)/$(hostname)/home__$(whoami)/
