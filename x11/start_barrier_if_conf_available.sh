@@ -28,7 +28,7 @@ function start_server {
 function start_client {
     touch "/tmp/barrier_client.log"
     # Even activating IPv6 avahi did not make "[]:24800" autoconfig work.
-    barrierc --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_client.log --name "$(hostname)" "[alkaid.local]:24800"
+    barrierc --disable-crypto --no-daemon --debug DEBUG --log /tmp/barrier_client.log --name "$(hostname)" "[alkaid]:24800"
 }
 
 
